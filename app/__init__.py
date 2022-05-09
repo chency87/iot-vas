@@ -18,6 +18,8 @@ from app.backend.handlers.settings import setting as setting_blueprint
 from app.backend.handlers.logger import logger as logger_blueprint
 from app.backend.handlers.plugins import plugins as plugins_blueprint
 from app.backend.extensions import scheduler
+from app.backend.controller.Task import Task as Task_blueprint
+from app.backend.controller.scan import scan as scan_blueprint
 
 
 def init_app(config_name = None):
@@ -56,9 +58,10 @@ def register_blueprints(app):
     app.register_blueprint(setting_blueprint)
     app.register_blueprint(logger_blueprint)
     app.register_blueprint(plugins_blueprint)
+    app.register_blueprint(Task_blueprint)
+    app.register_blueprint(scan_blueprint)
     # app.register_blueprint(auth_blueprint, url_prefix='/auth')
     # app.register_blueprint(job_blueprint,url_prefix='/v1/cron/job')
-
 
 
 def register_extensions(app):

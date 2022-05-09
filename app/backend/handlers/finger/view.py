@@ -1,5 +1,4 @@
 import re
-
 from werkzeug.wrappers import response
 from . import finger
 from flask import json, render_template,request, jsonify, redirect,url_for
