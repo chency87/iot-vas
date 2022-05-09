@@ -1,6 +1,24 @@
-# SB Admin 2 - Python template
+# iot vas
 
-**SB Admin 2 - Python template** is a Python based template for [SB Admin 2](http://startbootstrap.com/template-overviews/sb-admin-2/).
+## 如何clone 代码
+
+确保自己电脑安装了git，可以去https://git-scm.com/下载
+
+安装后，通过git clone 将github仓库内的代码clone到自己的本地，
+git clone git@github.com:chency87/iot-vas.git
+
+cd iot-vas
+
+当自己对代码进行修改后，可以通过
+git add . 
+git commit -m "你的message，自己根据实际情况写"
+git push
+
+当得知其他人对代码有修改后，可以通过
+git pull来将仓库中的代码与自己本地的代码进行更新合并。
+
+** 注意** 
+最好只修改自己的代码，这样来防止出现冲突，当出现冲突时，需要将冲突解决后push到仓库中。不允许带冲突push。
 
 ## Installation
 
