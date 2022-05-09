@@ -1,0 +1,39 @@
+alembic==1.7.5
+aniso8601==9.0.1
+APScheduler @ file:///Users/runner/miniforge3/conda-bld/apscheduler_1610113819192/work
+backports.zoneinfo @ file:///Users/runner/miniforge3/conda-bld/backports.zoneinfo_1629669681566/work
+click @ file:///Users/runner/miniforge3/conda-bld/click_1635822681337/work
+crontab @ file:///home/conda/feedstock_root/build_artifacts/crontab_1595435997448/work
+dataclasses @ file:///home/conda/feedstock_root/build_artifacts/dataclasses_1628958434797/work
+Flask @ file:///home/conda/feedstock_root/build_artifacts/flask_1633384704162/work
+Flask-APScheduler @ file:///home/conda/feedstock_root/build_artifacts/flask-apscheduler_1640046387063/work
+Flask-HTTPAuth @ file:///home/conda/feedstock_root/build_artifacts/flask-httpauth_1635218614571/work
+Flask-Login==0.5.0
+flask-marshmallow @ file:///home/conda/feedstock_root/build_artifacts/flask-marshmallow_1601276004467/work
+Flask-Migrate==3.1.0
+Flask-RESTful==0.3.9
+Flask-SQLAlchemy @ file:///home/conda/feedstock_root/build_artifacts/flask-sqlalchemy_1616102249273/work
+Flask-WTF==1.0.0
+greenlet @ file:///Users/runner/miniforge3/conda-bld/greenlet_1635836883203/work
+importlib-metadata==4.10.0
+importlib-resources==5.4.0
+itsdangerous @ file:///home/conda/feedstock_root/build_artifacts/itsdangerous_1621360792037/work
+Jinja2 @ file:///home/conda/feedstock_root/build_artifacts/jinja2_1636510082894/work
+Mako==1.1.6
+MarkupSafe @ file:///Users/runner/miniforge3/conda-bld/markupsafe_1635833661769/work
+marshmallow @ file:///home/conda/feedstock_root/build_artifacts/marshmallow_1636990308357/work
+marshmallow-sqlalchemy @ file:///home/conda/feedstock_root/build_artifacts/marshmallow-sqlalchemy_1623007433413/work
+psycopg2 @ file:///Users/runner/miniforge3/conda-bld/psycopg2-split_1637654410541/work
+python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1626286286081/work
+python-libnmap==0.7.2
+python-nmap==0.7.1
+pytz @ file:///home/conda/feedstock_root/build_artifacts/pytz_1633452062248/work
+pytz-deprecation-shim @ file:///Users/runner/miniforge3/conda-bld/pytz-deprecation-shim_1637074844706/work
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
+SQLAlchemy @ file:///Users/runner/miniforge3/conda-bld/sqlalchemy_1639086367062/work
+tinydb @ file:///home/conda/feedstock_root/build_artifacts/tinydb_1632439909405/work
+tzdata @ file:///home/conda/feedstock_root/build_artifacts/python-tzdata_1635187324762/work
+tzlocal @ file:///Users/runner/miniforge3/conda-bld/tzlocal_1637088253288/work
+Werkzeug @ file:///home/conda/feedstock_root/build_artifacts/werkzeug_1621518206714/work
+WTForms==3.0.0
+zipp==3.6.0

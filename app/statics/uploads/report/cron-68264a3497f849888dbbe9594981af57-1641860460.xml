@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///opt/homebrew/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.92 scan initiated Mon Jan 10 16:21:00 2022 as: /opt/homebrew/bin/nmap -oX - -vvv -&#45;stats-every 1s -sV -Pn -&#45;script=upload/omron-info.nse,upload/pcworx-info.nse,upload/s7-info.nse,upload/enip-info.nse,vulscan/vulscan.nse -&#45;script-args vulscandb=cve -p 80,44818,3306,22, -oX /Users/chenchunyu/Documents/workspace/sb-admin-2-python-master/app/statics/uploads/report/cron-68264a3497f849888dbbe9594981af57-1641860460.xml 82.102.188.9/24 -->
+<nmaprun scanner="nmap" args="/opt/homebrew/bin/nmap -oX - -vvv -&#45;stats-every 1s -sV -Pn -&#45;script=upload/omron-info.nse,upload/pcworx-info.nse,upload/s7-info.nse,upload/enip-info.nse,vulscan/vulscan.nse -&#45;script-args vulscandb=cve -p 80,44818,3306,22, -oX /Users/chenchunyu/Documents/workspace/sb-admin-2-python-master/app/statics/uploads/report/cron-68264a3497f849888dbbe9594981af57-1641860460.xml 82.102.188.9/24" start="1641860460" startstr="Mon Jan 10 16:21:00 2022" version="7.92" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="4" services="22,80,3306,44818"/>
+<verbose level="3"/>
+<debugging level="0"/>
+<runstats><finished time="1641860460" timestr="Mon Jan 10 16:21:00 2022" summary="Nmap done at Mon Jan 10 16:21:00 2022; 0 IP addresses (0 hosts up) scanned in 0.13 seconds" elapsed="0.13" exit="error" errormsg="NSE: failed to initialize the script engine:&#xa;/opt/homebrew/bin/../share/nmap/nse_main.lua:849: duplicate script ID: &apos;enip-info&apos;&#xa;stack traceback:&#xa;&#x9;[C]: in function &apos;assert&apos;&#xa;&#x9;/opt/homebrew/bin/../share/nmap/nse_main.lua:849: in local &apos;get_chosen_scripts&apos;&#xa;&#x9;/opt/homebrew/bin/../share/nmap/nse_main.lua:1322: in main chunk&#xa;&#x9;[C]: in ?&#xa;"/><hosts up="0" down="0" total="0"/>
+</runstats>
+</nmaprun>

@@ -1,0 +1,612 @@
+
+
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% from "macros/flot/piechart.html" import flot_pie_chart %}
+{% block content %}
+
+<style>
+
+.no-gutter > [class*='col-'] {
+    padding-right: 5px;
+    padding-left: 5px;
+
+}
+.sb-chart{
+    max-height: 280px !important;
+    height: 180px !important;
+}
+
+</style>
+
+<div id="page-wrapper" style="padding-left: 10px;">
+    <div class="container-fluid" >
+        <div class="row">
+          
+            <div class="col-lg-12">
+                <h1 class="page-header">{{header}}</h1>
+            </div>            
+        </div> 
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        点击报告日期切换
+                    </div>
+                    <div class="panel-body" style="overflow:scroll; height:768px;  margin: 0 auto;">
+                        <!-- <ul> -->
+                            <ul class="list-unstyled">
+                                {% for item in tasks%}
+                                    <li class="text-muted"><a onclick="get_report('{{item.id}}')">{{item.exe_time}} ({{item.host_up}})</a></li>
+                                {%endfor%}
+                            </ul>                          
+                        <!-- </ul> -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                    <!-- /.panel -->
+            </div>
+            <div class="col-sm-10">
+                <div id = 'dashboard-top'>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bell fa-fw"></i>扫描任务信息
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="list-group" id = 'scan-info-list'>
+                                    
+                                  
+                                </div>
+                                <!-- /.list-group -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bar-chart-o fa-fw"></i> 网内终端数量
+                            </div>
+                            <div class="panel-body">
+                                <div id="morris-host-donut-chart"></div>
+                                <a href="#hosts-tables" class="btn btn-default btn-block">View Details</a>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        
+                    </div>
+                    <!-- /.col-lg-4 -->
+                    <div class="col-lg-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bar-chart-o fa-fw"></i> 终端数量监测
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                            Actions
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li><a href="#">Refresh</a>
+                                            </li>
+                                          
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <h4 class="text-center">网内终端数量变化</h4>
+                                <div id="device-count-bar-chart"></div>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bar-chart-o fa-fw"></i> 网内发现服务数量
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                            Actions
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li><a href="#"> Refresh</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover table-striped" style="overflow:scroll; max-height:250px;  margin: 0 auto;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                       
+                                                        <th>Service</th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="service-chart-table">
+                                                    
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.col-lg-4 (nested) -->
+                                    <div class="col-lg-8">
+                                        <h4 class="text-center">Top Service</h4>
+                                        <div id="morris-service-bar-chart"></div>
+                                    </div>
+                                    <!-- /.col-lg-8 (nested) -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-4 -->                   
+                </div>
+          
+                <div class="dataTable_wrapper">
+                   
+                    <div  class="panel-heading">
+                        <hr />
+                        <h2 class="text-center">在线终端资产列表</h2>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" id="hosts-tables">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>State</th>
+                                <th>Hostname</th>
+                                <th>IPV4</th>
+                                <th>MAC</th>
+                                <th>端口数</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="dataTable_wrapper">
+                   
+                    <div  class="panel-heading">
+                        <hr />
+                        <h2 class="text-center">终端指纹及开放服务信息</h2>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" id="hosts-service-tables">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>地址</th>
+                                <th>端口</th>
+                                <th>状态</th>
+
+                                <th>服务</th>
+                                <th>厂商</th>
+                                
+                                <th>组件</th>
+                                <th>序列号</th>
+                                <th>设备类型</th>
+                                <th>Product Code</th>
+                                <th>版本</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+
+        </div>
+
+        
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+
+
+
+{% endblock %}
+
+
+{% block pagescript %}
+<!-- DataTables JavaScript -->
+    <!-- <script type="text/javascript"
+        src="../bower_components/jquery/dist/jquery.js"></script> -->
+    <script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+    <script src="/bower_components/raphael/raphael-min.js"></script>
+    <script src="/bower_components/morrisjs/morris.min.js"></script>
+    
+
+
+<script>    
+    var table = null
+    var service_table = null
+   
+    $(document).ready(function () {
+        service_table = $('#hosts-service-tables').DataTable({
+                    // data: hosts,
+                    responsive: true,
+                    language: cn_language,
+                    columns:[
+                        {
+                            className: 'details-control btn-xs',
+                            orderable: false,
+                            data: null,
+                            defaultContent: "<button type='button' class='btn btn-info btn-xs'><i class='fa fa-plus'></i></button>"
+                        },
+                        { data: "address"  },
+                        { data: "port"     },
+                        { data: "state"    },
+                      
+                        { 
+                            data: "service" ,
+                            
+                        },
+                        { 
+                            data: "service-banner" ,
+                            render: function(data, type, row) {
+                                if (row.hasOwnProperty('Vendor')) {
+                                    return row.Vendor
+                                }else{
+                                    return data
+                                }
+                            }
+                        },
+                        {
+                            data: "port",
+                            render: function(data, type, row){
+                                if (row.hasOwnProperty('Product Name')) {
+                                    return row["Product Name"]
+                                }else{
+                                    return ''
+                                }
+                              
+                                return str
+                            }
+                        },
+                        { 
+                            data: "type", 
+                            render: function(data, type, row) {
+                                if (row.hasOwnProperty('Serial Number')) {
+                                    return row["Serial Number"]
+                                }else{
+                                    return ''
+                                }
+                            }
+                            
+                        },
+                        { 
+                            data: "type", 
+                            render: function(data, type, row) {
+                                if (row.hasOwnProperty('Device Type')) {
+                                    return row["Device Type"]
+                                }else{
+                                    return ''
+                                }
+                            }
+                        },
+                        { 
+                            data: "type", 
+                            render: function(data, type, row) {
+                                if (row.hasOwnProperty('Product Code')) {
+                                    return row["Product Code"]
+                                }else{
+                                    return ''
+                                }
+                            }
+                            
+                        },
+                        { 
+                            data: "type", 
+                            render: function(data, type, row) {
+                                if (row.hasOwnProperty('Revision')) {
+                                    return row["Revision"]
+                                }else{
+                                    return ''
+                                }
+                            }
+                            
+                        }
+
+                        
+                    ]
+                })
+
+        table = $('#hosts-tables').DataTable({
+                    // data: hosts,
+                    responsive: true,
+                    language: cn_language,
+                    columns:[
+                        {
+                            className: 'details-control btn-xs',
+                            orderable: false,
+                            data: null,
+                            defaultContent: "<button type='button' class='btn btn-info btn-xs'><i class='fa fa-plus'></i></button>"
+                        },
+                        { data: "status" ,
+                            render: function(data, type, row) {
+                                "<button type='button' class='btn btn-info btn-xs'><i class='fa fa-plus'></i></button>"
+                                if (data == 'up'){
+                                    return "<button type='button' class='btn btn-success btn-xs'>up</button>"
+                                }else {
+                                    return "<button type='button' class='btn btn-warning btn-xs'> " +data+ "</button>"
+                                }
+                            }
+                        },
+                        { data: "hostnames" },
+                        { data: "ipv4" },
+                        { data: "mac" },
+                        { data: "ports" }
+                    ]
+                })
+        $('#hosts-tables tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                //如果该行已经打开，则关闭
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                //关闭这已行
+                row.child(format(row.data())).show();
+                tr.addClass('shown');
+            }
+        });
+        $('#hosts-service-tables tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = service_table.row(tr);
+
+            if (row.child.isShown()) {
+                //如果该行已经打开，则关闭
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                //关闭这已行
+                row.child(format_service(row.data())).show();
+                tr.addClass('shown');
+            }
+        });
+        // get_report(1)
+        init_device_count_bar_chart()
+
+    })
+    function get_report(id,stdout){
+        $.ajax({
+            url:'/task/reportdetails?id='  + id,
+            type: 'GET',
+            success: function(result){
+                $('#dashboard-top').html(result.data)
+                $('#dashboard-scaninfo').html(result.scaninfo)
+                hosts = result.hosts
+                init_online_host_table(hosts)
+                // console.log(result.scaninfo)
+                // console.log(result.service)
+                // console.log(JSON.parse(result.service))
+                $('#scan-info-list').html(result.scaninfo)
+                init_service_table(result.service)
+                init_service_bar_chart(result.most_ports)   
+                init_service_cloud(result.ports)
+            },
+            error: function(err){
+                console.log(err)
+                alert('服务器错误，请重试')
+            }
+        })
+    }
+    function init_online_host_table(data) {
+
+        data = JSON.parse(data)
+        resource = data.online_host_list
+        // console.log(resource)
+        table.clear()
+        table.rows.add(resource).draw( false );
+    }
+
+    function init_service_table(data){
+        data = JSON.parse(data)
+    
+        service_table.clear()
+        service_table.rows.add(data).draw( false );
+    }
+
+    function init_service_cloud(data) {
+        // console.log(data)
+        // service-chart-table
+        
+        var service_cloud_str = ''
+
+ 
+
+        for (const [key, value] of Object.entries(data)) {
+            service_cloud_str += `<tr> <td>${value}</td><td>${key}</td></tr>`
+            // console.log(`${key}: ${value}`);
+        }
+        // console.log(service_cloud_str)
+        
+        $('#service-chart-table').html(service_cloud_str)
+
+        // services-cloud
+    }
+
+
+
+    function init_device_count_bar_chart() {
+        var service_count_mir_list = []
+        
+        var host_count_mir_list = [
+            {
+                label: 'up',
+                value: '{{tasks.host_up}}'
+            },
+            {
+                label: 'down',
+                value: '{{tasks.host_total}}'
+            }
+        ]
+        {% for item in tasks%}
+            service_count_mir_list.push({
+                exec_time: '{{item.exe_time}}',
+                host_up : '{{item.host_up}}',
+                host_total : '{{item.host_total}}',
+            })
+            host_count_mir_list[0] = {
+                label: 'Host Up',
+                value: '{{item.host_up}}',
+            }
+            host_count_mir_list[1] = {
+                label: 'Host Down',
+                value: '{{item.host_total - item.host_up}}',
+            }
+        {% endfor %}
+        // console.log(host_count_mir_list)
+
+        $('#morris-host-donut-chart').empty('') 
+        $('#morris-host-donut-chart').text('')
+
+        $('#device-count-bar-chart').empty('')
+        $('#device-count-bar-chart').text('')
+
+        Morris.Donut({
+            element: 'morris-host-donut-chart',
+            data: host_count_mir_list,
+            resize: true
+        });
+        console.log(service_count_mir_list)
+        // bar_chart.setData(service_count_mir_list)
+
+
+        Morris.Bar({
+            element: 'device-count-bar-chart',
+            data: service_count_mir_list,
+            xkey: 'exec_time',
+            ykeys: ['host_up', 'host_total'],
+            labels: ['在线终端数量','全部终端数量'],
+            hideHover: 'auto',
+            barRatio: 0.4,
+            resize: true
+        });
+    
+        
+       
+    }
+
+    function init_service_bar_chart(data){
+        console.log(data)
+
+        // morris-service-bar-chart
+        service_data = []
+
+        data.forEach(element => {
+            service_data.push({ 
+                service: element[0],
+                count: element[1],
+            })
+
+        })
+        // service_data = [{port: 80, count:1},{port: 4396, count:1},{port: 8080, count:1},{port: 55, count:1}]
+
+        $('#morris-service-bar-chart').empty()
+
+        Morris.Bar({
+            element: 'morris-service-bar-chart',
+            data: service_data,
+            xkey: 'service',
+            ykeys: ['count'],
+            labels: ['服务数量'],
+            hideHover: 'auto',
+            barRatio: 0.4,
+            resize: true
+        });
+    
+
+    }
+
+    function format(d) {
+        console.log(d)
+        os = d.os
+        os_str = ''
+        d.os.forEach(element => {
+            os_str += `
+            <div class="col-lg-4">
+                <p>Name: ${element.name}</p>
+                <p>Accuracy: ${d.accuracy}</p>
+            </div>
+            <div class="col-lg-4">
+                <p>Description: ${element.cpe.description}</p>
+                <p>CPE list: ${element.cpe.cpelist}</p>
+            </div>
+            `
+        });
+
+        return `<div class = "row" style="margin-left:50px">
+            <div class="col-lg-4 ">
+                <p>Starttime: ${d.starttime}</p>
+            </div>
+            <div class="col-lg-4">
+                <p>Endtime: ${d.endtime}</p>
+            </div>
+            <div class="col-lg-4">
+                <p> &nbsp; </p>
+            </div>
+            <div class="col-lg-4">
+                <p>IPV4: ${d.ipv4}</p>
+            </div>
+            <div class="col-lg-4 ">
+                <p>IPV6: ${d.ipv6}</p>
+            </div>
+            <div class="col-lg-4 ">
+                <p>MAC: ${d.mac}</p>
+            </div>
+    
+            <div class="col-lg-12">
+                <p>OS Fingerprint: </p>
+            </div>
+
+            ${os_str}
+        </div>`
+    }
+
+    function format_service(d) {
+        str = '<div class = "row" style="margin-left:50px">'
+        console.log(typeof(d))
+        console.log(d)
+   
+        for( var i in d){
+            str +=
+                `<div class="col-lg-4 ">
+                    <p>${i}: ${d[i]}</p>
+                </div>`
+
+        }
+        str += '</div>'
+
+        return str
+    }
+        
+    </script>
+{% endblock %}

@@ -1,0 +1,376 @@
+
+
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% from "macros/flot/piechart.html" import flot_pie_chart %}
+{% block content %}
+
+<style>
+
+.no-gutter > [class*='col-'] {
+    padding-right: 5px;
+    padding-left: 5px;
+
+}
+.sb-chart{
+    max-height: 280px !important;
+    height: 180px !important;
+}
+
+</style>
+
+<div id="page-wrapper" style="padding-left: 10px;">
+    <div class="container-fluid" >
+        <div class="row">
+          
+            <div class="col-lg-12">
+                <h1 class="page-header">{{header}}</h1>
+            </div>            
+        </div> 
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        点击报告日期切换
+                    </div>
+                    <div class="panel-body" style="overflow:scroll; height:768px;  margin: 0 auto;">
+                        <!-- <ul> -->
+                            <ul class="list-unstyled">
+                                {% for item in tasks%}
+                                <li class="text-muted"><a onclick="get_report('{{item.id}}','{{item.stdout}}')">{{item.exe_time.strftime('%m/%d/%Y, %H:%M')}}</a></li>
+                            {%endfor%}
+                            </ul>
+
+                            
+                        <!-- </ul> -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                    <!-- /.panel -->
+            </div>
+            <div class="col-sm-10">
+
+                <div id = 'dashboard-top'>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bell fa-fw"></i>扫描任务信息
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item">
+                                        <i class="fa fa-comment fa-fw"></i> 执行时间:
+                                        <!-- <span class="pull-right text-muted small"><em>4 minutes ago</em> -->
+                                        </span>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <i class="fa fa-comment fa-fw"></i> 任务类型:
+                                        <!-- <span class="pull-right text-muted small"><em>4 minutes ago</em> -->
+                                        </span>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <i class="fa fa-comment fa-fw"></i> 扫描用时:
+                                        <!-- <span class="pull-right text-muted small"><em>4 minutes ago</em> -->
+                                        </span>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <i class="fa fa-comment fa-fw"></i> 执行时间:
+                                        <!-- <span class="pull-right text-muted small"><em>4 minutes ago</em> -->
+                                        </span>
+                                    </a>
+                                  
+                                </div>
+
+
+                        <!-- <div class="well flot-chart" id = 'dashboard-scaninfo'>
+                            <h4>扫描任务信息</h4>
+                            <p><Strong>执行时间:</Strong>&nbsp; &nbsp;</p>
+                            <p><Strong>任务类型:</Strong>&nbsp;&nbsp; </p>
+                            <p><Strong>扫描用时:</Strong>&nbsp;&nbsp; (seconds)</p>
+                        </div> -->
+                                <!-- /.list-group -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        
+                    </div>
+                    <!-- /.col-lg-4 -->
+                    <div class="col-lg-8">
+                        <div class="well well-lg">
+                            <h4 class="text-center">Top 10 Service</h4>
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="service-flot-bar-chart"></div>
+                            </div>
+                            <div id = 'services-cloud'>
+                                <!-- <button type="button" class="btn btn-link">Link</button>
+                                <button type="button" class="btn btn-link">Link</button>
+                                <button type="button" class="btn btn-link">Link</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col-lg-4 -->                   
+                </div>
+          
+                <div class="dataTable_wrapper">
+                   
+                    <div  class="panel-heading">
+                        <hr />
+                        <h2 class="text-center">在线终端资产列表</h2>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" id="hosts-tables">
+                        <thead>
+                            <tr>
+                                <th>State</th>
+                                <th>Address</th>
+                                <th>Hostname</th>
+                                <th>服务数</th>
+                                <th>端口数</th>
+                                <th>os</th>
+                                <th>product</th>
+                                <!-- <th>Banner/Title</th> -->
+                                <!-- <th>Port</th>
+                                <th>Service</th>
+                                <th>Protocol</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="dataTable_wrapper">
+                   
+                    <div  class="panel-heading">
+                        <hr />
+                        <h2 class="text-center">终端指纹及开放服务信息</h2>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" id="hosts-service-tables">
+                        <thead>
+                            <tr>
+                                <th>Address</th>
+                                <th>Port</th>
+                                <th>状态</th>
+
+                                <th>Protocol</th>
+                                <th>服务</th>
+                                
+                                <th>CPE</th>
+                                <th>Banner/Title</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+
+        </div>
+
+        
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+
+
+
+{% endblock %}
+
+
+{% block pagescript %}
+<!-- DataTables JavaScript -->
+    <!-- <script type="text/javascript"
+        src="../bower_components/jquery/dist/jquery.js"></script> -->
+    <script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+    
+    <!-- Flot Charts JavaScript -->
+    <script src="/bower_components/flot/excanvas.min.js"></script>
+    <script src="/bower_components/flot/jquery.flot.js"></script>
+    <script src="/bower_components/flot/jquery.flot.pie.js"></script>
+    <script src="/bower_components/flot/jquery.flot.resize.js"></script>
+    <script src="/bower_components/flot/jquery.flot.time.js"></script>
+    <script src="/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    <script src="/bower_components/flot/jquery.flot.categories.js"></script>
+    <!-- <script src="/bower_components/flot/jquery.flot.axislabels.js"></script> -->
+
+    <!-- <script language="javascript" type="text/javascript" src="../../source/jquery.flot.axislabels.js"></script> -->
+    <!-- <script src="/js/flot-data.js"></script> -->
+
+
+<script>    
+    var table = null
+    var service_table = null
+    $(document).ready(function () {
+        service_table = $('#hosts-service-tables').DataTable({
+                    // data: hosts,
+                    responsive: true,
+                    language: cn_language,
+                    columns:[
+                        { data: "address"  },
+                        { data: "port"     },
+                        { data: "state"    },
+                        { data: "protocol" },
+                        { 
+                            data: "service" ,
+                            
+                        },
+                        {
+                            data: "cpe_list",
+                            render: function(data, type, row){
+                                var str = ''
+                                data.forEach(element => {
+                                    str += `<p> ${element}</p>`
+                                })
+                                return str
+                            }
+                        },
+                        { 
+                            data: "banner", 
+                            
+                        }
+                        
+                    ]
+                })
+
+        table = $('#hosts-tables').DataTable({
+                    // data: hosts,
+                    responsive: true,
+                    language: cn_language,
+                    columns:[
+                        { data: "status" },
+                        { data: "hostnames" },
+                        { data: "address" },
+                        { data: "detected_service" },
+                        { data: "total_port" },
+                        { 
+                            data: "os" ,
+                            render: function(data, type, row){
+                                return data.vendor
+                            }
+                        },
+                        { 
+                            data: "os", 
+                            render: function(data, type, row){
+                                return data.product
+                            }
+                        }
+                        
+                    ]
+                })
+                get_report('cron-testss','/Users/chenchunyu/Documents/workspace/sb-admin-2-python-master/app/statics/dist/scanme.xml')
+    })
+    function get_report(id,stdout){
+        $.ajax({
+            url:'/task/reportdetails?stdout=' +stdout +'&id=' + id,
+            type: 'GET',
+            success: function(result){
+                $('#dashboard-top').html(result.data)
+                $('#dashboard-scaninfo').html(result.scaninfo)
+                hosts = result.hosts
+                // console.log(hosts)
+                table.clear()
+                table.rows.add(hosts).draw( false );
+                init_service_table(hosts)
+                init_service_bar_chart(result.most_ports)   
+                init_service_cloud(result.ports)
+            },
+            error: function(err){
+                alert('删除失败')
+            }
+        })
+    }
+
+    function init_service_table(data){
+        var service_data = []
+        console.log(data)
+        data.forEach(element => {
+            var address = element.address
+            element.online_host_info.forEach(ele =>{
+                ele['address'] = element.address
+            })
+            // element.os_fingerprinted.forEach(ele =>{
+
+            // })
+
+            service_data = service_data.concat(element.online_host_info);
+        });
+        // console.log(service_data)
+        service_table.clear()
+        service_table.rows.add(service_data).draw( false );
+    }
+
+    function init_service_cloud(data) {
+        console.log(data)
+        var service_cloud_str = ''
+
+
+        for (const [key, value] of Object.entries(data)) {
+            service_cloud_str += `<button type="button" class="btn btn-link text-muted" >${key}(${value})</button>`
+            // console.log(`${key}: ${value}`);
+        }
+        
+        $('#services-cloud').html(service_cloud_str)
+
+        // services-cloud
+    }
+
+    function init_service_bar_chart(data){
+        var barData = {
+                    label: 'bar',
+                    data: data
+                }
+        var barOptions = {
+            series: {
+                        bars: {
+                            show: true,
+                            barWidth: 0.6,
+                            align: "center"
+                        }
+            },
+            xaxis: {
+                mode: "categories",
+                showTicks: false,
+                gridLines: false
+            },
+            yaxis: {
+                min: 0,
+                mode: 'number'
+            },
+
+            xaxes: [
+                { position: 'bottom', axisLabel: 'X Axis', show: true },
+                // { position: 'bottom', axisLabel: 'Second X Axis', show: true, showTickLabels: 'none', showMinorTicks: true, gridLines: false, min: 0, max: 2},
+                
+            ],
+            yaxes: [
+                { position: 'left', axisLabel: 'Y Axis', show: true },
+                
+            ],
+
+            grid: {
+                hoverable: true
+            },
+            legend: {
+                show: false
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: "服务: %x, 数量: %y"
+            }
+        };
+        $.plot($("#service-flot-bar-chart"), [barData], barOptions);
+    
+
+    }
+        
+    </script>
+{% endblock %}

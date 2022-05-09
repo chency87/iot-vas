@@ -1,0 +1,158 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">{{header}}</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+
+            <div class="dataTable_wrapper">
+                <table class="table table-striped table-bordered table-hover" id="log-tables">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>IP</th>
+                            <th>USER</th>
+                            <th>User-Agents</th>
+                            <th>ACTION</th>
+                            <th>RESULT</th>
+                            <th>DATE</th>
+                            <th>DETAILS</th>
+                            <!-- <th>Description</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">日志详情</h4>
+                        </div>
+                        <div class="modal-body" >
+                            <div class="well">
+                                
+                                <p  id = 'log-details-modal'></p>
+                            </div>
+
+                          
+
+                           
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+            
+
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}
+
+
+{% block pagescript %}
+
+<!-- DataTables JavaScript -->
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/DataTables-1.11.3/js/jquery.dataTables.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Buttons-2.1.1/js/dataTables.buttons.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/DateTime-1.1.1/js/dataTables.dateTime.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Select-1.3.4/js/dataTables.select.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Buttons-2.1.1/js/buttons.print.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/DataTables-1.11.3/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Buttons-2.1.1/js/buttons.bootstrap.js"></script>
+
+<script>
+    var log_table = null
+    $(document).ready(function () {
+        log_table = $('#log-tables').DataTable({
+                    // data: hosts,
+                    responsive: true,
+                    language: cn_language,
+                    processing: true,
+                    serverSide: true,
+                    searching: false,
+                    order: [[1, 'asc']],
+                    
+                    ajax: {
+                        url: '/settings/logdetails',
+                        type: 'GET',
+                        dataSrc: 'data',
+                        dataFilter: function (data) {
+                            return data
+                        }
+                    },
+                    columns:[
+                        { data: "id" ,visible: false, searchable: false },
+                        { data: "opt_ip"  },
+                        { data: "opt_user",  },
+                        { data: "opt_browser" },
+                        { data: "opt_event" },
+                        { data: "opt_result" },
+                        { data: "opt_time" },
+                        { 
+                            data: "opt_detail" ,                             
+                            render: function(data, type, row){
+                                
+                                
+                                var str = `<button type="button" class="btn btn-primary btn-sm" onclick= "show_log_details('${row.id}')">详情</button>`
+                                return str
+                            }
+                        }   
+                    ]
+
+                })
+
+    })
+
+
+    function show_log_details(data){
+            // console.log(data)
+            // $('#log-details-modal').text(data)
+            // console.log(log_table.rows(data).data())
+            var logs = log_table.rows().data();
+
+            for (var i = 0; i < logs.length; i++) {
+                if(logs[i]["id"] == data){
+                    $('#log-details-modal').text(JSON.stringify(logs[i]))
+                }
+            }
+
+            // $('#log-details-modal').text(  log_table.row(data)+        JSON.stringify(log_table.rows(data).data()[0]))
+
+            $('#myModal').modal('toggle')
+
+        }
+
+
+</script>
+
+{% endblock %}

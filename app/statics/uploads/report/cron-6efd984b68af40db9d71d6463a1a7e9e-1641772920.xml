@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///opt/homebrew/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.92 scan initiated Sun Jan  9 16:02:00 2022 as: /opt/homebrew/bin/nmap -oX - -vvv -&#45;stats-every 1s -sV -Pn -&#45;script=melsecq-discover-udp.nse,cr3-fingerprint.nse,enip-info.nse,vulscan/vulscan.nse -&#45;script-args vulscandb=cve -p 80,44818,3306,22, -oX /Users/chenchunyu/Documents/workspace/sb-admin-2-python-master/app/statics/uploads/report/cron-6efd984b68af40db9d71d6463a1a7e9e-1641772920.xml scanme.nmap.org -->
+<nmaprun scanner="nmap" args="/opt/homebrew/bin/nmap -oX - -vvv -&#45;stats-every 1s -sV -Pn -&#45;script=melsecq-discover-udp.nse,cr3-fingerprint.nse,enip-info.nse,vulscan/vulscan.nse -&#45;script-args vulscandb=cve -p 80,44818,3306,22, -oX /Users/chenchunyu/Documents/workspace/sb-admin-2-python-master/app/statics/uploads/report/cron-6efd984b68af40db9d71d6463a1a7e9e-1641772920.xml scanme.nmap.org" start="1641772920" startstr="Sun Jan  9 16:02:00 2022" version="7.92" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="4" services="22,80,3306,44818"/>
+<verbose level="3"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1641772920"/>
+<taskend task="NSE" time="1641772920"/>
+<taskbegin task="NSE" time="1641772920"/>
+<taskend task="NSE" time="1641772920"/>
+<taskbegin task="Parallel DNS resolution of 1 host." time="1641772920"/>
+<taskend task="Parallel DNS resolution of 1 host." time="1641772920"/>
+<taskbegin task="Connect Scan" time="1641772920"/>
+<taskend task="Connect Scan" time="1641772920" extrainfo="4 total ports"/>
+<taskbegin task="Service scan" time="1641772920"/>
+<taskprogress task="Service scan" time="1641772926" percent="50.00" remaining="6" etc="1641772932"/>
+<taskprogress task="Service scan" time="1641772932" percent="50.00" remaining="12" etc="1641772944"/>
+<taskprogress task="Service scan" time="1641772937" percent="50.00" remaining="18" etc="1641772954"/>
+<taskprogress task="Service scan" time="1641772942" percent="50.00" remaining="22" etc="1641772964"/>
+<taskprogress task="Service scan" time="1641772947" percent="50.00" remaining="28" etc="1641772974"/>
+<taskprogress task="Service scan" time="1641772952" percent="50.00" remaining="32" etc="1641772984"/>
+<taskprogress task="Service scan" time="1641772958" percent="50.00" remaining="38" etc="1641772996"/>
+<taskprogress task="Service scan" time="1641772963" percent="50.00" remaining="44" etc="1641773006"/>
+<taskprogress task="Service scan" time="1641772968" percent="50.00" remaining="48" etc="1641773016"/>
+<taskprogress task="Service scan" time="1641772973" percent="50.00" remaining="54" etc="1641773026"/>
+<taskprogress task="Service scan" time="1641772980" percent="50.00" remaining="60" etc="1641773040"/>
+<taskprogress task="Service scan" time="1641772985" percent="50.00" remaining="66" etc="1641773050"/>
+<taskprogress task="Service scan" time="1641772990" percent="50.00" remaining="70" etc="1641773060"/>
+<taskprogress task="Service scan" time="1641772995" percent="50.00" remaining="76" etc="1641773070"/>
+<taskprogress task="Service scan" time="1641773000" percent="50.00" remaining="80" etc="1641773080"/>
+<taskprogress task="Service scan" time="1641773005" percent="50.00" remaining="86" etc="1641773090"/>
+<taskprogress task="Service scan" time="1641773010" percent="50.00" remaining="90" etc="1641773100"/>
+<taskprogress task="Service scan" time="1641773015" percent="50.00" remaining="96" etc="1641773110"/>
+<taskprogress task="Service scan" time="1641773020" percent="50.00" remaining="100" etc="1641773120"/>
+<taskprogress task="Service scan" time="1641773028" percent="50.00" remaining="108" etc="1641773136"/>
+<taskprogress task="Service scan" time="1641773033" percent="50.00" remaining="114" etc="1641773146"/>
+<taskprogress task="Service scan" time="1641773038" percent="50.00" remaining="118" etc="1641773156"/>
+<taskprogress task="Service scan" time="1641773043" percent="50.00" remaining="124" etc="1641773166"/>
+<taskprogress task="Service scan" time="1641773048" percent="50.00" remaining="128" etc="1641773176"/>
+<taskprogress task="Service scan" time="1641773053" percent="50.00" remaining="134" etc="1641773186"/>
+<taskprogress task="Service scan" time="1641773058" percent="50.00" remaining="138" etc="1641773196"/>
+<taskprogress task="Service scan" time="1641773063" percent="50.00" remaining="144" etc="1641773206"/>
+<taskprogress task="Service scan" time="1641773068" percent="50.00" remaining="148" etc="1641773216"/>
+<taskprogress task="Service scan" time="1641773073" percent="50.00" remaining="154" etc="1641773226"/>
+<taskprogress task="Service scan" time="1641773078" percent="100.00" remaining="0" etc="1641773078"/>
+<taskend task="Service scan" time="1641773078" extrainfo="2 services on 1 host"/>
+<taskbegin task="NSE" time="1641773078"/>
+<taskprogress task="NSE" time="1641773079" percent="93.48" remaining="1" etc="1641773079"/>
+<taskprogress task="NSE" time="1641773080" percent="93.48" remaining="1" etc="1641773080"/>
+<taskprogress task="NSE" time="1641773081" percent="93.48" remaining="1" etc="1641773081"/>
+<taskprogress task="NSE" time="1641773082" percent="93.48" remaining="1" etc="1641773082"/>
+<taskprogress task="NSE" time="1641773083" percent="93.48" remaining="1" etc="1641773083"/>
+<taskprogress task="NSE" time="1641773084" percent="93.48" remaining="1" etc="1641773084"/>
+<taskprogress task="NSE" time="1641773085" percent="93.48" remaining="1" etc="1641773085"/>
+<taskprogress task="NSE" time="1641773086" percent="95.65" remaining="1" etc="1641773086"/>
+<taskprogress task="NSE" time="1641773087" percent="96.74" remaining="1" etc="1641773087"/>
+<taskprogress task="NSE" time="1641773088" percent="96.74" remaining="1" etc="1641773088"/>
+<taskprogress task="NSE" time="1641773089" percent="96.74" remaining="1" etc="1641773089"/>
+<taskprogress task="NSE" time="1641773090" percent="96.74" remaining="1" etc="1641773090"/>
+<taskprogress task="NSE" time="1641773091" percent="96.74" remaining="1" etc="1641773091"/>
+<taskprogress task="NSE" time="1641773092" percent="96.74" remaining="1" etc="1641773092"/>
+<taskprogress task="NSE" time="1641773093" percent="96.74" remaining="1" etc="1641773094"/>
+<taskprogress task="NSE" time="1641773094" percent="96.74" remaining="1" etc="1641773095"/>
+<taskprogress task="NSE" time="1641773095" percent="96.74" remaining="1" etc="1641773096"/>
+<taskprogress task="NSE" time="1641773096" percent="96.74" remaining="1" etc="1641773097"/>
+<taskprogress task="NSE" time="1641773097" percent="96.74" remaining="1" etc="1641773098"/>
+<taskprogress task="NSE" time="1641773098" percent="96.74" remaining="1" etc="1641773099"/>
+<taskprogress task="NSE" time="1641773099" percent="96.74" remaining="1" etc="1641773100"/>
+<taskprogress task="NSE" time="1641773100" percent="96.74" remaining="1" etc="1641773101"/>
+<taskprogress task="NSE" time="1641773101" percent="97.83" remaining="1" etc="1641773102"/>
+<taskprogress task="NSE" time="1641773102" percent="97.83" remaining="1" etc="1641773103"/>
+<taskprogress task="NSE" time="1641773103" percent="97.83" remaining="1" etc="1641773104"/>
+<taskprogress task="NSE" time="1641773104" percent="97.83" remaining="1" etc="1641773105"/>
+<taskprogress task="NSE" time="1641773105" percent="97.83" remaining="1" etc="1641773106"/>
+<taskprogress task="NSE" time="1641773106" percent="97.83" remaining="1" etc="1641773107"/>
+<taskprogress task="NSE" time="1641773107" percent="97.83" remaining="1" etc="1641773108"/>
+<taskprogress task="NSE" time="1641773108" percent="97.83" remaining="1" etc="1641773109"/>
+<taskprogress task="NSE" time="1641773109" percent="98.91" remaining="1" etc="1641773109"/>
+<taskprogress task="NSE" time="1641773110" percent="98.91" remaining="1" etc="1641773110"/>
+<taskprogress task="NSE" time="1641773111" percent="98.91" remaining="1" etc="1641773111"/>
+<taskprogress task="NSE" time="1641773112" percent="98.91" remaining="1" etc="1641773112"/>
+<taskprogress task="NSE" time="1641773113" percent="98.91" remaining="1" etc="1641773113"/>
+<taskprogress task="NSE" time="1641773114" percent="98.91" remaining="1" etc="1641773114"/>
+<taskprogress task="NSE" time="1641773115" percent="98.91" remaining="1" etc="1641773115"/>
+<taskprogress task="NSE" time="1641773116" percent="98.91" remaining="1" etc="1641773116"/>
+<taskend task="NSE" time="1641773117"/>
+<taskbegin task="NSE" time="1641773117"/>
+<taskprogress task="NSE" time="1641773117" percent="50.00" remaining="0" etc="1641773117"/>
+<taskprogress task="NSE" time="1641773118" percent="75.00" remaining="1" etc="1641773118"/>
+<taskprogress task="NSE" time="1641773119" percent="75.00" remaining="1" etc="1641773120"/>
+<taskprogress task="NSE" time="1641773120" percent="75.00" remaining="2" etc="1641773121"/>
+<taskprogress task="NSE" time="1641773121" percent="75.00" remaining="2" etc="1641773122"/>
+<taskprogress task="NSE" time="1641773122" percent="75.00" remaining="2" etc="1641773124"/>
+<taskprogress task="NSE" time="1641773123" percent="75.00" remaining="2" etc="1641773125"/>
+<taskprogress task="NSE" time="1641773124" percent="75.00" remaining="3" etc="1641773126"/>
+<taskend task="NSE" time="1641773125"/>
+<host starttime="1641772920" endtime="1641773125"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="45.33.32.156" addrtype="ipv4"/>
+<hostnames>
+<hostname name="scanme.nmap.org" type="user"/>
+<hostname name="scanme.nmap.org" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ssh" product="OpenSSH" version="6.6.1p1 Ubuntu 2ubuntu2.13" extrainfo="Ubuntu Linux; protocol 2.0" ostype="Linux" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:6.6.1p1</cpe><cpe>cpe:/o:linux:linux_kernel</cpe></service><script id="vulscan" output=""/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3306"><state state="closed" reason="conn-refused" reason_ttl="0"/><service name="mysql" method="table" conf="3"/></port>
+<port protocol="tcp" portid="44818"><state state="closed" reason="conn-refused" reason_ttl="0"/><service name="EtherNetIP-2" method="table" conf="3"/></port>
+</ports>
+<times srtt="28136" rttvar="11925" to="100000"/>
+</host>
+<taskbegin task="NSE" time="1641773125"/>
+<taskend task="NSE" time="1641773125"/>
+<taskbegin task="NSE" time="1641773125"/>
+<taskend task="NSE" time="1641773125"/>
+<runstats><finished time="1641773125" timestr="Sun Jan  9 16:05:25 2022" summary="Nmap done at Sun Jan  9 16:05:25 2022; 1 IP address (1 host up) scanned in 204.59 seconds" elapsed="204.59" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

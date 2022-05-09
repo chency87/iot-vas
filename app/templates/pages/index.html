@@ -1,0 +1,50 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">{{title}}</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12 container">
+            <div class="jumbotron">
+                <h2>欢迎使用电力物联网感知终端指纹探测组件</h2>      
+                <p>针对电力物联网内的感知终端设备进行快速探测、精准识别、深度关联和直观展现，能够为威胁感知、快速预警和综合防御提供重要的支撑。</p>
+              </div>
+        </div>
+       
+        
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-8">
+            
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-4">
+           
+        <!-- /.col-lg-4 -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}
+
+{% block pagescript %}
+
+    <!-- Timeline CSS -->
+    <link href="/dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Morris Charts JavaScript -->
+    <script src="/bower_components/raphael/raphael-min.js"></script>
+    <script src="/bower_components/morrisjs/morris.min.js"></script>
+    <script src="/js/morris-data.js"></script>
+{% endblock %}

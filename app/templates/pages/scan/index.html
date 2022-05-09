@@ -1,0 +1,357 @@
+
+{% extends "base.html" %}
+
+<link rel="stylesheet" type="text/css"
+    href="../bower_components/datatables-bootstrap3/DataTables-1.11.3/css/dataTables.bootstrap.css" />
+<link rel="stylesheet" type="text/css"
+    href="../bower_components/datatables-bootstrap3/Buttons-2.1.1/css/buttons.bootstrap.css" />
+<link rel="stylesheet" type="text/css"
+    href="../bower_components/datatables-bootstrap3/DateTime-1.1.1/css/dataTables.dateTime.css" />
+<link rel="stylesheet" type="text/css"
+    href="../bower_components/datatables-bootstrap3/Select-1.3.4/css/select.bootstrap.css" />
+
+
+<!-- <link rel="stylesheet" type="text/css" href="../bower_components/datatables-bootstrap3/datatables.css"/> -->
+
+
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">{{header}}</h3>
+
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        <div class="pull-right">
+                            <!-- <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                    Actions
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+
+                                    <li><a href="#"><i class="fa fa-refresh fa-fw"></i> Refresh</a></li>
+                                    <li><a href="#">Another action</a>
+                                    </li>
+                                    <li><a href="#">Something else here</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a>
+                                    </li>
+                                </ul>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="tasks-tables2">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>任务ID</th>
+                                        <th>任务名称</th>
+                                        <th>执行命令</th>
+                                        <th>运行周期</th>
+                                        <th>下次运行时间</th>
+                                        <th>运行状态</th>
+                                        <!-- <th>运行结果</th> -->
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="taskinfo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            任务信息
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form" action="#" method="post" class="needs-validation" novalidate>
+                            <input type="text" class="form-control hidden" id="modal_id" name='id'>
+                            <div class="form-group has-success">
+                                <label class="control-label" for="inputSuccess">任务名称</label>
+                                <input type="text" class="form-control" id="modal_taskname" name='taskname' required>
+
+                            </div>
+
+                            <div class="form-group has-success">
+                                <label class="control-label" for="inputSuccess">执行函数或命令</label>
+                                <select class="form-control" id="modal_task_cmd" name="cmd">
+                                    <option value="echo $path" selected>输出PATH</option>
+                                    <option value="1">admin</option>
+                                    <option value="0">sa</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="control-label" for="inputSuccess">计划允许时间</label>
+                                <input type="text" class="form-control" id="modal_task_run_date" name='run_date'
+                                    required>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-sm-offset-8">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary" id="modal_taskinfo_btn_submit">
+                                        提交修改
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}
+
+{% block pagescript %}
+
+
+<!-- DataTables JavaScript -->
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/DataTables-1.11.3/js/jquery.dataTables.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Buttons-2.1.1/js/dataTables.buttons.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/DateTime-1.1.1/js/dataTables.dateTime.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Select-1.3.4/js/dataTables.select.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Buttons-2.1.1/js/buttons.print.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/DataTables-1.11.3/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Buttons-2.1.1/js/buttons.bootstrap.js"></script>
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+
+    var table = null
+    $(document).ready(function () {
+        var selected = [];
+        table = $('#tasks-tables2').DataTable({
+            responsive: true,
+            language: cn_language,
+            // select: true,
+            // lengthChange: false,
+            ajax: {
+                url: '/task/details',
+                type: 'GET',
+                dataSrc: 'data',
+                dataFilter: function (data) {
+                    // console.log( JSON.parse(data).data)
+                    // return JSON.parse(data).data
+                    console.log(data)
+                    return data
+                }
+            },
+            rowId: 'id',
+            columns: [
+                {
+                    className: 'details-control btn-xs',
+                    orderable: false,
+                    data: null,
+                    defaultContent: "<button type='button' class='btn btn-success btn-xs'><i class='fa fa-plus'></i></button>"
+                },
+                { data: "id", visible: false, searchable: false },
+                { data: "task_name" },
+                { data: "cmd" },
+                { data: "cron" },
+                { data: 'next_run_time' },
+                {
+                    data: 'status',
+                    orderable: false,
+                    render: function (data, type, row) {
+
+                        if (data == 'Running') {
+                            // return ' <code>' + data+ '</code>'
+                            return "<button type='button' class='btn btn-success btn-xs' onclick = pause_job('"+escape(row.id)+"')><i class='fa fa-pause'> &nbsp;" + data + "</button>"
+                        } else if (data == 'Pause') {
+                            return "<button type='button' class='btn btn-warning btn-xs' onclick = resume_job('" + escape(row.id) + "')><i class='fa fa-play'> &nbsp;" + data + "</button>"
+                        }
+                    }
+                },
+                {
+                    data: "id",
+                    orderable: false,
+                    render: function (data, type, row) {
+                        // alert(row.status)
+                        id = escape(row.id)
+                        var opt = `<div class="btn-group">
+                                <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown">
+                                    Actions
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li><a href="/task/report?task_id=${row.id}"><i class="fa fa-info fa-fw"></i> 查看结果</a>
+                                    </li>
+                                    <li class="divider"></li>
+
+                                    <li><a href="#"  onclick = refresh()><i class="fa fa-refresh fa-fw"></i> Refresh</a></li>
+                                    
+                                    <li><a href="#"><i class="fa fa-edit fa-fw"></i> 编辑</a>
+                                    </li>
+                                    <li><a href="#" onclick = remove_job('${id}')><i class="fa fa-trash-o fa-fw"></i>删除</a>
+                                    </li>
+                                    </li>
+                                </ul>
+                            </div>`
+                        return opt
+
+                    }
+                }
+            ],
+        })
+        //给每一行添加展开或收起的监听
+        $('#tasks-tables2 tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                //如果该行已经打开，则关闭
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                //关闭这已行
+                row.child(format(row.data())).show();
+                tr.addClass('shown');
+            }
+        });
+
+    });
+    function pause_job(id) {
+        // alert(unescape(id))
+        id = unescape(id)
+        $.ajax({
+            url: '/task/pause',
+            data: JSON.stringify({ id: id }),
+            type: 'POST',
+            success: function (result) {
+                // alert(result.msg)
+                // console.log(result)
+                if (result.status == 200) {
+                    table.ajax.reload();
+                }
+            },
+            error: function (err) {
+                alert('操作失败')
+            }
+        })
+    }
+    function resume_job(id) {
+        id = unescape(id)
+
+        $.ajax({
+            url: '/task/resume',
+            data: JSON.stringify({ id: id }),
+            type: 'POST',
+            success: function (result) {
+                if (result.status == 200) {
+                    table.ajax.reload();
+                }
+            },
+            error: function (err) {
+                alert('操作失败')
+            }
+        })
+    }
+    function remove_job(id) {
+        id = unescape(id)
+        $.ajax({
+            url: '/task/remove',
+            data: JSON.stringify({ id: id }),
+            type: 'DELETE',
+            success: function (result) {
+                if (result.status == 200) {
+                    table.ajax.reload();
+                }
+            },
+            error: function (err) {
+                alert('操作失败')
+            }
+        })
+
+    }
+    function refresh() {
+        table.ajax.reload()
+    }
+
+    /*根据条目数据返回需要显示的详情*/
+    function format(d) {
+
+
+        str = '<div class = "row" style="margin-left:50px">'
+   
+        for( var i in d){
+            str +=
+                `<div class="col-lg-4 ">
+                    <p>${i}: ${d[i]}</p>
+                </div>`
+
+        }
+        str += '</div>'
+
+        return str
+
+
+        // return '<table cellpadding="0" cellspacing="203" border="1" style="padding-left:50px;">' +
+        //     '<tr>' +
+        //     '<td>ID:</td>' +
+        //     '<td>' + d.id + '</td>' +
+        //     '<td>ID:</td>' +
+        //     '<td>' + d.id + '</td>' +
+        //     '</tr>' +
+        //     '<tr>' +
+        //     '<td>任务名称:</td>' +
+        //     '<td>' + d.task_name + '</td>' +
+        //     '</tr>' +
+        //     '<tr>' +
+        //     '<td>执行命令:</td>' +
+        //     '<td>' + d.cmd + '</td>' +
+        //     '</tr>' +
+        //     '</table>';
+    }
+
+
+</script>
+
+{% endblock %}

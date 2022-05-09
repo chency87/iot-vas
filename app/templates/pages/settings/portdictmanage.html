@@ -1,0 +1,423 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">{{header}}</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-6 form-inline">
+                        <div class="form-group">
+                            <label>字典列表:</label>
+                            <select class="form-control" id ="port-dict-select">
+                                {% for item in port_dicts%}
+                                <option value="{{item.id}}">{{item.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="button" class="btn btn-success" onclick="add_port_dict_info()">创建字典</button>
+                            <button type="button" class="btn btn-info" onclick="edit_port_dict_info()">修改字典</button>
+                            <button type="button" class="btn btn-danger" onclick="delete_port_dict_info()">删除字典</button>                    
+                        </div>
+
+                        
+                    </div>
+                    <div class="col-lg-4">
+                        <p>
+                            <button type="button" class="btn btn-info" onclick="add_port_info()">添加端口信息</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dataTable_wrapper">
+                
+                <table class="table table-striped table-bordered table-hover" id="port-dict-tables">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Dict</th>
+                            <th>Name</th>
+                            <th>Port</th>
+                            <th>Protocol</th>
+                            <th>Description</th>
+                            <th style="width: 8%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">创建端口</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" id = 'port-dict-form' action="/settings/ports" method="post">
+                                <div class="form-group hidden">
+                                    <label class="control-label" for="modal_port_name">id</label>
+                                    <input type="text" class="form-control" id="modal_port_name" name = 'id' >
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="modal_port_dict_select">所属字典</label>
+                                    <select class="form-control" id ="modal_port_dict_select">
+                                        {% for item in port_dicts%}
+                                        <option value="{{item.id}}">{{item.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="modal_port_name">端口名称</label>
+                                    <input type="text" class="form-control" id="modal_port_name" name = 'name' placeholder="请输入端口名称">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="modal_port">端口号</label>
+                                    <input type="number" class="form-control" id="modal_port_name" name = 'port' placeholder="请输入端口号">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="modal_protocol_name">协议名称</label>
+                                    <input type="text" class="form-control" id="modal_protocol_name" name = 'protocol' placeholder="请输入协议名称">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="modal_description_name">描述</label>
+                                    <textarea class="form-control"  id="modal_description_name" name = 'description' placeholder="请输入描述"></textarea>
+
+                                </div>
+                                <!-- <button type="submit" class="btn btn-primary">Save changes</button> -->
+                            </form>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="submitPort()">提交</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+            <!-- .DELETE CONFIRM MODAL-->
+
+            <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header  panel-red">
+                            删除确认
+                        </div>
+                        <div class="modal-body">
+                            <p><i class = 'fa fa-question-circle fa-10x' ></i>此操作不可逆，确定要删除本条信息么？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id = "cancel">取消</button>
+                            <button type="button" class="btn btn-primary" id="delete">确认删除</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/.DELETE CONFIRM MODAL-->
+
+            <!-- .ADD PORT DICT CONFIRM MODAL-->
+
+            <div class="modal fade" id="confirm-add-port-dict-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" id = "add-dict-modal-title">
+                            编辑字典
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" id = 'add-port-dict-form'>
+                                <div class="form-group hidden">
+                                    <label class="control-label" for="modal_port_name">id</label>
+                                    <input type="text" class="form-control" id="modal_port_name" name = 'id' >
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="modal_port_dict_name">字典名称</label>
+                                    <input type="text" class="form-control" id="modal_port_dict_name" name = 'name' placeholder="请输入字典名称">
+                                </div>
+                            </form>
+                            
+                        </div>
+                        <!-- <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+                        <button type="button" data-dismiss="modal" class="btn">Cancel</button> -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id = "cancel">取消</button>
+                            <button type="button" class="btn btn-primary" id="create-dict">添加</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/.DELETE CONFIRM MODAL-->
+
+
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}
+
+
+{% block pagescript %}
+
+<!-- DataTables JavaScript -->
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/DataTables-1.11.3/js/jquery.dataTables.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Buttons-2.1.1/js/dataTables.buttons.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/DateTime-1.1.1/js/dataTables.dateTime.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Select-1.3.4/js/dataTables.select.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Buttons-2.1.1/js/buttons.print.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/DataTables-1.11.3/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript"
+    src="../bower_components/datatables-bootstrap3/Buttons-2.1.1/js/buttons.bootstrap.js"></script>
+
+<script>
+    var service_table = null
+    $(document).ready(function () {
+        service_table = $('#port-dict-tables').DataTable({
+                    // data: hosts,
+                    responsive: true,
+                    language: cn_language,
+                    // serverSide: true,
+                    // ajax: {
+                    //     url: '/settings/ports',
+                    //     type: 'GET',
+                    //     dataSrc: 'data',
+                    //     dataFilter: function (data) {
+                    //         return data
+                    //     }
+                    // },
+                    columns:[
+                        { data: "id"  , visible: false},
+                        { data: "dict_id" ,
+                          render: function(data, type, row){
+                            // $("#thirdLevel option[value!=0]").remove();
+                            var dict_name = $(`#port-dict-select option[value=${data}]`).text()
+                            console.log(data, dict_name)
+                            return dict_name
+
+                          }
+                        },
+                        { data: "name"  },
+                        { data: "port",  },
+                        { data: "protocol" },
+                        { 
+                            data: "description" , 
+                        },
+                        { 
+                            data: "id" , 
+                            orderable: false,
+                            render: function(data, type, row){
+                                var btn = `<div> 
+                                                <button type="button" class="btn btn-primary btn-xs" onclick="edit_port_info('${row.id}', '${row.name}','${row.port}','${row.protocol}','${row.description}','${row.dict_id}')"><i class="fa fa-pencil-square-o">&nbsp; &nbsp;</i>修改</button>  
+                                                <button type="button" class="btn btn-danger btn-xs" onclick = "del_port_info('${data}')"><i class="fa fa-trash-o">&nbsp; &nbsp; </i>删除</button> 
+                                            </div>`     
+                                return btn
+                            }
+                        }   
+                    ]
+                })
+        var currentDictId = $('#port-dict-select option:selected').val();
+        get_port_info_by_dict_id(currentDictId)      
+    })
+
+
+    function add_port_dict_info(){
+        var form = $('#add-port-dict-form')
+        form.find('input[name="id"]').val('')
+        form.find('input[name="name"]').val('')
+
+        $('#confirm-add-port-dict-modal').modal({
+            backdrop: 'static',
+            keyboard: false
+        }).on('click', '#create-dict', function (e) {
+            var formData = $('#add-port-dict-form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.ajax({
+                url:'/settings/dicts',
+                data: JSON.stringify(formData),
+                type: 'POST',
+                success: function(result){
+                    location.reload();
+                    console.log(result)
+                 },
+                error: function(err){
+                    alert('添加失败，请重试！！！')
+                }
+            })
+        })
+    }
+    function edit_port_dict_info(){
+        var currentId = $('#port-dict-select option:selected').val()
+        var currentName = $('#port-dict-select option:selected').text()
+        var form = $('#add-port-dict-form')
+        form.find('input[name="id"]').val(currentId)
+        form.find('input[name="name"]').val(currentName)
+        $('#confirm-add-port-dict-modal').modal({
+            backdrop: 'static',
+            keyboard: false
+        }).on('click', '#create-dict', function (e) {
+            var formData = $('#add-port-dict-form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.ajax({
+                url:'/settings/dicts',
+                data: JSON.stringify(formData),
+                type: 'POST',
+                success: function(result){
+                    location.reload();
+                    console.log(result)
+                 },
+                error: function(err){
+                    alert('更新失败，请重试！！！')
+                }
+            })
+        })
+    }
+    function delete_port_dict_info(){
+        var currentId = $('#port-dict-select option:selected').val()
+        $('#confirm-delete-modal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+        .on('click', '#delete', function (e) {
+            var currentId = $('#port-dict-select option:selected').val()
+            $.ajax({
+                url:'/settings/dicts?id=' + currentId,
+                // data: form,
+                type: 'DELETE',
+                success: function(result){
+                    location.reload();
+                 },
+                error: function(err){
+                    alert('数据加载失败，请刷新重试！！！')
+                }
+            })
+        })
+    }
+    
+
+    $("#port-dict-select").change(function(){
+        var currentDictId = $('#port-dict-select option:selected').val();
+        get_port_info_by_dict_id(currentDictId)      
+    });
+
+    
+    function get_port_info_by_dict_id(currentDictId){
+        // var currentDictId = $('#port-dict-select option:selected').val()
+        if (currentDictId > 0){
+            $.ajax({
+                url:'/settings/ports?id=' + currentDictId,
+                // data: form,
+                type: 'GET',
+                success: function(result){
+                    service_table.clear()
+                    service_table.rows.add(result.data).draw( false );
+                 },
+                error: function(err){
+                    alert('数据加载失败，请刷新重试！！！')
+                }
+            })
+        }
+
+    }
+
+    function add_port_info(){
+        var form = $('#port-dict-form')
+        form.find('input[name="id"]').val('')
+        form.find('input[name="name"]').val('')
+        form.find('input[name="port"]').val('')
+        form.find('input[name="protocol"]').val('')
+        form.find('textarea[name="description"]').val('')
+        $('#myModalLabel').text("添加端口信息")
+        $('#myModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+    }
+    function edit_port_info(id, name, port, protocol, description, dict_id){
+        
+        var form = $('#port-dict-form')
+        form.find('input[name="id"]').val(id)
+        form.find('input[name="name"]').val(name)
+        form.find('input[name="port"]').val(port)
+        form.find('input[name="protocol"]').val(protocol)
+        form.find('textarea[name="description"]').val(description)
+        $('#modal_port_dict_select').val(dict_id)
+
+        $('#myModalLabel').text("修改端口信息")
+        $('#myModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+    }
+    function del_port_info(data){
+        $('#confirm-delete-modal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+        .on('click', '#delete', function (e) {
+            $.ajax({
+                url:'/settings/ports?id=' + data,
+                // data: form,
+                type: 'DELETE',
+                success: function(result){
+                    location.reload();
+                 },
+                error: function(err){
+                    alert('删除失败，请重试！！！')
+                }
+            })
+        })
+
+    }
+    function submitPort(){
+        var formData = $('#port-dict-form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+        formData['dict_id'] = $('#modal_port_dict_select option:selected').val();
+        // console.log(formData, '-----==')
+        $.ajax({
+            url: '/settings/ports',
+            data:JSON.stringify(formData),
+            type: 'POST',
+            success: function (result) {
+                // console.log()
+                if (result.status == 200 ) {
+                    // service_table.ajax.reload();
+                    location.reload()
+                    // console.log()
+                    $('#myModal').modal('hide')
+                }
+            },
+            error: function (err) {
+                alert('操作失败')
+            }
+        })
+
+    }
+</script>
+
+{% endblock %}

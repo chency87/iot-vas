@@ -1,0 +1,673 @@
+<style>
+
+input:focus,
+button:focus,
+.form-control:focus{
+	outline: none;
+	box-shadow: none;
+}
+.form-control:disabled, .form-control[readonly]{
+	background-color: #fff;
+}
+/*----------step-wizard------------*/
+.d-flex{
+	display: flex;
+}
+.justify-content-center{
+	justify-content: center;
+}
+.align-items-center{
+	align-items: center;
+}
+
+/*---------signup-step-------------*/
+.bg-color{
+	background-color: #333;
+}
+.signup-step-container{
+	padding: 0px 0px;
+	/* padding-bottom: 60px; */
+}
+
+.wizard .nav-tabs {
+    position: relative;
+    margin-bottom: 0;
+    border-bottom-color: transparent;
+}
+
+.wizard > div.wizard-inner {
+    position: relative;
+}
+
+.connecting-line {
+    height: 2px;
+    background: #e0e0e0;
+    position: absolute;
+    width: 75%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    z-index: 1;
+}
+
+.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+    color: #555555;
+    cursor: default;
+    border: 0;
+    border-bottom-color: transparent;
+}
+
+span.round-tab {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+    border-radius: 50%;
+    background: #fff;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    text-align: center;
+    font-size: 16px;
+    color: #0e214b;
+    font-weight: 500;
+    border: 1px solid #ddd;
+}
+span.round-tab i{
+    color:#555555;
+}
+.wizard li.active span.round-tab {
+        background: #0db02b;
+    color: #fff;
+    border-color: #0db02b;
+}
+.wizard li.active span.round-tab i{
+    color: #5bc0de;
+}
+.wizard .nav-tabs > li.active > a i{
+	color: #0db02b;
+}
+
+.wizard .nav-tabs > li {
+    width: 25%;
+}
+
+.wizard li:after {
+    content: " ";
+    position: absolute;
+    left: 46%;
+    opacity: 0;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 5px solid transparent;
+    border-bottom-color: red;
+    transition: 0.1s ease-in-out;
+}
+
+.wizard .nav-tabs > li a {
+    width: 30px;
+    height: 30px;
+    margin: 20px auto;
+    border-radius: 100%;
+    padding: 0;
+    background-color: transparent;
+    position: relative;
+    top: 0;
+}
+.wizard .nav-tabs > li a i{
+	position: absolute;
+    top: -15px;
+    font-style: normal;
+    font-weight: 400;
+    white-space: nowrap;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: 700;
+    color: #000;
+}
+
+    .wizard .nav-tabs > li a:hover {
+        background: transparent;
+    }
+
+.wizard .tab-pane {
+    position: relative;
+    padding-top: 20px;
+}
+
+
+.wizard h3 {
+    margin-top: 0;
+}
+.prev-step,
+.next-step{
+    font-size: 13px;
+    padding: 8px 24px;
+    border: none;
+    border-radius: 4px;
+    margin-top: 30px;
+}
+.next-step{
+	background-color: #0db02b;
+}
+.step-head{
+    font-size: 20px;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.term-check{
+	font-size: 14px;
+	font-weight: 400;
+}
+.custom-file {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 0;
+}
+.custom-file-input {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 40px;
+    margin: 0;
+    opacity: 0;
+}
+.custom-file-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: 40px;
+    padding: .375rem .75rem;
+    font-weight: 400;
+    line-height: 2;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+.custom-file-label::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    display: block;
+    height: 38px;
+    padding: .375rem .75rem;
+    line-height: 2;
+    color: #495057;
+    content: "Browse";
+    background-color: #e9ecef;
+    border-left: inherit;
+    border-radius: 0 .25rem .25rem 0;
+}
+.footer-link{
+	margin-top: 30px;
+}
+.all-info-container{
+
+}
+.list-content{
+	margin-bottom: 10px;
+}
+.list-content a{
+	padding: 10px 15px;
+    width: 100%;
+    display: inline-block;
+    background-color: #f5f5f5;
+    position: relative;
+    color: #565656;
+    font-weight: 400;
+    border-radius: 4px;
+}
+.list-content a[aria-expanded="true"] i{
+	transform: rotate(180deg);
+}
+.list-content a i{
+	text-align: right;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    transition: 0.5s;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: #fdfdfd;
+}
+.list-box{
+	padding: 10px;
+}
+.signup-logo-header .logo_area{
+	width: 200px;
+}
+.signup-logo-header .nav > li{
+	padding: 0;
+}
+.signup-logo-header .header-flex{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+/*-----------custom-checkbox-----------*/
+/*----------Custom-Checkbox---------*/
+input[type="checkbox"]{
+    position: relative;
+    display: inline-block;
+    margin-right: 5px;
+}
+input[type="checkbox"]::before,
+input[type="checkbox"]::after {
+    position: absolute;
+    content: "";
+    display: inline-block;   
+}
+input[type="checkbox"]::before{
+    height: 16px;
+    width: 16px;
+    border: 1px solid #999;
+    left: 0px;
+    top: 0px;
+    background-color: #fff;
+    border-radius: 2px;
+}
+input[type="checkbox"]::after{
+    height: 5px;
+    width: 9px;
+    left: 4px;
+    top: 4px;
+}
+input[type="checkbox"]:checked::after{
+    content: "";
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    transform: rotate(-45deg);
+}
+input[type="checkbox"]:checked::before{
+    background-color: #18ba60;
+    border-color: #18ba60;
+}
+
+
+
+
+
+
+@media (max-width: 767px){
+	.sign-content h3{
+		font-size: 40px;
+	}
+	.wizard .nav-tabs > li a i{
+		display: none;
+	}
+	.signup-logo-header .navbar-toggle{
+		margin: 0;
+		margin-top: 8px;
+	}
+	.signup-logo-header .logo_area{
+		margin-top: 0;
+	}
+	.signup-logo-header .header-flex{
+		display: block;
+	}
+}
+
+</style>
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">{{header}}</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <!-- <div class="col-lg-6" style="float: none; margin: 0 auto;">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    参数说明
+                </div>
+                <div class="panel-body">
+                    <p>
+                        1. 任务名称：可自定义相应名称 <br/>
+                        2. 计划运行时间格式： 秒 分 时 日 周
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    
+                </div>
+            </div>
+        </div> -->
+
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-8">
+                <section class="signup-step-container">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-8">
+                                <div class="wizard">
+                                    <div class="wizard-inner">
+                                        <div class="connecting-line"></div>
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li role="presentation" class="active">
+                                                <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab"
+                                                    aria-expanded="true"><span class="round-tab">1 </span> <i>Step
+                                                        1</i></a>
+                                            </li>
+                                            <li role="presentation" class="disabled">
+                                                <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab"
+                                                    aria-expanded="false"><span class="round-tab">2</span> <i>Step
+                                                        2</i></a>
+                                            </li>
+                                            <li role="presentation" class="disabled">
+                                                <a href="#step3" data-toggle="tab" aria-controls="step3"
+                                                    role="tab"><span class="round-tab">3</span> <i>Step 3</i></a>
+                                            </li>
+                                            <li role="presentation" class="disabled">
+                                                <a href="#step4" data-toggle="tab" aria-controls="step4"
+                                                    role="tab"><span class="round-tab">4</span> <i>Step 4</i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <form role="form" action="index.html" class="login-box" id= "create_task_form">
+                                        <div class="tab-content" id="main_form">
+                                            <div class="tab-pane active" role="tabpanel" id="step1">
+                                                <h4 class="text-center">任务基本信息配置</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>任务名称 *</label>
+                                                            <input class="form-control" type="text" name="modal_task_name"
+                                                                placeholder="请输入任务名称">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>任务描述</label>
+                                                            <input class="form-control" type="text" name="modal_task_desc"
+                                                                placeholder="请输任务描述">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label" for="modal_task_cmd">执行函数或命令 * </label>
+                                                            <select class="form-control" id="modal_task_cmd" name="modal_task_cmd">
+                                                                <!-- <option value="3" >输出PATH</option> -->
+                                                                <option value="2" selected>终端探测</option>
+                                                                <!-- <option value="1">POC更新</option>
+                                                                <option value="0">其他</option>             -->
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label" for="modal_task_engine">执行引擎 * </label>
+                                                            <select class="form-control" id="modal_task_engine" name="task_engine">
+                                                                <!-- <option value="3" >ENGINE 1</option> -->
+                                                                <option value="2" selected>ENGINE 0</option>
+                                                                <!-- <option value="1">ENGINE 2</option> -->
+                                                                <!-- <option value="0">ENGINE 3</option>             -->
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-inline pull-right">
+                                                    <li><button type="button" class="default-btn next-step">下一步</button></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" id="step2">
+                                                <h4 class="text-center">探测目标信息配置</h4>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>探测目标 *</label>
+                                                        <input class="form-control" type="text" name="modal_task_target"
+                                                            placeholder="请输入目标地址">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>指定端口 </label>
+                                                        <select class="form-control" id ="modal-task-ports-select" name="modal_task_ports">
+                                                            {% for item in port_dict%}
+                                                            <option value="{{item.id}}">{{item.name}} &nbsp;&nbsp; (共{{item.ports | length}}个)</option>   
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>探测指令</label>
+                                                        <!-- scripts -->
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" checked value = "sv" name = "modal_task_func">服务版本探测
+                                                        </label>
+                                                        <label class="checkbox-inline" >
+                                                            <input type="checkbox" checked value = "vulscan" name = "modal_task_func" id = "vuln-scan">脆弱性评估
+                                                        </label>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" checked value = "os" name = "modal_task_func">操作系统识别
+                                                        </label>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" checked value = "ping" name = "modal_task_func">禁用主机检测
+                                                        </label> 
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group" id = "task_deps_db">
+                                                        <label>漏洞数据库</label>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" checked value="cve" name = "modal_task_db" >CVE
+                                                        </label>
+                                                        <label class="checkbox-inline" >
+                                                            <input type="checkbox" value="scipvuldb" name = "modal_task_db"> scipvuldb
+                                                        </label>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" value="osvdb"  name = "modal_task_db">osvdb
+                                                        </label>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox"  value="securityfocus" name = "modal_task_db">securityfocus
+                                                        </label>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox"  value="securitytracker" name = "modal_task_db">securitytracker
+                                                        </label>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox"  value="xforce" name = "modal_task_db" >xforce
+                                                        </label>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox"  value="expliotdb" name = "modal_task_db">expliotdb
+                                                        </label>
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox"  value="openvas" name = "modal_task_db">openvas
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-inline pull-right">
+                                                    <li><button type="button"
+                                                            class="default-btn prev-step">上一步</button></li>
+                                                   
+                                                    <li><button type="button"
+                                                            class="default-btn next-step">下一步</button></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" id="step3">
+                                                <h4 class="text-center">探测脚本配置</h4>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>选择脚本文件 </label>
+                                                        {% for item in scripts%}
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value="{{item.name + '.nse'}}" name = "modal_task_script"> {{item.name}}
+                                                            </label>
+                                                        </div>
+                                                        {%endfor%}   
+                                                    </div>
+                                                </div>
+
+                                               
+        
+                                                <ul class="list-inline pull-right">
+                                                    <li><button type="button"
+                                                            class="default-btn prev-step">上一步</button></li>
+                                                   
+                                                    <li><button type="button"
+                                                            class="default-btn next-step">下一步</button></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" id="step4">
+                                                <h4 class="text-center">配置运行时间</h4>
+                                                <div class="all-info-container">
+                                                    
+                                                    <div class="col-md-12">
+                                                        <div class="form-group " id='cron'>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group " id='expression'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-inline pull-right">
+                                                    <li><button type="button"
+                                                            class="default-btn prev-step">上一步</button></li>
+                                                    <li><button type="button"
+                                                            class="default-btn next-step" onclick="createTask()">提交</button></li>
+                                                </ul>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}
+{% block pagescript %}
+<script type="text/javascript" src="../bower_components/jquery-cron-quartz-master/cron/jquery-cron.js"></script>
+<script  type="text/javascript" src="../bower_components/jquery-cron-quartz-master/gentleSelect/jquery-gentleSelect.js"></script>
+
+<script>
+    var target_ports = []
+    var cron = $('#cron').cron({
+        initial: "42 3 * * 5",
+        effectOpts: {
+            openEffect: "fade",
+            openSpeed: "slow"
+        },
+        onChange: function() {
+        },
+        useGentleSelect: false // default: false
+    });
+    function createTask(){
+        var task_cron = cron.cron('value')
+        var modal_task_func = [], modal_task_db = [], modal_task_script = []
+        $('input[name="modal_task_func"]:checked').each(function(){
+            modal_task_func.push($(this).val())
+        })
+        $('input[name="modal_task_db"]:checked').each(function(){
+            modal_task_db.push($(this).val())
+        })
+        $('input[name="modal_task_script"]:checked').each(function(){
+            modal_task_script.push($(this).val())
+        })
+        var formData = {
+            task_name : $('input[name="modal_task_name"]').val(),
+            task_desc : $('input[name="modal_task_desc"]').val(),
+            task_cmd :  $('#modal_task_cmd option:selected').val(),
+            task_engine:  $('#modal_task_engine option:selected').val(), //input[name=""
+            task_target_ip: $('input[name="modal_task_target"]').val(),
+            task_target_ports: $('#modal-task-ports-select option:selected').val(),
+            task_func : modal_task_func,
+            task_deps_db: modal_task_db,
+            task_deps_script: modal_task_script,
+            task_trigger_type: 'cron',
+            task_cron:  String(task_cron)
+        }
+        // var currentId = $('#modal-task-ports-select option:selected').val()
+        
+        // console.log(currentId, '---')
+        console.log(formData)
+        $.ajax({
+            url:'/task/add',
+            data: JSON.stringify(formData),
+            type: 'POST',
+            success: function(result){
+                alert(result.msg)
+            },
+            error: function(err){
+                alert('操作失败')
+            }
+        })
+    }
+
+    // vuln-scan
+
+    $("#vuln-scan:input").change(function() {
+        // var flag = $("#vuln-scan:input").val();
+        if($('#vuln-scan').is(':checked')) {
+            $('#task_deps_db').removeClass('hidden')
+        }else{
+            $('#task_deps_db').addClass('hidden')
+        }
+    });
+
+    $("#modal-task-ports-select").change(function() {
+        // var flag = $("#vuln-scan:input").val();
+        var currentId = $('#modal-task-ports-select option:selected').val()
+    });
+
+    // ------------step-wizard-------------
+    $(document).ready(function () {
+        
+        $('.nav-tabs > li a[title]').tooltip();
+        //Wizard
+        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+            var $target = $(e.target);
+            if ($target.parent().hasClass('disabled')) {
+                return false;
+            }
+        });
+        $(".next-step").click(function (e) {
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+        });
+        $(".prev-step").click(function (e) {
+            var $active = $('.wizard .nav-tabs li.active');
+            prevTab($active);
+        });
+    });
+
+    function nextTab(elem) {
+        $(elem).next().find('a[data-toggle="tab"]').click();
+    }
+    function prevTab(elem) {
+        $(elem).prev().find('a[data-toggle="tab"]').click();
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,322 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css"
+    href="../bower_components/bootstrap-datepicker/css/bootstrap-datepicker.min.css" />
+
+<!-- <link rel="stylesheet" type="text/css" href="../bower_components/jquery-cron-quartz-master/src/jquery-cron-quartz.css"> -->
+<link rel="stylesheet" type="text/css" href="../bower_components/jquery-cron-quartz-master/cron/jquery-cron.css">
+<link rel="stylesheet" type="text/css" href="../bower_components/jquery-cron-quartz-master/gentleSelect/jquery-gentleSelect.css">
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">{{header}}</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-6" style="float: none; margin: 0 auto;">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        参数说明
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            1. 任务名称：可自定义相应名称 <br/>
+                            2. 计划运行时间格式： 秒 分 时 日 周
+                        </p>
+                        <div id = 'example1'>
+
+                        </div>
+                        <div id = 'example1-val'>
+
+                        </div>
+         
+         
+
+                        
+
+                    </div>
+                    <div class="panel-footer">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row border"  style="margin-top: 25px;">
+            <div class="col-lg-6" style="float: none; margin: 0 auto;">
+                <form role="form" id = 'create_task_form' action="/task/add" method="post">
+                    <div class="form-group">
+                        <label class="control-label" for="modal_task_name">任务名称</label>
+                        <input type="text" class="form-control" id="modal_task_name" name = 'task_name' placeholder="请输入任务名称">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="modal_task_cmd">执行函数或命令</label>
+                        <select class="form-control" id="modal_task_cmd" name="task_cmd">
+                            <option value="3" >输出PATH</option>
+                            <option value="2" selected>终端探测</option>
+                            <option value="1">POC更新</option>
+                            <option value="0">其他</option>            
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="modal_task_engine">执行引擎</label>
+                        <select class="form-control" id="modal_task_engine" name="task_engine">
+                            <option value="3" >ENGINE 1</option>
+                            <option value="2" selected>ENGINE 0</option>
+                            <option value="1">ENGINE 2</option>
+                            <option value="0">ENGINE 3</option>            
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="modal_task_name">目标IP</label>
+                        <input type="text" class="form-control" id="modal_task_target_ip" name = 'target_ip' placeholder="请输入目标IP地址">
+                    </div>
+                    <!-- <div class="form-group">
+                        <label class="control-label" for="modal_task_name">目标端口</label>
+                        <input type="text" class="form-control" id="modal_task_target_ip" name = 'target_port' placeholder="请输入目标端口">
+                    </div> -->
+                    <div class="form-group">
+                        <label>探测指令</label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" checked value = "sv">服务版本探测
+                        </label>
+                        <label class="checkbox-inline" >
+                            <input type="checkbox" checked value = "vulscan">脆弱性评估
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" checked value = "os">操作系统识别
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" checked value = "ping">禁用主机检测
+                        </label> 
+                    </div>
+                    <div class="form-group">
+                        <label>漏洞数据库</label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox"  >CVE
+                        </label>
+                        <label class="checkbox-inline" >
+                            <input type="checkbox" > scipvuldb
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" >osvdb
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" >securityfocus
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" >securitytracker
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" >xforce
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" >expliotdb
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" >openvas
+                        </label>
+
+                        
+                    </div>
+
+                    
+
+                    <div class="form-group " id='cron'>
+                        
+                    </div>
+
+                    <div class="form-group " id='expression'>
+                        
+                        
+                    </div>
+
+                    <!-- <div class="form-group " id = 'trigger_type'>
+                        <label class="control-label">任务执行策略</label>
+                        <label class="radio-inline ">
+                            <input type="radio" name="trigger_type" value="date" checked >Date
+                        </label>
+                        <label class="radio-inline ">
+                            <input type="radio" name="trigger_type" value="cron" >Cron
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="trigger_type" value="interval">Interval
+                        </label>
+                    </div>                    -->
+
+                    <!-- <div class="form-group show"  id="trigger_type_date">
+                        <label class="control-label" for="run_date_picker">任务执行时间</label>
+                        <div class="input-group date" id = 'run_date_picker'>
+                            <input type="text" class="form-control" name='run_date' placeholder="请选择任务开始执行时期"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden" id="trigger_type_cron" >
+                        <label class="control-label" for="modal_task_cron">任务执行时间</label>
+                        <input type="text" class="form-control" id="modal_task_cron" name = 'task_cron' placeholder="请输入CRON表达式">
+                    </div>
+
+                    <div class="form-group row custom-control custom-control-inline hidden"  id="trigger_type_interval">
+                        <div class="col-sm-6">
+                            <label class="control-label" for="run_start_date_picker">开始执行时间</label>
+                            <div class="input-group date" id = 'run_start_date_picker'>
+                                <input type="text" class="form-control" name='start_date' placeholder="请输入任务开始执行时间"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>                  
+
+                        <div class="col-sm-6">
+                            <label class="control-label" for="modal_task_interval">任务循环周期</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">每</span>
+                                <input type="number" class="form-control" aria-label="请输入任务循环周期"  id="modal_task_interval" name = 'interval'>
+                                <span class="input-group-addon">
+
+                                    <select class="" id="modal_task_interval_unit" name="interval_unit" style="border: none; background-color: transparent;">
+                                        <option value="3" >天</option>
+                                        <option value="2" selected>小时</option>
+                                        <option value="1">分钟</option>
+                                        <option value="0">秒</option>            
+                                    </select>
+                                </span>
+                            </div>                                            
+                        </div>
+                    </div> -->
+
+                    <div class="row" >
+                        <div class="col-sm-12"> 
+                            <button type="button" class="btn btn-outline btn-primary btn-lg btn-block" id = "modal_taskinfo_btn_submit">
+                                创建任务
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        
+        
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+    <script type="text/javascript"
+    src="../bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript"
+    src="../bower_components/bootstrap-datepicker/js/moment.js"></script>
+    <script type="text/javascript"
+    src="../bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- <script type="text/javascript" src="../bower_components/jquery-cron-quartz-master/src/jquery-cron-quartz.js" ></script>
+    <script type="text/javascript" src="../bower_components/jquery-cron-quartz-master/src/jquery-cron-quartz-zh-cn.js" ></script> -->
+    <script type="text/javascript" src="../bower_components/jquery-cron-quartz-master/cron/jquery-cron.js"></script>
+    <script  type="text/javascript" src="../bower_components/jquery-cron-quartz-master/gentleSelect/jquery-gentleSelect.js"></script>
+
+
+<script>
+
+    var cron = $('#cron').cron({
+        initial: "42 3 * * 5",
+        effectOpts: {
+            openEffect: "fade",
+            openSpeed: "slow"
+        },
+        onChange: function() {
+            // console.log($('#example1').cron('value'))
+            // console.log($(this))
+        
+            // $('#example1-val').text($(this).cron("value"));
+
+            // console.log($(this).cron("value"))
+
+
+        },
+        useGentleSelect: false // default: false
+    });
+
+// Initialize DOM with cron builder with options
+    // $('#cron').cronBuilder({
+    //     selectorLabel: "选择时间段:  ",
+    //     language: "zh_CN",
+    //     onChange: function(expression) {
+    //         $('#expression').text(expression);
+    //     }
+    // });
+
+    // console.log()
+
+
+
+    $('#run_date_picker').datetimepicker({
+        "allowInputToggle": true,
+        "showClose": true,
+        "showClear": true,
+        "showTodayButton": true,
+        "format": "MM/DD/YYYY HH:mm:ss",
+    });
+    $('#run_start_date_picker').datetimepicker({
+        "allowInputToggle": true,
+        "showClose": true,
+        "showClear": true,
+        "showTodayButton": true,
+        "format": "MM/DD/YYYY HH:mm:ss",
+    });
+
+    $("#trigger_type :input").change(function() {
+        var trigger_type = $(':radio[name=trigger_type]:checked').val();
+        if (trigger_type =='date'){
+            $('#trigger_type_interval').addClass('hidden')
+            $('#trigger_type_cron').addClass('hidden')
+            $('#trigger_type_date').removeClass('hidden')
+
+
+        }else if(trigger_type =='cron'){
+            $('#trigger_type_interval').addClass('hidden')
+            $('#trigger_type_cron').removeClass('hidden')
+            $('#trigger_type_date').addClass('hidden')
+        }else{
+            $('#trigger_type_interval').removeClass('hidden')
+            $('#trigger_type_cron').addClass('hidden')
+            $('#trigger_type_date').addClass('hidden')
+        }
+    });
+
+    $('#modal_taskinfo_btn_submit').click(function(){
+
+        var formData = $('#create_task_form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+        formData['trigger_type'] = 'cron'
+        task_cron = cron.cron('value')
+        console.log(task_cron)
+        formData['task_cron'] = String(task_cron);
+        console.log(formData)
+
+        $.ajax({
+            url:'/task/add',
+            data: JSON.stringify(formData),
+            type: 'POST',
+            success: function(result){
+                alert(result.msg)
+            },
+            error: function(err){
+                alert('操作失败')
+            }
+        })
+
+    })
+
+    
+
+</script>
+{% endblock %}

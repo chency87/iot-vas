@@ -1,0 +1,70 @@
+<!-- extend base layout -->
+{% extends "loginbase.html" %}
+
+
+{% macro render_field(field) %}
+<!-- 定义字段宏 -->
+<dt>{{ field.label }}:
+<dd>{{ field(**kwargs)|safe }}
+    {% if field.errors %}
+    <ul class=errors>
+        {% for error in field.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</dd>
+{% endmacro %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    
+                    <h3 class="panel-title">请登录</h3>
+                </div>
+                <div class="panel-body">
+                    <!-- 登录表单 -->
+
+                    <!-- type="email"  -->
+
+                    <form role="form" action="{{ url_for('login') }}" method="post">
+                        {{ form.csrf_token }}
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="请输入用户名" name="username" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="请输入密码" name="password" type="password"
+                                    value="">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="remember_me" type="checkbox" value="True">Remember Me
+                                </label>
+                            </div>
+
+                            {% if emsg %}
+                            <!-- 如果有错误信息 则显示 -->
+                            <div>
+                                <h6> {{ emsg.message }}</h6>
+                            </div>
+                            {% endif %}
+                            <input type="submit" class="btn btn-lg btn-success btn-block" value="登录" id="login_btn">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+
+</script>
+{% endblock %}

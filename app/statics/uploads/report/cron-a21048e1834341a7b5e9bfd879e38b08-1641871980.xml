@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///opt/homebrew/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.92 scan initiated Mon Jan 10 19:33:00 2022 as: /opt/homebrew/bin/nmap -oX - -vvv -&#45;stats-every 1s -sV -Pn -&#45;script=upload/enip-info.nse,vulscan/vulscan.nse -&#45;script-args vulscandb=cve -p 80,44818,3306,22, -oX /Users/chenchunyu/Documents/workspace/sb-admin-2-python-master/app/statics/uploads/report/cron-a21048e1834341a7b5e9bfd879e38b08-1641871980.xml 82.102.188.9 -->
+<nmaprun scanner="nmap" args="/opt/homebrew/bin/nmap -oX - -vvv -&#45;stats-every 1s -sV -Pn -&#45;script=upload/enip-info.nse,vulscan/vulscan.nse -&#45;script-args vulscandb=cve -p 80,44818,3306,22, -oX /Users/chenchunyu/Documents/workspace/sb-admin-2-python-master/app/statics/uploads/report/cron-a21048e1834341a7b5e9bfd879e38b08-1641871980.xml 82.102.188.9" start="1641871980" startstr="Mon Jan 10 19:33:00 2022" version="7.92" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="4" services="22,80,3306,44818"/>
+<verbose level="3"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1641871980"/>
+<taskend task="NSE" time="1641871980"/>
+<taskbegin task="NSE" time="1641871980"/>
+<taskend task="NSE" time="1641871980"/>
+<taskbegin task="Parallel DNS resolution of 1 host." time="1641871980"/>
+<taskend task="Parallel DNS resolution of 1 host." time="1641871981"/>
+<taskbegin task="Connect Scan" time="1641871981"/>
+<taskprogress task="Connect Scan" time="1641871981" percent="100.00" remaining="0" etc="1641871981"/>
+<taskend task="Connect Scan" time="1641871981" extrainfo="4 total ports"/>
+<taskbegin task="Service scan" time="1641871981"/>
+<taskprogress task="Service scan" time="1641871987" percent="0.00"/>
+<taskprogress task="Service scan" time="1641871993" percent="0.00"/>
+<taskprogress task="Service scan" time="1641871998" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872003" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872009" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872014" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872019" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872025" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872032" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872038" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872043" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872048" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872054" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872059" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872065" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872070" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872075" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872081" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872086" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872094" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872099" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872105" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872110" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872115" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872121" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872126" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872132" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872137" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872142" percent="0.00"/>
+<taskprogress task="Service scan" time="1641872147" percent="100.00" remaining="0" etc="1641872147"/>
+<taskend task="Service scan" time="1641872147" extrainfo="1 service on 1 host"/>
+<taskbegin task="NSE" time="1641872147"/>
+<taskend task="NSE" time="1641872148"/>
+<taskbegin task="NSE" time="1641872148"/>
+<taskend task="NSE" time="1641872148"/>
+<host starttime="1641871981" endtime="1641872148"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="82.102.188.9" addrtype="ipv4"/>
+<hostnames>
+<hostname name="82-102-188-9.orange.net.il" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="closed" reason="conn-refused" reason_ttl="0"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="closed" reason="conn-refused" reason_ttl="0"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3306"><state state="closed" reason="conn-refused" reason_ttl="0"/><service name="mysql" method="table" conf="3"/></port>
+<port protocol="tcp" portid="44818"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="EtherNet-IP-2" method="probed" conf="10"/><script id="enip-info" output="&#xa;  Vendor: Rockwell Automation/Allen-Bradley (1)&#xa;  Product Name: 1769-L18ER/B LOGIX5318ER&#xa;  Serial Number: 0xd019bd19&#xa;  Device Type: Programmable Logic Controller (14)&#xa;  Product Code: 154&#xa;  Revision: 32.11&#xa;  Device IP: 192.168.0.10"><elem key="Vendor">Rockwell Automation/Allen-Bradley (1)</elem>
+<elem key="Product Name">1769-L18ER/B LOGIX5318ER</elem>
+<elem key="Serial Number">0xd019bd19</elem>
+<elem key="Device Type">Programmable Logic Controller (14)</elem>
+<elem key="Product Code">154</elem>
+<elem key="Revision">32.11</elem>
+<elem key="Device IP">192.168.0.10</elem>
+</script><script id="fingerprint-strings" output="&#xa;  TLSSessionReq: &#xa;    rando"><elem key="TLSSessionReq">&#xa;    rando</elem>
+</script></port>
+</ports>
+<times srtt="386830" rttvar="167042" to="1054998"/>
+</host>
+<taskbegin task="NSE" time="1641872148"/>
+<taskend task="NSE" time="1641872148"/>
+<taskbegin task="NSE" time="1641872148"/>
+<taskend task="NSE" time="1641872148"/>
+<runstats><finished time="1641872148" timestr="Mon Jan 10 19:35:48 2022" summary="Nmap done at Mon Jan 10 19:35:48 2022; 1 IP address (1 host up) scanned in 167.71 seconds" elapsed="167.71" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

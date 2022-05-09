@@ -1,0 +1,267 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">{{header}}</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">设备脆弱性信息检索</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>HostName</label>
+                                        <input class="form-control" placeholder="Enter HostName" id="search_hostname" name = 'hostname'>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>MAC Address</label>
+                                        <input class="form-control" placeholder="Enter MAC Address" id="search_nic_mac" name = 'nic_mac'>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>FTP Banner</label>
+                                        <input class="form-control" placeholder="Enter FTP BANNER"  id="search_ftp_banner" name = 'ftp_banner'>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>TELNET Banner</label>
+                                        <input class="form-control" placeholder="Enter TELNET BANNER" id="search_telnet_banner" name = 'telnet_banner'>
+                                        <!-- <p class="help-block">Example block-level help text here.</p> -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>SNMP协议描述</label>
+                                        <input class="form-control" placeholder="Enter SNMP SYSDESCR" id="search_snmp_sysdescr" name = 'snmp_sysdescr'>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>SNMP协议系统ID</label>
+                                        <input class="form-control" placeholder="Enter SNMP sysoid" id="search_snmp_sysoid" name = 'snmp_sysoid'>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>HTTP Response</label>
+                                        <input class="form-control" placeholder="Enter http response" id="search_http_response" name = 'http_response'>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>HTTPS Response</label>
+                                        <input class="form-control" placeholder="Enter https response" id="search_https_response" name = 'https_response'>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>UPNP Response</label>
+                                        <input class="form-control" placeholder="Enter upnp response" id="search_upnp_response" name = 'upnp_response'>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-4 pull-right">
+                                <button type="submit" class="btn btn-default" id = "search_submit_btn">设备搜索</button> 
+                                <button type="reset" class="btn btn-default" id = "search_reset_btn">重置</button>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+               
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        设备指纹信息
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="fingers-tables">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>厂商</th>
+                                        <th>产品名称</th>
+                                        <th>序列号</th>
+                                        <th>设备类型</th>
+                                        <th>设备批号</th>
+                                        <th>版本</th>
+                                        <th>服务</th>
+                                        <th>协议</th>
+                                        <th>IP</th>
+                                        <th>#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                      
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        删除确认
+                    </div>
+                    <div class="modal-body">
+                        此操作不可逆，确定要删除本文件么？
+                    </div>
+                    <!-- <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+                    <button type="button" data-dismiss="modal" class="btn">Cancel</button> -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id = "cancel">取消</button>
+                        <button type="button" class="btn btn-primary" id="delete">确认删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}
+
+{% block pagescript %}
+
+<!-- DataTables JavaScript -->
+<script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function () {
+        $('#fingers-tables').DataTable({
+            responsive: true,
+            // processing: true,
+            serverSide: true,
+            language: cn_language,
+            // select: true,
+            lengthChange: false,
+            ajax: {
+                url: '/finger/details',
+                type: 'GET',
+                dataSrc: 'data',
+                dataFilter: function (data) {                    
+                    return data
+                }
+            },
+            // rowId: 'id',
+            columns: [
+                
+                { data: "id" ,visible: false, searchable: false },
+                { data: "vendor"  },
+                { data: "product_name",  },
+                { data: "serial_number" },
+                { data: "device_type" },
+                { data: "product_code" },
+                { data: "revision" },
+                { data: "service" },
+                { data: "protocol" },
+                { 
+                    data: "device_ip" ,                             
+                    render: function(data, type, row){
+                        
+                        
+                        var str = `<button type="button" class="btn btn-primary btn-sm" onclick= "show_log_details('${row.id}')">详情</button>`
+                        return data
+                    }
+                },
+                {
+                    data: "id" ,                             
+                    render: function(data, type, row){
+                        
+                        
+                        var str = `<button type="button" class="btn btn-danger btn-sm" onclick= "window.location.href='/finger/details/delete?id=${row.id}'">删除</button>`
+
+           
+                        return str
+                    }
+                }
+                
+            ],
+        });
+    });
+
+    $('#search_reset_btn').click(function(){
+        $("#search_snmp_sysdescr").val('');
+        $("#search_snmp_sysoid").val('');
+        $("#search_ftp_banner").val('');
+        $("#search_telnet_banner").val('');
+        $("#search_hostname").val('');
+        $("#search_http_response").val('');
+        $("#search_https_response").val('');
+        $("#search_upnp_response").val('');
+        $("#search_nic_mac").val('');
+    })
+    $('#search_submit_btn').click(function(){
+        var formData = {
+            "snmp_sysdescr": $("#search_snmp_sysdescr").val(),
+            "snmp_sysoid": $("#search_snmp_sysoid").val(),
+            "ftp_banner": $("#search_ftp_banner").val(),
+            "telnet_banner": $("#search_telnet_banner").val(),
+            "hostname": $("#search_hostname").val(),
+            "http_response": $("#search_http_response").val(),
+            "https_response": $("#search_https_response").val(),
+            "upnp_response": $("#search_upnp_response").val(),
+            "nic_mac": $("#search_nic_mac").val()
+        }
+        console.log(formData)
+        $.ajax({
+            url:'/finger/device/detect',
+            data: JSON.stringify(formData),
+            type: 'POST',
+            success: function(result){
+                console.log(result)
+                alert(result.data)
+            },
+            error: function(err){
+                alert('操作失败')
+            }
+        })
+
+    })
+
+  </script>
+
+{% endblock %}
