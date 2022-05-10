@@ -57,13 +57,14 @@ class Scan(object):
         # 将os结果插入字典
         self.results = {}
 
-        result = self.nm.scan(hosts=self.ip,
+        result = self.nm.scan(hosts=self.ip, ports=self.ports,
                               arguments='-A ' + self.scan_argument + self.script_name)  # 调用nmap执行-A扫描操作系统和os
+        print(result)
         self.ip = list(result['scan'].keys())
 
         for ip in self.ip:
             self.results[ip] = {}
-            self.results[ip]['os'] = result["scan"][ip]['osmatch'][0]['name']  # 从返回值里通过切片提取出操作系统版本
+            # self.results[ip]['os'] = result["scan"][ip]['osmatch'][0]['name']  # 从返回值里通过切片提取出操作系统版本
             self.results[ip]['vendor'] = result['scan'][ip]['vendor']  # 从返回值里通过切片提取出厂商
             self.results[ip]['hostname'] = result['scan'][ip]['hostnames']  # 从返回值里提取hostnames
 
@@ -75,11 +76,12 @@ class Scan(object):
         for ip in self.ip:
             if self.ports is None:
                 self.ports = self.port_decetion()
+
                 for port in self.ports:
                     self.results[ip][port] = {}
                     self.results[ip][port]['service_name'] = result['scan'][ip][connect][int(port)]['name']
             else:
-                ports = list(self.ports)  # 这里ports应该是字符串，要把他转换成列表
+                ports = self.ports.split(" ")  # 这里ports应该是字符串，要把他转换成列表
                 for port in ports:
                     self.results[ip][port] = {}
                     self.results[ip][port]['service_name'] = result['scan'][ip][connect][int(port)]['name']
@@ -94,23 +96,29 @@ class Scan(object):
 
     # snmp信息获取
     def snmp_info(self, result):
+        ports = self.ports.split(" ")
         for ip in self.ip:
-            for port in self.ports:
-                self.results[ip][port]['snmp-interfaces'] = result['scan'][ip]['udp'][port]['script'][
-                    'snmp-interfaces']
-                self.results[ip][port]['snmp-sysdescr'] = result['scan'][ip]['udp'][port]['script'][
-                    'snmp-sysdescr']
+            print(result['scan'][ip]['udp'][161]['script'])
+            self.results[ip][161]['snmp-interfaces'] = result['scan'][ip]['udp'][161]['script']['snmp-interfaces']
+            self.results[ip][161]['snmp-sysdescr'] = result['scan'][ip]['udp'][161]['script']['snmp-sysdescr']
                 # snmp协议id暂时没找到
 
+    # 扫描逻辑函数
     def scan(self):
         if self.ports is None:
             self.port_decetion()
 
-        # result 是完整的结果，self.result是要最终我们要的结果
+            # result 是完整的结果，self.result是要最终我们要的结果
         result = self.basic_detection()
+        print(result)
 
         # 根据脚本将信息添加到 self.result里的信息
         if self.script_name == 'vulscan':
             self.vul_detection(result=result)
-        elif self.script_name == 'snmp*':
+            print(self.results)
+
+        elif self.script_name == '--script=snmp*':
             self.snmp_info(result=result)
+            print(self.results)
+
+        return self.results
