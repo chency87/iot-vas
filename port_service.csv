@@ -1,0 +1,662 @@
+﻿id,connection_mode,port, service,port_type
+1,TCP,0, Reserved,0
+2,TCP,1,TCP Port Service Multiplexer,0
+3,TCP,2,Death,0
+4,TCP,5,"Remote Job Entry,yoyo",0
+5,TCP,7,Echo,0
+6,TCP,11,Skun,0
+7,TCP,12,Bomber,0
+8,TCP,16,Skun,0
+9,TCP,17,Skun,0
+10,TCP,18,消息传输协议，skun,0
+11,TCP,19,Skun,0
+12,TCP,20,"FTP Data,Amanda",0
+13,TCP,21,"文件传输,Back Construction,Blade Runner,Doly Trojan,Fore,FTP trojan,Invisible FTP,Larva,WebEx,WinCrash",0
+14,TCP,22,远程登录协议,0
+15,TCP,23,"远程登录（Telnet),Tiny Telnet Server ( TTS)",0
+16,TCP,25,"电子邮件(SMTP),Ajan,Antigen,Email Password Sender,Happy 99,Kuang2,ProMail trojan,Shtrilitz,Stealth,Tapiras,Terminator,WinPC,WinSpy,Haebu Coceda",0
+17,TCP,27,Assasin,0
+18,TCP,28,Amanda,0
+19,TCP,29,MSG ICP,0
+20,TCP,30,Agent 40421,0
+21,TCP,31,"Agent 31,Hackers Paradise,Masters Paradise,Agent 40421",0
+22,TCP,37,"Time,ADM worm",0
+23,TCP,39,SubSARI,0
+24,TCP,41,"DeepThroat,Foreplay",0
+25,TCP,42,Host Name Server,0
+26,TCP,43,WHOIS,0
+27,TCP,44,Arctic,0
+28,TCP,48,DRAT,0
+29,TCP,49,主机登录协议,0
+30,TCP,50,DRAT,0
+31,TCP,51,"IMP Logical Address Maintenance,Fuck Lamers Backdoor",0
+32,TCP,52,"MuSka52,Skun",0
+33,TCP,53,"DNS,Bonk (DOS Exploit)",0
+34,TCP,54,MuSka52,0
+35,TCP,58,DMSetup,0
+36,TCP,59,DMSetup,0
+37,TCP,63,whois++,0
+38,TCP,64,Communications Integrator,0
+39,TCP,65,TACACS-Database Service,0
+40,TCP,66,"Oracle SQL*NET,AL-Bareki",0
+41,TCP,67,Bootstrap Protocol Server,0
+42,TCP,68,Bootstrap Protocol Client,0
+43,TCP,69,"TFTP,W32.Evala.Worm,BackGate Kit,Nimda,Pasana,Storm,Storm worm,Theef,Worm.Cycle.a",0
+44,TCP,70,Gopher服务，ADM worm,0
+45,TCP,79,"用户查询（Finger),Firehotcker,ADM worm",0
+46,TCP,80,"超文本服务器（Http),Executor,RingZero",0
+47,TCP,81,"Chubo,Worm.Bbeagle.q",0
+48,TCP,82,Netsky-Z,0
+49,TCP,88,Kerberos krb5服务,0
+50,TCP,99,Hidden Port,0
+51,TCP,102,消息传输代理,0
+52,TCP,108,SNA网关访问服务器,0
+53,TCP,109,Pop2,0
+54,TCP,110,"电子邮件（Pop3),ProMail",0
+55,TCP,113,"Kazimas,Auther Idnet",0
+56,TCP,115,简单文件传输协议,0
+57,TCP,118,"SQL Services,Infector 1.4.2",0
+58,TCP,119,"新闻组传输协议（Newsgroup(Nntp)),Happy 99",0
+59,TCP,121,"JammerKiller,Bo jammerkillah",0
+60,TCP,123,"网络时间协议(NTP),Net Controller",0
+61,TCP,129,Password Generator Protocol,0
+62,TCP,133,Infector 1.x,0
+63,TCP,135,微软DCE RPC end-point mapper服务,0
+64,TCP,137,微软Netbios Name服务（网上邻居传输文件使用）,0
+65,TCP,138,微软Netbios Name服务（网上邻居传输文件使用）,0
+66,TCP,139,微软Netbios Name服务（用于文件及打印机共享）,0
+67,TCP,142,NetTaxi,0
+68,TCP,143,Internet 邮件访问协议版本 4（IMAP4),0
+69,TCP,146,"FC Infector,Infector",0
+70,TCP,150,NetBIOS Session Service,0
+71,TCP,156,SQL服务器,0
+72,TCP,161,Snmp,0
+73,TCP,162,Snmp-Trap,0
+74,TCP,170,A-Trojan,0
+75,TCP,177,X Display管理控制协议,0
+76,TCP,179,Border网关协议（BGP),0
+77,TCP,190,网关访问控制协议（GACP),0
+78,TCP,194,Irc,0
+79,TCP,197,目录定位服务（DLS),0
+80,TCP,220,Internet 邮件访问协议版本 3（IMAP3),0
+81,TCP,256,Nirvana,0
+82,TCP,315,The Invasor,0
+83,TCP,371,ClearCase版本管理软件,0
+84,TCP,389,Lightweight Directory Access Protocol (LDAP),0
+85,TCP,396,Novell Netware over IP,0
+86,TCP,420,Breach,0
+87,TCP,421,TCP Wrappers,0
+88,TCP,443,安全服务（HTTPS）,0
+89,TCP,444,Simple Network Paging Protocol(SNPP),0
+90,TCP,445,Microsoft-DS,0
+91,TCP,455,Fatal Connections,0
+92,TCP,456,"Hackers paradise,FuseSpark",0
+93,TCP,458,苹果公司QuickTime,0
+94,TCP,513,Grlogin,0
+95,TCP,514,RPC Backdoor,0
+96,UDP,520,Rip,0
+97,TCP,531,"Rasmin,Net666",0
+98,TCP,544,kerberos kshell,0
+99,TCP,546,DHCP Client,0
+100,TCP,547,DHCP Server,0
+101,TCP,548,Macintosh文件服务,0
+102,TCP,555,"Ini-Killer,Phase Zero,Stealth Spy",0
+103,TCP,569,MSN,0
+104,TCP,605,SecretService,0
+105,TCP,606,Noknok8,0
+106,TCP,660,DeepThroat,0
+107,TCP,661,Noknok8,0
+108,TCP,666,"Attack FTP,Satanz Backdoor,Back Construction,Dark Connection Inside 1.2",0
+109,TCP,667,Noknok7.2,0
+110,TCP,668,Noknok6,0
+111,TCP,669,DP trojan,0
+112,TCP,692,GayOL,0
+113,TCP,707,"Welchia,nachi",0
+114,TCP,777,AIM Spy,0
+115,TCP,808,"RemoteControl,WinHole",0
+116,TCP,815,Everyone Darling,0
+117,TCP,901,Backdoor.Devil,0
+118,TCP,911,Dark Shadow,0
+119,TCP,990,ssl加密,0
+120,TCP,993,IMAP,0
+121,TCP,999,DeepThroat,0
+122,TCP,1000,Der Spaeher,0
+123,TCP,1001,"Silencer,WebEx,Der Spaeher",0
+124,TCP,1003,BackDoor,0
+125,TCP,1010,Doly,0
+126,TCP,1011,Doly,0
+127,TCP,1012,Doly,0
+128,TCP,1015,Doly,0
+129,TCP,1016,Doly,0
+130,TCP,1020,Vampire,0
+131,TCP,1023,Worm.Sasser.e,0
+132,TCP,1024,NetSpy.698(YAI),1
+133,TCP,1025,"NetSpy.698,Unused Windows Services Block",1
+134,TCP,1026,Unused Windows Services Block,1
+135,TCP,1027,Unused Windows Services Block,1
+136,TCP,1028,Unused Windows Services Block,1
+137,TCP,1029,Unused Windows Services Block,1
+138,TCP,1030,Unused Windows Services Block,1
+139,TCP,1033,Netspy,1
+140,TCP,1035,Multidropper,1
+141,TCP,1042,Bla,1
+142,TCP,1045,Rasmin,1
+143,TCP,1047,GateCrasher,1
+144,TCP,1050,MiniCommand,1
+145,TCP,1059,nimreg,1
+146,TCP,1069,Backdoor.TheefServer.202,1
+147,TCP,1070,"Voice,Psyber Stream Server,Streaming Audio Trojan",1
+148,TCP,1080,"Wingate,Worm.BugBear.B,Worm.Novarg.B",1
+149,TCP,1090,"Xtreme,VDOLive",1
+150,TCP,1092,LoveGate,1
+151,TCP,1095,Rat,1
+152,TCP,1097,Rat,1
+153,TCP,1098,Rat,1
+154,TCP,1099,Rat,1
+155,TCP,1110,nfsd-keepalive,1
+156,TCP,1111,Backdoor.AIMVision,1
+157,TCP,1155,Network File Access,1
+158,TCP,1170,"Psyber Stream Server,Streaming Audio trojan,Voice",1
+159,TCP,1200,NoBackO,1
+160,TCP,1201,NoBackO,1
+161,TCP,1207,Softwar,1
+162,TCP,1212,"Nirvana,Visul Killer",1
+163,TCP,1234,Ultors,1
+164,TCP,1243,"BackDoor-G,SubSeven,SubSeven Apocalypse",1
+165,TCP,1245,VooDoo Doll,1
+166,TCP,1269,Mavericks Matrix,1
+167,TCP,1313,Nirvana,1
+168,TCP,1349,BioNet,1
+169,TCP,1433,Microsoft SQL服务,1
+170,TCP,1441,Remote Storm,1
+171,TCP,1492,FTP99CMP(BackOriffice.FTP),1
+172,TCP,1503,NetMeeting T.120,1
+173,TCP,1509,Psyber Streaming Server,1
+174,TCP,1600,Shivka-Burka,1
+175,TCP,1688,Key Management Service(密钥管理服务),1
+176,TCP,1703,Exloiter 1.1,1
+177,TCP,1720,NetMeeting H.233 call Setup,1
+178,TCP,1723,VPN 网关（PPTP）,1
+179,TCP,1731,NetMeeting音频调用控制,1
+180,TCP,1807,SpySender,1
+181,TCP,1966,Fake FTP 2000,1
+182,TCP,1976,Custom port,1
+183,TCP,1981,Shockrave,1
+184,TCP,1990,stun-p1 cisco STUN Priority 1 port,1
+185,TCP,1990,stun-p1 cisco STUN Priority 1 port,1
+186,TCP,1991,stun-p2 cisco STUN Priority 2 port,1
+187,TCP,1992,"stun-p3 cisco STUN Priority 3 port,ipsendmsg IPsendmsg",1
+188,TCP,1993,snmp-tcp-port cisco SNMP TCP port,1
+189,TCP,1994,stun-port cisco serial tunnel port,1
+190,TCP,1995,perf-port cisco perf port,1
+191,TCP,1996,tr-rsrb-port cisco Remote SRB port,1
+192,TCP,1997,gdp-port cisco Gateway Discovery Protocol,1
+193,TCP,1998,x25-svc-port cisco X.25 service (XOT),1
+194,TCP,1999,"BackDoor,TransScout",1
+195,TCP,2000,"Der Spaeher,INsane Network",1
+196,TCP,2002,W32. Beagle .AX @mm,1
+197,TCP,2001,Transmisson scout,1
+198,TCP,2002,Transmisson scout,1
+199,TCP,2003,Transmisson scout,1
+200,TCP,2004,Transmisson scout,1
+201,TCP,2005,TTransmisson scout,1
+202,TCP,2011,cypress,1
+203,TCP,2015,raid-cs,1
+204,TCP,2023,"Ripper,Pass Ripper,Hack City Ripper Pro",1
+205,TCP,2049,NFS,1
+206,TCP,2115,Bugs,1
+207,TCP,2121,Nirvana,1
+208,TCP,2140,"Deep Throat,The Invasor",1
+209,TCP,2155,Nirvana,1
+210,TCP,2208,RuX,1
+211,TCP,2255,Illusion Mailer,1
+212,TCP,2283,HVL Rat5,1
+213,TCP,2300,PC Explorer,1
+214,TCP,2311,Studio54,1
+215,TCP,2556,Worm.Bbeagle.q,1
+216,TCP,2565,Striker,1
+217,TCP,2583,WinCrash,1
+218,TCP,2600,Digital RootBeer,1
+219,TCP,2716,Prayer Trojan,1
+220,TCP,2745,Worm.BBeagle.k,1
+221,TCP,2773,"Backdoor,SubSeven",1
+222,TCP,2774,SubSeven2.1&2.2,1
+223,TCP,2801,Phineas Phucker,1
+224,TCP,2989,Rat,1
+225,TCP,3024,WinCrash trojan,1
+226,TCP,3127,Worm.Novarg,1
+227,TCP,3128,"RingZero,Worm.Novarg.B",1
+228,TCP,3129,Masters Paradise,1
+229,TCP,3150,"Deep Throat,The Invasor",1
+230,TCP,3198,Worm.Novarg,1
+231,TCP,3210,SchoolBus,1
+232,TCP,3332,Worm.Cycle.a,1
+233,TCP,3333,Prosiak,1
+234,TCP,3389,超级终端（远程桌面）,1
+235,TCP,3456,Terror,1
+236,TCP,3459,Eclipse 2000,1
+237,TCP,3700,Portal of Doom,1
+238,TCP,3791,Eclypse,1
+239,TCP,3801,Eclypse,1
+240,TCP,3996,"Portal of Doom,RemoteAnything",1
+241,TCP,4000,腾讯QQ客户端,1
+242,TCP,4060,"Portal of Doom,RemoteAnything",1
+243,TCP,4092,WinCrash,1
+244,TCP,4242,VHM,1
+245,TCP,4267,SubSeven2.1&2.2,1
+246,TCP,4321,BoBo,1
+247,TCP,4444,"Prosiak,Swift remote",1
+248,TCP,4500,W32.HLLW.Tufas,1
+249,TCP,4567,File Nail,1
+250,TCP,4590,ICQTrojan,1
+251,TCP,4899,Remote Administrator服务器,1
+252,TCP,4950,ICQTrojan,1
+253,TCP,5000,"WindowsXP服务器，Blazer 5,Bubbel,Back Door Setup,Sockets de Troie",1
+254,TCP,5001,"Back Door Setup,Sockets de Troie",1
+255,TCP,5002,"cd00r,Shaft",1
+256,TCP,5011,One of the Last Trojans (OOTLT),1
+257,TCP,5025,WM Remote KeyLogger,1
+258,TCP,5031,"Firehotcker,Metropolitan,NetMetro",1
+259,TCP,5032,Metropolitan,1
+260,TCP,5190,ICQ Query,1
+261,TCP,5321,Firehotcker,1
+262,TCP,5333,Backage Trojan Box 3,1
+263,TCP,5343,WCrat,1
+264,TCP,5400,"Blade Runner,BackConstruction1.2",1
+265,TCP,5401,"Blade Runner,Back Construction",1
+266,TCP,5402,"Blade Runner,Back Construction",1
+267,TCP,5471,WinCrash,1
+268,TCP,5512,Illusion Mailer,1
+269,TCP,5521,Illusion Mailer,1
+270,TCP,5550,"Xtcp,INsane Network",1
+271,TCP,5554,Worm.Sasser,1
+272,TCP,5555,ServeMe,1
+273,TCP,5556,BO Facil,1
+274,TCP,5557,BO Facil,1
+275,TCP,5569,Robo-Hack,1
+276,TCP,5598,BackDoor 2.03,1
+277,TCP,5631,PCAnyWhere data,1
+278,TCP,5632,PCAnyWhere,1
+279,TCP,5637,PC Crasher,1
+280,TCP,5638,PC Crasher,1
+281,TCP,5698,BackDoor,1
+282,TCP,5714,Wincrash3,1
+283,TCP,5741,WinCrash3,1
+284,TCP,5742,WinCrash,1
+285,TCP,5760,Portmap Remote Root Linux Exploit,1
+286,TCP,5880,Y3K RAT,1
+287,TCP,5881,Y3K RAT,1
+288,TCP,5882,Y3K RAT,1
+289,TCP,5888,Y3K RAT,1
+290,TCP,5889,Y3K RAT,1
+291,TCP,5900,WinVnc,1
+292,TCP,6000,Backdoor.AB,1
+293,TCP,6006,Noknok8,1
+294,TCP,6129,Dameware Nt Utilities服务器,1
+295,TCP,6272,SecretService,1
+296,TCP,6267,广外女生,1
+297,TCP,6400,"Backdoor.AB,The Thing",1
+298,TCP,6500,Devil 1.03,1
+299,TCP,6661,Teman,1
+300,TCP,6666,TCPshell.c,1
+301,TCP,6667,"NT Remote Control,Wise 播放器接收端口",1
+302,TCP,6668,Wise Video广播端口,1
+303,TCP,6669,Vampyre,1
+304,TCP,6670,"DeepThroat,iPhone",1
+305,TCP,6671,Deep Throat 3.0,1
+306,TCP,6711,SubSeven,1
+307,TCP,6712,SubSeven1.x,1
+308,TCP,6713,SubSeven,1
+309,TCP,6723,Mstream,1
+310,TCP,6767,NT Remote Control,1
+311,TCP,6771,DeepThroat,1
+312,TCP,6776,"BackDoor-G,SubSeven,2000 Cracks",1
+313,TCP,6777,Worm.BBeagle,1
+314,TCP,6789,Doly Trojan,1
+315,TCP,6838,Mstream,1
+316,TCP,6883,DeltaSource,1
+317,TCP,6912,Shit Heep,1
+318,TCP,6939,Indoctrination,1
+319,TCP,6969,"GateCrasher,Priority,IRC 3",1
+320,TCP,6970,"RealAudio,GateCrasher",1
+321,TCP,7000,"Remote Grab,NetMonitor,SubSeven1.x",1
+322,TCP,7001,Freak88,1
+323,TCP,7201,NetMonitor,1
+324,TCP,7215,"BackDoor-G,SubSeven",1
+325,TCP,7001,"Freak88,Freak2k",1
+326,TCP,7300,NetMonitor,1
+327,TCP,7301,NetMonitor,1
+328,TCP,7306,"NetMonitor,NetSpy 1.0",1
+329,TCP,7307,"NetMonitor,ProcSpy",1
+330,TCP,7308,"NetMonitor,X Spy",1
+331,TCP,7323,Sygate服务器端,1
+332,TCP,7424,Host Control,1
+333,TCP,7511,聪明基因,1
+334,TCP,7597,Qaz,1
+335,TCP,7609,Snid X2,1
+336,TCP,7626,冰河,1
+337,TCP,7777,The Thing,1
+338,TCP,7789,"Back Door Setup,ICQKiller",1
+339,TCP,7983,Mstream,1
+340,TCP,8000,腾讯OICQ服务器端，XDMA,1
+341,TCP,8010,"Wingate,Logfile",1
+342,TCP,8011,WAY2.4,1
+343,TCP,8080,"WWW 代理，Ring Zero,Chubo,Worm.Novarg.B",1
+344,TCP,8102,网络神偷,1
+345,TCP,8181,W32.Erkez.D@mm,1
+346,TCP,8520,W32.Socay.Worm,1
+347,TCP,8594,I-Worm/Bozori.a,1
+348,TCP,8787,BackOfrice 2000,1
+349,TCP,8888,Winvnc,1
+350,TCP,8897,"Hack Office,Armageddon",1
+351,TCP,8989,Recon,1
+352,TCP,9000,Netministrator,1
+353,TCP,9325,Mstream,1
+354,TCP,9400,InCommand 1.0,1
+355,TCP,9401,InCommand 1.0,1
+356,TCP,9402,InCommand 1.0,1
+357,TCP,9872,Portal of Doom,1
+358,TCP,9873,Portal of Doom,1
+359,TCP,9874,Portal of Doom,1
+360,TCP,9875,Portal of Doom,1
+361,TCP,9876,Cyber Attacker,1
+362,TCP,9878,TransScout,1
+363,TCP,9989,Ini-Killer,1
+364,TCP,9898,Worm.Win32.Dabber.a,1
+365,TCP,9999,Prayer Trojan,1
+366,TCP,10067,Portal of Doom,1
+367,TCP,10080,Worm.Novarg.B,1
+368,TCP,10084,Syphillis,1
+369,TCP,10085,Syphillis,1
+370,TCP,10086,Syphillis,1
+371,TCP,10101,BrainSpy,1
+372,TCP,10167,Portal Of Doom,1
+373,TCP,10168,"Worm.Supnot.78858.c,Worm.LovGate.T",1
+374,TCP,10520,Acid Shivers,1
+375,TCP,10607,Coma trojan,1
+376,TCP,10666,Ambush,1
+377,TCP,11000,Senna Spy,1
+378,TCP,11050,Host Control,1
+379,TCP,11051,Host Control,1
+380,TCP,11223,"Progenic,Hack ’99KeyLogger",1
+381,TCP,11831,TROJ_LATINUS.SVR,1
+382,TCP,12076,"Gjamer,MSH.104b",1
+383,TCP,12223,Hack’99 KeyLogger,1
+384,TCP,12345,"GabanBus,NetBus 1.6/1.7,Pie Bill Gates,X-bill",1
+385,TCP,12346,"GabanBus,NetBus 1.6/1.7,X-bill",1
+386,TCP,12349,BioNet,1
+387,TCP,12361,Whack-a-mole,1
+388,TCP,12362,Whack-a-mole,1
+389,TCP,12363,Whack-a-mole,1
+390,TCP,12378,W32/Gibe@MM,1
+391,TCP,12456,NetBus,1
+392,TCP,12623,DUN Control,1
+393,TCP,12624,Buttman,1
+394,TCP,12631,"WhackJob,WhackJob.NB1.7",1
+395,TCP,12701,Eclipse2000,1
+396,TCP,12754,Mstream,1
+397,TCP,13000,Senna Spy,1
+398,TCP,13010,Hacker Brazil,1
+399,TCP,13013,Psychward,1
+400,TCP,13223,Tribal Voice的聊天程序PowWow,1
+401,TCP,13700,Kuang2 The Virus,1
+402,TCP,14456,Solero,1
+403,TCP,14500,PC Invader,1
+404,TCP,14501,PC Invader,1
+405,TCP,14502,PC Invader,1
+406,TCP,14503,PC Invader,1
+407,TCP,15000,NetDaemon 1.0,1
+408,TCP,15092,Host Control,1
+409,TCP,15104,Mstream,1
+410,TCP,16484,Mosucker,1
+411,TCP,16660,Stacheldraht (DDoS),1
+412,TCP,16772,ICQ Revenge,1
+413,TCP,16959,Priority,1
+414,TCP,16969,Priority,1
+415,TCP,17027,"提供广告服务的Conducent""adbot""共享软件",1
+416,TCP,17166,Mosaic,1
+417,TCP,17300,Kuang2 The Virus,1
+418,TCP,17490,CrazyNet,1
+419,TCP,17500,CrazyNet,1
+420,TCP,17569,Infector 1.4.x + 1.6.x,1
+421,TCP,17777,Nephron,1
+422,TCP,18753,Shaft (DDoS),1
+423,TCP,19191,蓝色火焰,1
+424,TCP,19864,ICQ Revenge,1
+425,TCP,20000,Millennium II (GrilFriend),1
+426,TCP,20001,Millennium II (GrilFriend),1
+427,TCP,20002,AcidkoR,1
+428,TCP,20034,NetBus 2 Pro,1
+429,TCP,20168,Lovgate,1
+430,TCP,20203,"Logged,Chupacabra",1
+431,TCP,20331,Bla,1
+432,TCP,20432,Shaft (DDoS),1
+433,TCP,20808,Worm.LovGate.v.QQ,1
+434,TCP,21335,"Tribal Flood Network,Trinoo",1
+435,TCP,21544,"Schwindler 1.82,GirlFriend",1
+436,TCP,21554,"Schwindler 1.82,GirlFriend,Exloiter 1.0.1.2",1
+437,TCP,22222,"Prosiak,RuXUploader2.0",1
+438,TCP,22784,Backdoor.Intruzzo,1
+439,TCP,23432,Asylum 0.1.3,1
+440,TCP,23444,网络公牛,1
+441,TCP,23456,"Evil FTP,Ugly FTP,WhackJob",1
+442,TCP,23476,Donald Dick,1
+443,TCP,23477,Donald Dick,1
+444,TCP,23777,INet Spy,1
+445,TCP,26274,Delta,1
+446,TCP,26681,Spy Voice,1
+447,TCP,27374,"Sub Seven 2.0+,Backdoor.Baste",1
+448,TCP,27444,"Tribal Flood Network,Trinoo",1
+449,TCP,27665,"Tribal Flood Network,Trinoo",1
+450,TCP,29431,Hack Attack,1
+451,TCP,29432,Hack Attack,1
+452,TCP,29104,Host Control,1
+453,TCP,29559,TROJ_LATINUS.SVR,1
+454,TCP,29891,The Unexplained,1
+455,TCP,30001,Terr0r32,1
+456,TCP,30003,"Death,Lamers Death",1
+457,TCP,30029,AOL trojan,1
+458,TCP,30100,"NetSphere 1.27a,NetSphere 1.31",1
+459,TCP,30101,"NetSphere 1.31,NetSphere 1.27a",1
+460,TCP,30102,"NetSphere 1.27a,NetSphere 1.31",1
+461,TCP,30103,NetSphere 1.31,1
+462,TCP,30303,Sockets de Troie,1
+463,TCP,30722,W32.Esbot.A,1
+464,TCP,30947,Intruse,1
+465,TCP,30999,Kuang2,1
+466,TCP,31336,Bo Whack,1
+467,TCP,31337,"Baron Night,BO client,BO2,Bo Facil,BackFire,Back Orifice,DeepBO,Freak2k,NetSpy",1
+468,TCP,31338,"NetSpy,Back Orifice,DeepBO",1
+469,TCP,31339,NetSpy DK,1
+470,TCP,31554,Schwindler,1
+471,TCP,31666,BOWhack,1
+472,TCP,31778,Hack Attack,1
+473,TCP,31785,Hack Attack,1
+474,TCP,31787,Hack Attack,1
+475,TCP,31789,Hack Attack,1
+476,TCP,31791,Hack Attack,1
+477,TCP,31792,Hack Attack,1
+478,TCP,32100,PeanutBrittle,1
+479,TCP,32418,Acid Battery,1
+480,TCP,33333,"Prosiak,Blakharaz 1.0",1
+481,TCP,33577,Son Of Psychward,1
+482,TCP,33777,Son Of Psychward,1
+483,TCP,33911,Spirit 2001a,1
+484,TCP,34324,"BigGluck,TN,Tiny Telnet Server",1
+485,TCP,34555,Trin00 (Windows) (DDoS),1
+486,TCP,35555,Trin00 (Windows) (DDoS),1
+487,TCP,36794,Worm.Bugbear-A,1
+488,TCP,37651,YAT,1
+489,TCP,40412,The Spy,1
+490,TCP,40421,"Agent 40421,Masters Paradise.96",1
+491,TCP,40422,Masters Paradise,1
+492,TCP,40423,Masters Paradise.97,1
+493,TCP,40425,Masters Paradise,1
+494,TCP,40426,Masters Paradise 3.x,1
+495,TCP,41666,Remote Boot,1
+496,TCP,43210,Schoolbus 1.6/2.0,1
+497,TCP,44444,Delta Source,1
+498,TCP,44445,Happypig,1
+499,TCP,45576,未知代理,1
+500,TCP,47252,Prosiak,1
+501,TCP,47262,Delta,1
+502,TCP,47878,BirdSpy2,1
+503,TCP,49301,Online Keylogger,1
+504,TCP,50505,Sockets de Troie,1
+505,TCP,50766,"Fore,Schwindler",1
+506,TCP,51966,CafeIni,1
+507,TCP,53001,Remote Windows Shutdown,1
+508,TCP,53217,Acid Battery 2000,1
+509,TCP,54283,"Back Door-G,Sub7",1
+510,TCP,54320,"Back Orifice 2000,Sheep",1
+511,TCP,54321,"School Bus .69-1.11,Sheep,BO2K",1
+512,TCP,57341,NetRaider,1
+513,TCP,58008,BackDoor.Tron,1
+514,TCP,58009,BackDoor.Tron,1
+515,TCP,58339,ButtFunnel,1
+516,TCP,59211,BackDoor.DuckToy,1
+517,TCP,60000,Deep Throat,1
+518,TCP,60068,Xzip 6000068,1
+519,TCP,60411,Connection,1
+520,TCP,60606,TROJ_BCKDOR.G2.A,1
+521,TCP,61466,Telecommando,1
+522,TCP,61603,Bunker-kill,1
+523,TCP,63485,Bunker-kill,1
+524,TCP,65000,"Devil,DDoS",1
+525,TCP,65432,"Th3tr41t0r,The Traitor",1
+526,TCP,65530,TROJ_WINMITE.10,1
+527,TCP,65535,"RC,Adore Worm/Linux",1
+528,UDP,1,Sockets des Troie,2
+529,UDP,9,Chargen,2
+530,UDP,19,Chargen,2
+531,UDP,69,Pasana,2
+532,UDP,80,Penrox,2
+533,UDP,371,ClearCase版本管理软件,2
+534,UDP,445,公共Internet文件系统（CIFS),2
+535,UDP,500,"Internet密钥交换（IP安全性 ,IKE)",2
+536,UDP,1025,Maverick’s Matrix 1.2 - 2.0,3
+537,UDP,1026,Remote Explorer 2000,3
+538,UDP,1027,UC聊天软件，Trojan.Huigezi.e,3
+539,UDP,1028,"3721上网助手（用途不明，建议用户警惕！），KiLo,SubSARI",3
+540,UDP,1029,SubSARI,3
+541,UDP,1031,Xot,3
+542,UDP,1032,Akosch4,3
+543,UDP,1104,RexxRave,3
+544,UDP,1111,Daodan,3
+545,UDP,1116,Lurker,3
+546,UDP,1122,"Last 2000,Singularity",3
+547,UDP,1183,"Cyn,SweetHeart",3
+548,UDP,1200,NoBackO,3
+549,UDP,1201,NoBackO,3
+550,UDP,1342,BLA trojan,3
+551,UDP,1344,Ptakks,3
+552,UDP,1349,BO dll,3
+553,UDP,1561,MuSka52,3
+554,UDP,1701,VPN网关（L2TP）,3
+555,UDP,1772,NetControle,3
+556,UDP,1978,Slapper,3
+557,UDP,1985,Black Diver,3
+558,UDP,2000,"A-trojan,Fear,Force,GOTHIC Intruder,Last 2000,Real 2000",3
+559,UDP,2001,Scalper,3
+560,UDP,2002,Slapper,3
+561,UDP,2015,raid-cs,3
+562,UDP,2018,rellpack,3
+563,UDP,2130,Mini BackLash,3
+564,UDP,2140,"Deep Throat,Foreplay,The Invasor",3
+565,UDP,2222,"SweetHeart,Way",3
+566,UDP,2339,Voice Spy,3
+567,UDP,2702,Black Diver,3
+568,UDP,2989,RAT,3
+569,UDP,3150,Deep Throat,3
+570,UDP,3215,XHX,3
+571,UDP,3333,Daodan,3
+572,UDP,3801,Eclypse,3
+573,UDP,3996,Remote Anything,3
+574,UDP,4128,RedShad,3
+575,UDP,4156,Slapper,3
+576,UDP,4500,sae-urn/ (IP安全性，IKE NAT遍历）,3
+577,UDP,5419,DarkSky,3
+578,UDP,5503,Remote Shell Trojan,3
+579,UDP,5555,Daodan,3
+580,UDP,5882,Y3K RAT,3
+581,UDP,5888,Y3K RAT,3
+582,UDP,6112,Battle .net Game,3
+583,UDP,6666,KiLo,3
+584,UDP,6667,KiLo,3
+585,UDP,6766,KiLo,3
+586,UDP,6767,"KiLo,UandMe",3
+587,UDP,6838,Mstream Agent-handler,3
+588,UDP,7028,未知木马,3
+589,UDP,7424,Host Control,3
+590,UDP,7788,Singularity,3
+591,UDP,7983,MStream handler-agent,3
+592,UDP,8012,Ptakks,3
+593,UDP,8090,Aphex’s Remote Packet Sniffer,3
+594,UDP,8127,"9_119,Chonker",3
+595,UDP,8488,KiLo,3
+596,UDP,8489,KiLo,3
+597,UDP,8787,BackOrifice 2000,3
+598,UDP,8879,BackOrifice 2000,3
+599,UDP,9325,MStream Agent-handler,3
+600,UDP,10000,XHX,3
+601,UDP,10067,Portal of Doom,3
+602,UDP,10084,Syphillis,3
+603,UDP,10100,Slapper,3
+604,UDP,10167,Portal of Doom,3
+605,UDP,10498,Mstream,3
+606,UDP,10666,Ambush,3
+607,UDP,11225,Cyn,3
+608,UDP,12321,Protoss,3
+609,UDP,12345,BlueIce 2000,3
+610,UDP,12378,W32/Gibe@MM,3
+611,UDP,12623,"ButtMan,DUN Control",3
+612,UDP,15210,UDP remote shell backdoor server,3
+613,UDP,15486,KiLo,3
+614,UDP,16514,KiLo,3
+615,UDP,16515,KiLo,3
+616,UDP,18753,Shaft handler to Agent,3
+617,UDP,20433,Shaft,3
+618,UDP,21554,GirlFriend,3
+619,UDP,22784,Backdoor.Intruzzo,3
+620,UDP,23476,Donald Dick,3
+621,UDP,25123,MOTD,3
+622,UDP,26274,Delta Source,3
+623,UDP,26374,Sub-7 2.1,3
+624,UDP,26444,Trin00/TFN2K,3
+625,UDP,26573,Sub-7 2.1,3
+626,UDP,27184,Alvgus trojan 2000,3
+627,UDP,27444,Trinoo,3
+628,UDP,29589,KiLo,3
+629,UDP,29891,The Unexplained,3
+630,UDP,30103,NetSphere,3
+631,UDP,31320,Little Witch,3
+632,UDP,31335,Trin00 DoS Attack,3
+633,UDP,31337,"Baron Night,BO client,BO2,Bo Facil,BackFire,Back Orifice,DeepBO",3
+634,UDP,31338,"Back Orifice,NetSpy DK,DeepBO",3
+635,UDP,31339,Little Witch,3
+636,UDP,31340,Little Witch,3
+637,UDP,31416,Lithium,3
+638,UDP,31787,Hack aTack,3
+639,UDP,31789,Hack aTack,3
+640,UDP,31790,Hack aTack,3
+641,UDP,31791,Hack aTack,3
+642,UDP,33390,未知木马,3
+643,UDP,34555,Trinoo,3
+644,UDP,35555,Trinoo,3
+645,UDP,43720,KiLo,3
+646,UDP,44014,Iani,3
+647,UDP,44767,School Bus,3
+648,UDP,46666,Taskman,3
+649,UDP,47262,Delta Source,3
+650,UDP,47785,KiLo,3
+651,UDP,49301,OnLine keyLogger,3
+652,UDP,49683,Fenster,3
+653,UDP,49698,KiLo,3
+654,UDP,52901,Omega,3
+655,UDP,54320,Back Orifice,3
+656,UDP,54321,Back Orifice 2000,3
+657,UDP,54341,NetRaider Trojan,3
+658,UDP,61746,KiLO,3
+659,UDP,61747,KiLO,3
+660,UDP,61748,KiLO,3
+661,UDP,65432,The Traitor,3

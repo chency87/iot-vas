@@ -126,5 +126,55 @@ class VulnerableComponent(db.Model):
     category = db.Column(db.String(256))
     vulnerabilities =  db.Column(db.String(1024))
     cvss_max = db.Column(db.Integer)
-    
+
+#PostServiceRealation
+class PortServiceRelation(db.Model):
+    __tablename__ = 'port_service_relation'
+    id = db.Column(db.Integer, primary_key=True)
+
+    connection_mode = db.Column(db.String(512))
+    port = db.Column(db.Integer)
+    service = db.Column(db.String(512))
+    port_type = db.Column(db.Integer)   # 0:TCP static port 1:TCP dynamic port 2:UDP static port 3:UDP dynamic port
+
+class FirmwareRisk(db.Model):
+    __tablename__ = 'firmware_risk'
+    id=db.Column(db.Integer,primary_key=True)
+
+    risk_summary=db.Column(db.String(1024))
+    vulnerable_components=db.Column(db.String(1024))
+
+class RiskSummary(db.Model):
+    __tablename__ = 'risk_summary'
+    id = db.Column(db.Integer, primary_key=True)
+
+    net_services_risk = db.Column(db.String(1024))
+    crypto_risk = db.Column(db.String(1024))
+    kernel_risk = db.Column(db.String(1024))
+    client_tools_risk = db.Column(db.String(1024))
+
+class WeakCert(db.Model):
+    __tablename__ = 'weak_cert'
+    id = db.Column(db.Integer, primary_key=True)
+
+    file_name = db.Column(db.String(512))
+    file_hash = db.Column(db.String(512))
+    thumb_print = db.Column(db.String(512))
+    sign_algorithm=db.Column(db.String(512))
+    subject_name = db.Column(db.String(512))
+    valid_from = db.Column(db.String(512))
+    valid_to = db.Column(db.String(512))
+class ValidationError(db.Model):
+    __tablename__ = 'validation_error'
+    id = db.Column(db.Integer, primary_key=True)
+
+    loc = db.Column(db.String(512))
+    msg = db.Column(db.String(512))
+    type = db.Column(db.String(512))
+
+class HTTPValidationError(db.Model):
+    __tablename__ = 'http_validation_error'
+    id = db.Column(db.Integer, primary_key=True)
+
+    detail = db.Column(db.String(1024))
 
