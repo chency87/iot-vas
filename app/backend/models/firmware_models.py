@@ -178,3 +178,80 @@ class HTTPValidationError(db.Model):
 
     detail = db.Column(db.String(1024))
 
+class DeviceFeaturesInfoRelation(db.Model):
+    __tablename__ = 'device_features_info_relation'
+    id = db.Column(db.Integer, primary_key=True)
+    id_DeviceFeatures = db.Column(db.Integer) #Reference_key to DeviceFeatures
+    id_DeviceInfo = db.Column(db.Integer)#Reference_key to DeviceInfo
+
+class FirmwareRiskSummaryVulnerableComponentRelation(db.Model):
+    __tablename__ = 'firmware_risk_summary_vulnerable_component_relation'
+    id = db.Column(db.Integer, primary_key=True)
+    id_RiskSummary = db.Column(db.Integer) #Reference_key to RiskSummary
+    id_VulnerableComponent = db.Column(db.Integer)#Reference_key to VulnerableComponent
+    firmware_hash = db.Column(db.String(512)) #Reference_key to FirmwareInfo
+
+    # class DefaultAccount(db.Model):
+    #     __tablename__ = 'default_account'
+    #     id = db.Column(db.Integer, primary_key=True)
+    #     name = db.Column(db.String(512))
+    #     pwd_hash = db.Column(db.String(512))
+    #     hash_algorithm = db.Column(db.String(512))  # title: Hash algorithm, '0': DES, '1': '5': SHA2, '2a': Blowfish
+    #     shell = db.Column(db.String(512))
+    #     uid = db.Column(db.Integer)
+    #     gid = db.Column(db.Integer)
+    #     home_dir = db.Column(db.String(512))
+
+class DefaultAccountRelationship(db.Model):
+    __tablename__ = 'default_account_relationship'
+    id = db.Column(db.Integer, primary_key=True)
+    id_DefaultAccount = db.Column(db.Integer) #Reference_key to DefaultAccount
+    firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
+
+class CryptoKeyRelation(db.Model):
+    __tablename__ = 'crypto_key_relation'
+    id = db.Column(db.Integer, primary_key=True)
+    id_CryptoKey = db.Column(db.Integer) #Reference_key to CryptoKey
+    firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
+
+class WeakCertRelation(db.Model):
+    __tablename__ = 'weak_cert_relation'
+    id = db.Column(db.Integer, primary_key=True)
+    id_WeakCert = db.Column(db.Integer) #Reference_key to WeakCert
+    firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
+
+# class ConfigIssue(db.Model):
+#     __tablename__ = 'config_issue'
+#     id = db.Column(db.Integer, primary_key=True)
+#     service_name = db.Column(db.String(512))
+#     config_file = db.Column(db.String(512))
+#     issues = db.Column(db.String(512))  # List of detected issues
+#     suggestions = db.Column(db.String(512)) # List of suggestions to fix the issues
+class ConfigIssueRelation(db.Model):
+    __tablename__ = 'config_issue_relation'
+    id = db.Column(db.Integer, primary_key=True)
+    id_ConfigIssue = db.Column(db.Integer) #Reference_key to ConfigIssue
+    firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
+
+# class ExpiredCert(db.Model):
+#     __tablename__ = 'expired_cert'
+#     id = db.Column(db.Integer, primary_key=True)
+#     file_name = db.Column(db.String(512))
+#     file_hash = db.Column(db.String(512))
+#     thumb_print = db.Column(db.String(512))
+#     public_key = db.Column(db.Integer) # public key , refer to  PublicKey
+#     subject_name = db.Column(db.String(512))
+#     valid_form = db.Column(db.String(512))
+#     valid_to =  db.Column(db.String(512))
+
+class ExpiredCertRelation(db.Model):
+    __tablename__ = 'expired_cert_relation'
+    id = db.Column(db.Integer, primary_key=True)
+    id_ExpiredCert = db.Column(db.Integer) #Reference_key to ExpiredCert
+    firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
+
+
+
+
+
+
