@@ -4,9 +4,7 @@ import json
 
 from app.backend.database.database import db
 
-# {'task_name': '2', 'task_cmd': '2', 'task_engine': '2', 
-    # 'trigger_type': 'date', 'run_date': '12/24/2021 16:55:47', 
-    # 'task_cron': '', 'start_date': '', 'interval': '', 'interval_unit': '2'}
+
 
 
 class Task(db.Model):
@@ -134,6 +132,13 @@ class DeviceFingerprint(db.Model):
     service =  db.Column(db.String(240))
     protocol =  db.Column(db.String(240))
     device_ip = db.Column(db.String(64))
+
+
+
+
+
+
+
 
     def to_json(self):       
         json_post = {

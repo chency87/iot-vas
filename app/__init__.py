@@ -9,8 +9,8 @@ from werkzeug.exceptions import HTTPException
 from app.conf import config
 from app.backend.database.database import db
 from app.backend.database.db_initializer import (create_admin_user,
-                                               create_super_admin,
-                                               create_test_user)
+                                                 create_super_admin,
+                                                 create_test_user)
 
 from app.backend.handlers.schedule import schedule as schedule_blueprint
 from app.backend.handlers.finger import finger as finger_blueprint
@@ -18,19 +18,19 @@ from app.backend.handlers.settings import setting as setting_blueprint
 from app.backend.handlers.logger import logger as logger_blueprint
 from app.backend.handlers.plugins import plugins as plugins_blueprint
 from app.backend.extensions import scheduler
+from app.backend.controller.extract_info import extract_info as extract_info_blueprint
 from app.backend.controller.Task import Task as Task_blueprint
 from app.backend.controller.scan import scan as scan_blueprint
-from app.backend.controller.extract_info import extract_info as extract_info_blueprint
 
 
-def init_app(config_name = None):
+def init_app(config_name=None):
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'default')
     app = Flask(__name__, static_url_path='')
-    app.config['SQLALCHEMY_DATABASE_URI']= config.db['SQLALCHEMY_DATABASE_URI']
-    app.config['SECRET_KEY']=config.SECRET_KEY
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=  config.db['SQLALCHEMY_TRACK_MODIFICATIONS']
-    app.config['SCHEDULER_API_ENABLED']= True
+    app.config['SQLALCHEMY_DATABASE_URI'] = config.db['SQLALCHEMY_DATABASE_URI']
+    app.config['SECRET_KEY'] = config.SECRET_KEY
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config.db['SQLALCHEMY_TRACK_MODIFICATIONS']
+    app.config['SCHEDULER_API_ENABLED'] = True
     app.config['MAX_CONTENT_LENGTH'] = config.MAX_CONTENT_LENGTH
     app.config['JSON_AS_ASCII'] = False
 
@@ -42,16 +42,20 @@ def init_app(config_name = None):
     init_script_folder()
 
     db.app = app
-        # Create all database tables.
+    # Create all database tables.
     db.create_all()
     # Create default super admin user in database.
     create_super_admin()
     create_admin_user()
     create_test_user()
     return app
+
+
 def init_script_folder():
     if not os.path.exists(config.UPLOAD_FOLDER):
         os.makedirs(config.UPLOAD_FOLDER)
+
+
 # 注册蓝图
 def register_blueprints(app):
     app.register_blueprint(schedule_blueprint)
@@ -64,7 +68,6 @@ def register_blueprints(app):
     app.register_blueprint(scan_blueprint)
     # app.register_blueprint(auth_blueprint, url_prefix='/auth')
     # app.register_blueprint(job_blueprint,url_prefix='/v1/cron/job')
-
 
 
 def register_extensions(app):
@@ -81,7 +84,10 @@ def register_extensions(app):
     scheduler.init_app(app)
     scheduler.start()
 
+
 app = init_app()
+
+
 @app.errorhandler(Exception)
 def server_error_handler(e):
     if isinstance(e, APIException):
@@ -102,14 +108,15 @@ def server_error_handler(e):
 def send_bower(path):
     return send_from_directory(os.path.join(app.root_path, 'statics/bower_components'), path)
 
+
 @app.route('/dist/<path:path>')
 def send_dist(path):
     return send_from_directory(os.path.join(app.root_path, 'statics/dist'), path)
 
+
 @app.route('/js/<path:path>')
 def send_js(path):
     return send_from_directory(os.path.join(app.root_path, 'statics/js'), path)
-
 
 
 from app import views

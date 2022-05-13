@@ -519,7 +519,7 @@ def add_update_firmware_risk(id,risk_summary ,net_services_risk,crypto_risk,kern
 
         db.session.commit()
     else:
-        current = FirmwareRisk.query.filter_by(risk_summary_net_services_risk=risk_summary_net_services_risk).first()
+        current = FirmwareRisk.query.filter_by(risk_summary_net_services_risk=net_services_risk).first()
         current0= VulnerableComponent.query.filter_by(name=name)
         current1=Vulnerability.query.filter_by(cve_id=cve_id).first()
         if current and current0 and current1:

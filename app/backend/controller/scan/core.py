@@ -33,7 +33,6 @@ class Scan(object):
         ips = list(result['scan'].keys())  # 将扫描的到的出来的ip地址赋值给self.ip
         return ips
 
-
     # 使用masscan检测开放的端口
     def port_decetion(self):
         """
@@ -45,19 +44,18 @@ class Scan(object):
         :param hosts: string for hosts as masscan use it 'scanme.masscan.org' or '198.116.0-255.1-127' or '216.163.128.20/20'
         :param ports: string for ports as masscan use it '22,53,110,143-4564'
         """
-        # 如果扫描参数里有-sU 则使用udp扫描
+        # 如果扫描参数里有-sU 则使用udp扫
         try:
             port = []
             if re.search('-sU', self.scan_argument):
-
-                ports = 'U:' + self.ports
+                ports = "U:1-65535"
                 result = self.ms.scan(hosts=self.ip, ports=ports, arguments=self.scan_rate)
                 ips = list(result['scan'].keys())
                 for ip in ips:
                     port = list(result['scan'][ip]['udp'].keys())
 
             # tcp 扫描
-            ports = 'T:' + self.ports
+            ports = 'T:1-65535'
             result = self.ms.scan(hosts=self.ip, ports=ports, arguments=self.scan_rate)
             # 将扫描的ip列表化
             ips = list(result['scan'].keys())
@@ -67,14 +65,16 @@ class Scan(object):
             ports = ','.join(open_ports)
             return ports  # 这里ports要转换成字符串，后面basic_dection 还要用
         except:
-            print("network is unreachable")
+            print('network is unreachable.')
+            return None
 
     # 基本检测 无论什么扫描都会调用一次
     def basic_detection(self, ports=None):
         """
         Method which detect the service
         """
-        ##这里待会记得改一下，ports改成 self.ports
+        print("star nmap_scan")
+
         if self.ports is None:
             ports = self.port_decetion()  # 如果用户没有提供端口，则需要用masscan扫描出来
         result = self.nm.scan(hosts=self.ip, ports=ports, arguments=self.scan_argument + ' ' + self.script_argument)
@@ -141,9 +141,12 @@ class Scan(object):
             t_ports = list(result['scan'][ip]['tcp'].keys())
             if 161 in u_ports:
                 if 'snmp-interfaces' in result['scan'][ip]['udp'][161]['script']:
-                    self.results[ip]['udp'][161]['snmp-interfaces'] = result['scan'][ip]['udp'][161]['script']['snmp-interfaces']
+                    self.results[ip]['udp'][161]['snmp-interfaces'] = result['scan'][ip]['udp'][161]['script'][
+                        'snmp-interfaces']
                 if 'snmp-sysdescr' in result['scan'][ip]['udp'][161]['script']:
-                    self.results[ip]['udp'][161]['snmp-sysdescr'] = result['scan'][ip]['udp'][161]['script']['snmp-sysdescr']
+                    self.results[ip]['udp'][161]['snmp-sysdescr'] = result['scan'][ip]['udp'][161]['script'][
+                        'snmp-sysdescr']
 
     def get_result(self):
+        print(self.results)
         return self.results

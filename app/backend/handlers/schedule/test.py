@@ -5,11 +5,6 @@ from libnmap.process import NmapProcess
 from libnmap.parser import NmapParser, NmapParserException
 from datetime import datetime
 
-
-
-
-
-
 std = '''<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE nmaprun>
 <?xml-stylesheet href="file:///opt/homebrew/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
@@ -90,8 +85,6 @@ std = '''<?xml version="1.0" encoding="UTF-8"?>
 </runstats>
 </nmaprun>
 '''
-
-
 
 os_scan6 = '''<?xml version="1.0"?>
 <?xml-stylesheet href="file:///usr/local/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
@@ -975,17 +968,11 @@ os_scan6 = '''<?xml version="1.0"?>
 '''
 
 
-
-
-
-
-
-
 # start a new nmap scan on localhost with some specific options
 def do_scan(targets, options):
     parsed = None
     nmproc = NmapProcess(targets, options, safe_mode=False)
-    rc = nmproc.run() #sudo_run(run_as="root")
+    rc = nmproc.run()  # sudo_run(run_as="root")
     if rc != 0:
         print("nmap scan failed: {0}".format(nmproc.stderr))
     print(type(nmproc.stdout))
@@ -1019,10 +1006,10 @@ def print_scan(nmap_report):
 
         for serv in host.services:
             pserv = "{0:>5s}/{1:3s}  {2:12s}  {3}".format(
-                    str(serv.port),
-                    serv.protocol,
-                    serv.state,
-                    serv.service)
+                str(serv.port),
+                serv.protocol,
+                serv.state,
+                serv.service)
             if len(serv.banner):
                 pserv += " ({0})".format(serv.banner)
             print(pserv)
@@ -1031,13 +1018,14 @@ def print_scan(nmap_report):
         print(host.scripts_results)
     print(nmap_report.summary)
 
+
 def parse_nmap_stdout(stdout):
     report = NmapParser.parse_fromstring(stdout)
     host_dict = {
-        'total' : report.hosts_total,
-        'up'    : report.hosts_up,
-        'down'  : report.hosts_down,
-        'online_host_list' : []
+        'total': report.hosts_total,
+        'up': report.hosts_up,
+        'down': report.hosts_down,
+        'online_host_list': []
     }
     service_lists = []
     for host in report.hosts:
@@ -1081,6 +1069,7 @@ def store_reportitems(nmap_host):
     # print(service_list)
     return jhost, service_list
 
+
 def get_os(nmap_host):
     os_match_list = []
     if nmap_host.is_up() and nmap_host.os_fingerprinted:
@@ -1088,7 +1077,7 @@ def get_os(nmap_host):
             os_dict = {
                 'os': osm.name,
                 'accuracy': osm.accuracy,
-                'cpe' : {
+                'cpe': {
                     'description': '',
                     'cpelist': []
                 }
@@ -1099,6 +1088,8 @@ def get_os(nmap_host):
                     os_dict['cpe']['cpelist'].append(cpe.cpestring)
             os_match_list.append(os_dict)
     return os_match_list
+
+
 def get_item(nmap_service):
     service_keys = ["port", "protocol", "state"]
     ritems = []
@@ -1127,12 +1118,11 @@ def get_item(nmap_service):
 
 
 if __name__ == "__main__":
-
     # -oX - -vvv -&#45;stats-every 1s -sV -Pn -&#45;script=melsecq-discover-udp.nse,cr3-fingerprint.nse,enip-info.nse,vulscan/vulscan.nse -&#45;script-args vulscandb=cve -p 80,4396,44818
 
     # -sV  -Pn  --script=enip-info.nse,vulscan/vulscan.nse --script-args vulscandb=cve -p 80,44818,3306,
     # -sV --script=enip-info.nse,vulscan/vulscan.nse --script-args vulscandb=cve -Pn -p 80,4396,44818
-    
+
     # report = do_scan("82.102.188.9", "-sV  -Pn -O --script=enip-info.nse,vulscan/vulscan.nse --script-args vulscandb=cve -p 80,44818,3306,")
     # report = NmapParser.parse_fromfile('/Users/chenchunyu/Documents/workspace/sb-admin-2-python-master/app/backend/handlers/schedule/test.xml')
     # report = NmapParser.parse_fromstring(std)

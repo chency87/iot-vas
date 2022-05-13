@@ -63,7 +63,7 @@ def resume_job():
         job_id = data.get('id')
         scheduler.resume_job(job_id)
         response['msg'] = "job[%s] resume success!"%job_id
-        response['status'] = 200
+        response['status'] = 20
     except Exception as e:
         response['msg'] = str(e)
     log_handler.add_log(request, LogActions.EDIT_SCAN, ActionResult.success, str(response))
