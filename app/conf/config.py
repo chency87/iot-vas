@@ -23,7 +23,7 @@ basedir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # postgres://postgres:password@127.0.0.1:5432/DBname
 SQLALCHEMY_DATABASE_URI = 'postgresql://chunyu@postgres.chunyu.svc.cluster.dsl:5432/iot'
 
-SQLALCHEMY_DATABASE_URI = 'postgresql://chunyu@localhost:5432/iot'
+SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:123456@localhost:5432/iot'
 # 设置该路径为 中nmap 的script 文件夹中,建立一个文件夹，用于存储脚本
 
 
