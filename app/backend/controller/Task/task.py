@@ -2,18 +2,12 @@ from app.backend.controller.scan.core import Scan
 import uuid
 from app.backend.extensions import scheduler
 import datetime
+from app.backend.models.Task_data.table import Schedule_History
+from app.backend.database.database import db
+import re
+from app.backend.models.Task_data.curd import add_schedule_history
 
-
-def exe_task():
-    info = {"name": "test", "desc": "desc", "target": "198.53.49.46", "port": '1-1000', "rate": 10000,
-            "scan_type": ["TCP_Scan", "UDP_Scan"],
-            "config": ["open_port", "service"], "vuldb": ["xforce", "vuldb", "openvas", "cve"],
-            "script": ["snmp-interfaces", "snmp-sysdescr"],
-            "schedule": {"triggers": "date"}
-            }
-
-    task = Task(info=info)
-    task.create_task()
+# from app.backend.models.Task_data.curd import
 
 
 class Task(object):
@@ -40,16 +34,28 @@ class Task(object):
         self.info = info
         self.scan_argument = ""
 
+    info = dict(
+        name="",
+        target="",
+        task_id="",
+        port="",
+        rate="",
+        scan_type=[],
+        config=["", "", "", ""],
+        scan_desc="",
+        script="",
+
+    )
+
     def info_process(self):
-        self.scan_name = self.info['name']
-        self.scan_ip = self.info['target']
-        self.scan_port = self.info['port']
-        self.rate = "--max-rate=" + str(self.info['rate'])
-        self.config = self.info['config']
-        self.scan_desc = self.info['desc']
-        self.script = self.info['script']
-        self.rate = self.info['rate']
-        self.scan_type = self.info['scan_type']
+        self.scan_name = self.info['name'] or None
+        self.scan_ip = self.info['target'] or None
+        self.scan_port = self.info['port'] or None
+        self.rate = "--max-rate=" + str(self.info['rate']) or None
+        self.config = self.info['config'] or None
+        self.scan_desc = self.info['desc'] or None
+        self.script = self.info['script'] or None
+        self.scan_type = self.info['scan_type'] or None
 
     def set_config(self):
         """
@@ -76,11 +82,11 @@ class Task(object):
         for scan_type in scan_types:
             if scan_type == 'SYN_Scan':
                 self.scan_argument = self.scan_argument + ' ' + '-sS'
-            elif scan_type == 'TCP_Scan':
+            if scan_type == 'TCP_Scan':
                 self.scan_argument = self.scan_argument + ' ' + '-sT'
-            elif scan_type == 'UDP_Scan':
+            if scan_type == 'UDP_Scan':
                 self.scan_argument = self.scan_argument + ' ' + '-sU'
-            elif scan_type == 'Ping_Scan':
+            if scan_type == 'Ping_Scan':
                 self.scan_argument = self.scan_argument + ' ' + '-sP'
 
     # 暂时还不知道怎么配置vuldb
@@ -98,7 +104,7 @@ class Task(object):
         sc = Scan(ip=self.scan_ip, ports=self.scan_port, scan_argument=self.scan_argument,
                   script_argument=self.script_argument, sacn_rate=self.rate)
         result = sc.basic_detection()
-        sc.process_result(result=result)
+        sc.init_result(result=result)
 
         configs = self.config
         # 配置信息获取部分
@@ -109,12 +115,13 @@ class Task(object):
                 sc.vul_detection(result=result)
 
         # 脚本信息获取部分
-        for script in self.script:
-            if script == 'snmp-interfaces' or "snmp-sysdecsr":
+            if re.search('snmp-sysdesc',self.script):
                 sc.snmp_info(result=result)
-            elif script == 'vulscan/vulscan':
+            if re.search('vulscan/vulscan',self.script):
                 sc.vul_detection(result=result)
-        print()
+            if re.search('banner',self.script):
+                sc.get_banner(result=result)
+
         return sc.get_result()
 
 
@@ -131,7 +138,7 @@ class Schedule(object):
         self.minute = None
         self.scheduler = scheduler
 
-    def init_task(self):
+    def init_task_id(self):
         self.triggers = self.info['schedule']['triggers']
         # 通过伪随机码创造ID
         task_id = "{}-{}".format(self.triggers, uuid.uuid4().hex)
@@ -142,11 +149,12 @@ class Schedule(object):
         task = Task(self.info)
         # 立即执行任务
         func = __name__ + ":" + "exe_task"
-        id = self.init_task()
+        if self.info["task_id"] == "":
+           task_id = self.init_task_id()  # 从self.info 里面看有没有task_id   逻辑改一下
         if self.triggers == 'date':
-            self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(), id=id)
-            print(scheduler.get_jobs())
-            self.scheduler.start()
+            self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(), id=task_id,
+                                   kwargs={"params": self.info, "id": task_id})  # kwargs表示向函数里func里传参
+
             print(scheduler.get_jobs())
 
         # 定时任务以后再说
@@ -160,13 +168,13 @@ class Schedule(object):
         self.scheduler.remove_job(job_id=id)
 
 
+def exe_task(params, id):
+    print(params)
+    create_time = datetime.datetime.now()
+    task = Task(info=params)
+    scan_report = task.create_task()
+    end_time = datetime.datetime.now()
+    add_schedule_history(id=id, create_time=create_time, scan_report=scan_report, end_time=end_time,params=params)
 
-info = {"name": "test", "desc": "desc", "target": "198.53.49.46", "port": '1-1000', "rate": 10000,
-        "scan_type": ["TCP_Scan", "UDP_Scan"],
-        "config": ["open_port", "service"], "vuldb": ["xforce", "vuldb", "openvas", "cve"],
-        "script": ["snmp-interfaces", "snmp-sysdescr"],
-        "schedule": {"triggers": "date"}
-        }
-
-sch = Schedule(info=info)
-sch.add_task()
+# 增删改查    定时任务的暂停，启动  已经完成的再运行一遍
+# task_id 创建时间 完成时间 info参数 scan_report

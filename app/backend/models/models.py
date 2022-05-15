@@ -134,12 +134,6 @@ class DeviceFingerprint(db.Model):
     device_ip = db.Column(db.String(64))
 
 
-
-
-
-
-
-
     def to_json(self):       
         json_post = {
             'id': self.id,
@@ -154,3 +148,6 @@ class DeviceFingerprint(db.Model):
             'protocol' : self.protocol,            
         }
         return json_post
+
+
+
