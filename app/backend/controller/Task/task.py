@@ -7,6 +7,7 @@ from app.backend.database.database import db
 import re
 from app.backend.models.Task_data.curd import add_schedule_history
 
+
 # from app.backend.models.Task_data.curd import
 
 
@@ -43,19 +44,21 @@ class Task(object):
         scan_type=[],
         config=["", "", "", ""],
         scan_desc="",
-        script="",
+        script=["snmp*"],
 
     )
 
     def info_process(self):
-        self.scan_name = self.info['name'] or None
-        self.scan_ip = self.info['target'] or None
-        self.scan_port = self.info['port'] or None
-        self.rate = "--max-rate=" + str(self.info['rate']) or None
-        self.config = self.info['config'] or None
-        self.scan_desc = self.info['desc'] or None
-        self.script = self.info['script'] or None
-        self.scan_type = self.info['scan_type'] or None
+        self.scan_name = self.info['name']
+        self.scan_ip = self.info['target']
+        self.scan_port = self.info['port']
+        self.rate = "--max-rate=" + str(self.info['rate'])
+        self.config = self.info['config']
+        # self.scan_desc = self.info['desc'] or None
+        self.script = self.info['script']
+        self.scan_type = self.info['scan_type']
+
+
 
     def set_config(self):
         """
@@ -65,11 +68,11 @@ class Task(object):
         for config in configs:
             if config == 'os':
                 self.scan_argument = self.scan_argument + ' ' + '-O'
-            elif config == 'service':
+            if config == 'service':
                 self.scan_argument = self.scan_argument + ' ' + '-sV'
-            elif config == 'vul':
+            if config == 'vul':
                 self.script_argument = self.script_argument + 'vulscan/vulscan.nse,'
-            elif config == 'banner':
+            if config == 'banner':
                 self.script_argument = self.script_argument + 'banner.nse,'
 
     def set_script(self):
@@ -101,9 +104,17 @@ class Task(object):
         self.set_vuldb()
         self.set_script()
 
+        print(self.scan_ip)
+        print(self.scan_port)
+        print(self.scan_argument)
+        print(self.script_argument)
+        print(self.rate)
+
         sc = Scan(ip=self.scan_ip, ports=self.scan_port, scan_argument=self.scan_argument,
                   script_argument=self.script_argument, sacn_rate=self.rate)
+         # 先进行基础检测
         result = sc.basic_detection()
+
         sc.init_result(result=result)
 
         configs = self.config
@@ -114,14 +125,14 @@ class Task(object):
             elif config == 'vul':
                 sc.vul_detection(result=result)
 
-        # 脚本信息获取部分
-            if re.search('snmp-sysdesc',self.script):
+            # 脚本信息获取部分
+            if 'snmp*' in self.script:
                 sc.snmp_info(result=result)
-            if re.search('vulscan/vulscan',self.script):
+            if 'vulscan/vulscan' in self.script:
                 sc.vul_detection(result=result)
-            if re.search('banner',self.script):
+            if 'banner' in self.script:
                 sc.get_banner(result=result)
-
+        print(sc.get_result())
         return sc.get_result()
 
 
@@ -129,13 +140,6 @@ class Schedule(object):
     def __init__(self, info):
         self.info = info
         self.triggers = None
-        self.time = None
-        self.year = None
-        self.month = None
-        self.week = None
-        self.day = None
-        self.hour = None
-        self.minute = None
         self.scheduler = scheduler
 
     def init_task_id(self):
@@ -150,31 +154,33 @@ class Schedule(object):
         # 立即执行任务
         func = __name__ + ":" + "exe_task"
         if self.info["task_id"] == "":
-           task_id = self.init_task_id()  # 从self.info 里面看有没有task_id   逻辑改一下
+            task_id = self.init_task_id()  # 从self.info 里面看有没有task_id   逻辑改一下
         if self.triggers == 'date':
-            self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(), id=task_id,
-                                   kwargs={"params": self.info, "id": task_id})  # kwargs表示向函数里func里传参
-
+            self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(),
+                                   id=self.info["task_id"],
+                                   name="task1", kwargs={"params": self.info, "id": task_id})  # kwargs表示向函数里func里传参
+            self.scheduler.start()
             print(scheduler.get_jobs())
-
-        # 定时任务以后再说
-        elif self.triggers == 'interval':
-            self.scheduler.add_job(func=task.create_task(), trigger=self.triggers, seconds=5, id=id)
-        elif self.triggers == 'cron':
-            self.scheduler.add_job(func=task.create_task(), trigger=self.triggers, year=self.year, month=self.month,
-                                   week=self.week, day=self.day, hour=self.hour, minute=self.minute)
+        # #
+        # # 定时任务以后再说
+        # elif self.triggers == 'interval':
+        #     self.scheduler.add_job(func=task.create_task(), trigger=self.triggers, seconds=5, id=id)
+        # elif self.triggers == 'cron':
+        #     self.scheduler.add_job(func=task.create_task(), trigger=self.triggers, year=self.year, month=self.month,
+        #                            week=self.week, day=self.day, hour=self.hour, minute=self.minute)
 
     def remove_task(self, id):
         self.scheduler.remove_job(job_id=id)
 
 
 def exe_task(params, id):
+    print("params")
     print(params)
     create_time = datetime.datetime.now()
     task = Task(info=params)
     scan_report = task.create_task()
     end_time = datetime.datetime.now()
-    add_schedule_history(id=id, create_time=create_time, scan_report=scan_report, end_time=end_time,params=params)
+    add_schedule_history(id=id, create_time=create_time, scan_report=scan_report, end_time=end_time, params=params)
 
 # 增删改查    定时任务的暂停，启动  已经完成的再运行一遍
 # task_id 创建时间 完成时间 info参数 scan_report

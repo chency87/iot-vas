@@ -84,7 +84,7 @@ def register_extensions(app):
     # if you don't wanna use a config, you can set options here:
     # scheduler.api_enabled = True
     scheduler.init_app(app)
-    scheduler.start()
+
 
 
 app = init_app()

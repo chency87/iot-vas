@@ -24,7 +24,6 @@ def show_tasks():
     job_id = request.args.get('id')
     info_list = get_current_jobs_list(job_id)
     # print(info_list)
-
     response['status'] = 200
     response['data'] = info_list
     response['count'] = len(info_list)

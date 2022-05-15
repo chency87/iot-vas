@@ -1,7 +1,7 @@
 from app.backend.database.database import db
 
 
-class Schedule_History (db.Model):
+class Schedule_History(db.Model):
     __tablename__ = ' schedule_history'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -9,4 +9,4 @@ class Schedule_History (db.Model):
     create_time = db.Column(db.String(240))
     params = db.Column(db.Text)
     end_time = db.Column(db.String(240))
-    scan_result = db.Column(db.String(240))
+    scan_report = db.Column(db.Text)

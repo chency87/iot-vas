@@ -1,7 +1,8 @@
-from app.backend.models.Task_data.table import Schedule_History
 from app.backend.database.database import db
+from .table import Schedule_History
 
 
+# 增
 def add_schedule_history(id, create_time, end_time, params, scan_report):
     data = dict(
         task_id=str(id),
@@ -15,3 +16,9 @@ def add_schedule_history(id, create_time, end_time, params, scan_report):
     db.session.commit()
 
 
+# 查
+def get_report_by_id(id):
+    if id is None:
+        return None
+    report = Schedule_History.query.filter_by(id=id).first()
+    return report
