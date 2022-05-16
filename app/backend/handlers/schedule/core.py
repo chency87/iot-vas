@@ -6,7 +6,6 @@ from app.backend.handlers import port_handler, schedule
 from crontab import CronTab
 from libnmap.parser import NmapParser
 from libnmap.reportjson import ReportDecoder, ReportEncoder
-
 from .template import dashboard_top, dashboard_scaninfo
 
 from app.backend.handlers.logger.core import log_handler, LogActions, ActionResult

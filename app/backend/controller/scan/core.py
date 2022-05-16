@@ -155,8 +155,8 @@ class Scan(object):
                 for t_port in tcp_ports:
                     if "vulscan" in result["scan"][ips[i]]["tcp"][int(t_port)]["script"]:
                         self.results[i][ips[i]][t_port][t_port]["cve"] = \
-                        result["scan"][ips[i]]["tcp"][int(t_port)]["script"][
-                            "vulscan"]
+                            result["scan"][ips[i]]["tcp"][int(t_port)]["script"][
+                                "vulscan"]
             if "udp" in result["scan"][ips[i]].keys():
                 udp_ports = list(result["scan"][ips[i]]["udp"].keys()) if "udp" in result["scan"][ips[i]] else []
                 for u_port in udp_ports:
@@ -190,14 +190,14 @@ class Scan(object):
                 if self.results[i][ips[i]]["tcp"][j]["port"] == 21 and "banner" in result["scan"][ips[i]]["tcp"][21][
                     "script"]:
                     self.results[i][ips[i]]["tcp"][j]["port"]["ftp_banner"] = \
-                    result["scan"][ips[i]]["tcp"][21]["script"]["banner"]
+                        result["scan"][ips[i]]["tcp"][21]["script"]["banner"]
                 else:
                     self.results[i][ips[i]]["tcp"][j]["port"]["ftp_banner"] = ""
                 # 获取telnet_banner
                 if self.results[i][ips[i]]["tcp"][j]["port"] == 23 and "banner" in result["scan"][ips[i]]["tcp"][23][
                     "script"]:
                     self.results[i][ips[i]]["tcp"][j]["port"]["telnet_banner"] = \
-                    result["scan"][ips[i]]["tcp"][23]["script"]["banner"]
+                        result["scan"][ips[i]]["tcp"][23]["script"]["banner"]
                 else:
                     self.results[i][ips[i]]["tcp"][j]["port"]["telnet_banner"] = ""
 
