@@ -10,3 +10,24 @@ class Schedule_History(db.Model):
     params = db.Column(db.Text)
     end_time = db.Column(db.String(240))
     scan_report = db.Column(db.Text)
+
+    def __repr__(self):
+        return "{id:'%d', task_id:'%s', create_time:'%s',params:'%s', end_time:'%s',scan_report:'%s'}" % (
+            self.id,
+            self.task_id,
+            self.create_time,
+            self.params,
+            self.end_time,
+            self.scan_report
+        )
+
+    def to_json(self):
+        json_post = {
+            'id': self.id,
+            'task_id': self.task_id,
+            'create_time': self.create_time,
+            'params': self.params,
+            'end_time': self.end_time,
+            'scan_report': self.scan_report
+        }
+        return json_post

@@ -8,6 +8,7 @@ import re
 from app.backend.models.Task_data.curd import add_schedule_history
 from app.backend.models.dao.dao import use_report
 
+
 # from app.backend.models.Task_data.curd import
 
 
@@ -49,14 +50,14 @@ class Task(object):
     )
 
     def info_process(self):
-        self.scan_name = self.info['name']
-        self.scan_ip = self.info['target']
-        self.scan_port = self.info['port']
-        self.rate = "--max-rate=" + str(self.info['rate'])
-        self.config = self.info['config']
-        # self.scan_desc = self.info['desc'] or None
-        self.script = self.info['script']
-        self.scan_type = self.info['scan_type']
+        self.scan_name = self.info['name'] if 'name' in self.info else ""
+        self.scan_ip = self.info['target'] if 'target' in self.info else ""
+        self.scan_port = self.info['port'] if 'port' in self.info else ""
+        self.rate = ("--max-rate=" + str(self.info['rate'])) if 'rate' in self.info else ""
+        self.config = self.info['config'] if 'config' in self.info else ""
+        self.scan_desc = self.info['desc'] if 'desc' in self.info else ""
+        self.script = self.info['script'] if 'script' in self.info else ""
+        self.scan_type = self.info['scan_type'] if 'scan_type' in self.info else ""
 
     def set_config(self):
         """
@@ -146,44 +147,87 @@ class Schedule(object):
         task_id = "{}-{}".format(self.triggers, uuid.uuid4().hex)
         return task_id
 
-    def add_task(self):
-        # 创建任务类
-        task = Task(self.info)
+    # 创建一个新的任务
+    # 这个任务默认是新任务
+    def add_new_task(self):
         # 立即执行任务
+        print("执行任务")
         func = __name__ + ":" + "exe_task"
-        if self.info["task_id"] == "":
-            self.info["task_id"] = self.init_task_id()  # 从self.info 里面看有没有task_id   逻辑改一下
+        self.info["task_id"] = self.init_task_id()  # 从self.info 里面看有没有task_id   逻辑改一下
         if self.triggers == 'date':
-            self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(),
-                                   id=self.info["task_id"],
-                                   kwargs={"params": self.info, "id": self.info["task_id"]})  # kwargs表示向函数里func里传参
-
+            job = self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(),
+                                         id=self.info["task_id"], max_instances=10,
+                                         kwargs={"params": self.info,
+                                                 "id": self.info["task_id"]})  # kwargs表示向函数里func里传参
+            # print(self.scheduler.get_jobs())
+            print(type(self.scheduler.get_jobs()))
         # 定时任务以后再说
         elif self.triggers == 'interval':
-            self.scheduler.add_job(func=func, trigger=self.triggers, seconds=180, id=self.info["task_id"],replace_existing=True,
+            self.scheduler.add_job(func=func, trigger=self.triggers, seconds=180, id=self.info["task_id"],
+                                   replace_existing=True,
                                    kwargs={"params": self.info, "id": self.info["task_id"]})
+            print(self.scheduler.get_jobs())
+        #
+        #     # elif self.triggers == 'cron':
+        # #     self.scheduler.add_job(func=task.create_task(), trigger=self.triggers, year=self.year, month=self.month,
+        # #                            week=self.week, day=self.day, hour=self.hour, minute=self.minute)
 
+    def finished_to_run(self):
+        func = __name__ + ":" + "exe_task"
+        if self.info['state'] != "finished":
+            return "ERROR!"
+        elif self.scheduler.get_job(id=(self.info['task_id'])):
+            return "The task is running!"
+        else:
+            params = Schedule_History.query.filter(id=self.info['task_id'])['params']
+            if self.triggers == 'date':
+                job = self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(),
+                                             id=self.info["task_id"], max_instances=10,
+                                             kwargs={"params": params,
+                                                     "id": self.info["task_id"]})
 
+    def run_to_pause(self):
+        if self.info['state'] != "running":
+            print("state error")
+            return
+        elif not self.scheduler.get_job(id=self.info['task_id']):
+            print("The Task is not running!")
+        else:
+            self.scheduler.pause_job(id=self.info['task_id'])
 
-            # elif self.triggers == 'cron':
-        #     self.scheduler.add_job(func=task.create_task(), trigger=self.triggers, year=self.year, month=self.month,
-        #                            week=self.week, day=self.day, hour=self.hour, minute=self.minute)
+    def pause_to_run(self):
+        if self.info['state'] != "pause":
+            print("state error")
+            return
+        elif not self.scheduler.get_job(id=self.info['task_id']):
+            print('The Task isn\'t exist')
+        else:
+            self.scheduler.resume_job(id=self.info['task_id'])
 
-    def remove_task(self, id):
-        self.scheduler.remove_job(job_id=id)
+    def remove_task(self):
+        task_id = self.info['task_id']
+        self.scheduler.remove_job(job_id=task_id)
+        print("success delete")
+
+    def state_change(self):
+        if self.info['state'] == "pause":
+            self.pause_to_run()
+        elif self.info['state'] == "run":
+            self.run_to_pause()
+        elif self.info['state'] == "finished":
+            self.finished_to_run()
+
 
 
 def exe_task(params, id):
-    print("params")
     print(params)
     create_time = datetime.datetime.now()
     task = Task(info=params)
     scan_report = task.create_task()
-    use_report(scan_report)
+    # use_report(scan_report)
     end_time = datetime.datetime.now()
-    add_schedule_history(id=id, create_time=create_time, scan_report=scan_report, end_time=end_time, params=params)
+    if params['schedule']['trigger'] == 'date':
+        add_schedule_history(id=id, create_time=create_time, scan_report=scan_report, end_time=end_time, params=params)
 
 # 增删改查    定时任务的暂停，启动  已经完成的再运行一遍
 # task_id 创建时间 完成时间 info参数 scan_report
-
-

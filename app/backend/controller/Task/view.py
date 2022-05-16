@@ -22,45 +22,47 @@ def add_job():
         name="123",
         target="198.53.49.46",
         task_id="",
-        port="1-1000",
+        port="161",
         rate=10000,
-        scan_type=["UDP_Scan"],
+        scan_type=["UDP_Scan", "TCP_Scan"],
         config=["service", "banner"],
         scan_desc="",
         script=["snmp*"],
-        schedule={"triggers": "date"}
+        schedule={"triggers": "date"},
+        state=""
     )
     # info = request.get_json(force=True)
     sc = Schedule(info)
-    result = sc.add_task()
+    sc.add_new_task()
     return "success"
 
-@Task.route('/task/pause', methods=['POST'])
-def pause_job():
-    '''暂停作业'''
-    # print(request)
-    response = {'status': False}
-    try:
-        info = request.get_json(force=True)
-        job_id = info.get('task_id')
-        # print(job_id)
-        scheduler.pause_job(job_id)
-        response['msg'] = "job[%s] pause success!" % job_id
-        response['status'] = 200
-    except Exception as e:
-        response['msg'] = str(e)
-    return jsonify(response)
 
-@Task.route('/task/view',methods=['GET','POST'])
-def view_job():
+@Task.route('/task/state_change', methods=['POST', 'GET'])
+def task_change():
+    info = request.get_json(force=True)
+    params = dict(
+        task_id=info["taskID"],
+        status=info["status"]
+    )
+    sc = Schedule(info=params)
+    sc.state_change()
+    return "success_change"
+
+
+
+@Task.route('/task/view', methods=['GET', 'POST'])
+def view_job(limit=10):
     """
     分页查看任务
     """
-    data = Schedule_History.query.all()
+    limit = 10
+    page = int(request.args.get("page"))
+    data = Schedule_History.query.all().paginate(page=page, max_per_page=10)  # 这样data就是 FlaskSQLAchemy中的Pagination类型的对象
+    # 要展示的页
+    start = (page - 1) * limit  # 开始展示的那个数据
+    end = page * limit if len(data) > page * limit else len(data)
 
-
-
-
+    return jsonify(data)
 
 #
 #
