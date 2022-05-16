@@ -1257,6 +1257,42 @@ def  query_expired_cert_relation(id, id_ExpiredCert, firmware_hash):
     elif firmware_hash:
         return ExpiredCertRelation.query.filter_by(firmware_hash=firmware_hash).first()
 
+def use_report(listx):
+    for index in range(len(listx)):
+        ip=list(listx[index].keys())[0]
+        os=listx[index][ip].get("os","null")
+        vendor=listx[index][ip].get("vendor","null")
+        model_name=listx[index][ip].get('model_name','')
+        firmware_version=listx[index][ip].get('firmware_version','')
+        is_discontinued=listx[index][ip].get('is_discontinued','')
+        cve_id=[]
+        cvss=[]
+        for i in range(len(listx[index][ip]['cve_list'])):
+            cve_id.append(listx[index][ip]['cve_list'].get('cve_id',''))
+            cvss.append(listx[index][ip]['cve_list'].get('cvss',''))
+        device_type=listx[index][ip].get('device_type','')
+        firmware_infor_name=listx[index][ip]['firmware_infor'].get('name','')
+        firmware_infor_version = listx[index][ip]['firmware_infor'].get('version', '')
+        firmware_infor_sha2 = listx[index][ip]['firmware_infor'].get('sha2', '')
+        str_cve_id=''
+        str_cvss=''
+        for i in range(len(cve_id)):
+            str_cvss=str_cvss+cvss[i]+','
+            str_cve_id=str_cve_id+cve_id[i]+','
+        snmp_sysdescr=listx[index][ip].get('snmp_sysdescr','')
+        snmp_sysoid=listx[index][ip].get('snmp_sysoid','')
+        ftp_banner=listx[index][ip].get('ftp_banner','')
+        telnet_banner=listx[index][ip].get('telnet_banner','')
+        hostname=listx[index][ip].get('hostname','')
+        http_response=listx[index][ip].get('http_response','')
+        https_response=listx[index][ip].get('https_response','')
+        upnp_response=listx[index][ip].get('upnp_response','')
+        nic_mac=listx[index][ip].get('nic_mac','')
+
+
+        add_update_device_infor(None,vendor,model_name,firmware_version,is_discontinued,None,device_type,None,None,str_cve_id,str_cvss,firmware_infor_name,firmware_infor_version,firmware_infor_sha2,None,None)
+        add_update_device_features(None,snmp_sysdescr,snmp_sysoid,ftp_banner,telnet_banner,hostname,http_response,https_response,upnp_response,nic_mac)
+
 
 
 
