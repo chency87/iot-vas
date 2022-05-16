@@ -1259,26 +1259,51 @@ def  query_expired_cert_relation(id, id_ExpiredCert, firmware_hash):
 
 def use_report(listx):
     for index in range(len(listx)):
-        ip=list(listx[index].keys())[0]
-        os=listx[index][ip].get("os","null")
-        vendor=listx[index][ip].get("vendor","null")
-        model_name=listx[index][ip].get('model_name','')
-        firmware_version=listx[index][ip].get('firmware_version','')
-        is_discontinued=listx[index][ip].get('is_discontinued','')
-        cve_id=[]
-        cvss=[]
-        for i in range(len(listx[index][ip]['cve_list'])):
-            cve_id.append(listx[index][ip]['cve_list'].get('cve_id',''))
-            cvss.append(listx[index][ip]['cve_list'].get('cvss',''))
-        device_type=listx[index][ip].get('device_type','')
-        firmware_infor_name=listx[index][ip]['firmware_infor'].get('name','')
-        firmware_infor_version = listx[index][ip]['firmware_infor'].get('version', '')
-        firmware_infor_sha2 = listx[index][ip]['firmware_infor'].get('sha2', '')
-        str_cve_id=''
-        str_cvss=''
+        ip = list(listx[index].keys())[0]
+        os = listx[index][ip].get("os", "null")
+        vendor = listx[index][ip].get("vendor", "null")
+        model_name = listx[index][ip].get('model_name', '')
+        firmware_version = listx[index][ip].get('firmware_version', '')
+        is_discontinued = listx[index][ip].get('is_discontinued', '')
+        cve_list = list(listx[index][ip].keys())[5]
+        cve_id = []
+        cvss = []
+        for i in range(len(listx[index][ip][cve_list])):
+            cve_id.append(listx[index][ip][cve_list].get('cve_id', ''))
+            cvss.append(listx[index][ip][cve_list].get('cvss', ''))
+        device_type = listx[index][ip].get('device_type', '')
+
+        firmware_infor = list(listx[index][ip].keys())[7]
+        firmware_infor_name = listx[index][ip][firmware_infor].get('name', '')
+        firmware_infor_version = listx[index][ip][firmware_infor].get('version', '')
+        firmware_infor_sha2 = listx[index][ip][firmware_infor].get('sha2', '')
+        str_cve_id = ''
+        str_cvss = ''
         for i in range(len(cve_id)):
-            str_cvss=str_cvss+cvss[i]+','
-            str_cve_id=str_cve_id+cve_id[i]+','
+            str_cvss = str_cvss + cvss[i] + ','
+            str_cve_id = str_cve_id + cve_id[i] + ','
+
+        tcp = list(listx[index][ip].keys())[8]
+        udp = list(listx[index][ip].keys())[9]
+
+        tcp_port = []
+        tcp_service = []
+        udp_port = []
+        udp_service = []
+        snmp_sysdescr_list = []
+
+        for i in range(len(listx[index][ip][tcp])):
+            tcp_port.append(listx[index][ip][tcp][i].get('port', ''))
+            tcp_service.append(listx[index][ip][tcp][i].get('service', ''))
+            snmp_sysdescr_list.append(listx[index][ip][tcp][i].get('snmp_sysdescr', ''))
+        for i in range(len(listx[index][ip][udp])):
+            udp_port.append(listx[index][ip][udp][i].get('port', ''))
+            udp_service.append(listx[index][ip][udp][i].get('service', ''))
+            snmp_sysdescr_list.append(listx[index][ip][udp][i].get('snmp-sysdescr', ''))
+        snmp_sysdescr = ''
+        for i in range(len(snmp_sysdescr_list)):
+            snmp_sysdescr = snmp_sysdescr + snmp_sysdescr_list[i]
+
         snmp_sysdescr=listx[index][ip].get('snmp_sysdescr','')
         snmp_sysoid=listx[index][ip].get('snmp_sysoid','')
         ftp_banner=listx[index][ip].get('ftp_banner','')
