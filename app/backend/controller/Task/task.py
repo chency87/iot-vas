@@ -6,7 +6,7 @@ from app.backend.models.Task_data.table import Schedule_History
 from app.backend.database.database import db
 import re
 from app.backend.models.Task_data.curd import add_schedule_history
-
+from app.backend.models.dao.dao import use_report
 
 # from app.backend.models.Task_data.curd import
 
@@ -57,8 +57,6 @@ class Task(object):
         # self.scan_desc = self.info['desc'] or None
         self.script = self.info['script']
         self.scan_type = self.info['scan_type']
-
-
 
     def set_config(self):
         """
@@ -112,7 +110,7 @@ class Task(object):
 
         sc = Scan(ip=self.scan_ip, ports=self.scan_port, scan_argument=self.scan_argument,
                   script_argument=self.script_argument, sacn_rate=self.rate)
-         # 先进行基础检测
+        # 先进行基础检测
         result = sc.basic_detection()
 
         sc.init_result(result=result)
@@ -154,18 +152,20 @@ class Schedule(object):
         # 立即执行任务
         func = __name__ + ":" + "exe_task"
         if self.info["task_id"] == "":
-            task_id = self.init_task_id()  # 从self.info 里面看有没有task_id   逻辑改一下
+            self.info["task_id"] = self.init_task_id()  # 从self.info 里面看有没有task_id   逻辑改一下
         if self.triggers == 'date':
             self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(),
                                    id=self.info["task_id"],
-                                   name="task1", kwargs={"params": self.info, "id": task_id})  # kwargs表示向函数里func里传参
-            self.scheduler.start()
-            print(scheduler.get_jobs())
-        # #
-        # # 定时任务以后再说
-        # elif self.triggers == 'interval':
-        #     self.scheduler.add_job(func=task.create_task(), trigger=self.triggers, seconds=5, id=id)
-        # elif self.triggers == 'cron':
+                                   kwargs={"params": self.info, "id": self.info["task_id"]})  # kwargs表示向函数里func里传参
+
+        # 定时任务以后再说
+        elif self.triggers == 'interval':
+            self.scheduler.add_job(func=func, trigger=self.triggers, seconds=180, id=self.info["task_id"],replace_existing=True,
+                                   kwargs={"params": self.info, "id": self.info["task_id"]})
+
+
+
+            # elif self.triggers == 'cron':
         #     self.scheduler.add_job(func=task.create_task(), trigger=self.triggers, year=self.year, month=self.month,
         #                            week=self.week, day=self.day, hour=self.hour, minute=self.minute)
 
@@ -179,8 +179,11 @@ def exe_task(params, id):
     create_time = datetime.datetime.now()
     task = Task(info=params)
     scan_report = task.create_task()
+    use_report(scan_report)
     end_time = datetime.datetime.now()
     add_schedule_history(id=id, create_time=create_time, scan_report=scan_report, end_time=end_time, params=params)
 
 # 增删改查    定时任务的暂停，启动  已经完成的再运行一遍
 # task_id 创建时间 完成时间 info参数 scan_report
+
+
