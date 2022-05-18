@@ -13,10 +13,12 @@ def login():
         {"code":20000,"data":{"token":"admin-txxoken","role":"axxxdmin"}}
     )
 
-@user_blueprint.route('/user/user/logout', methods=['POST'])
+@user_blueprint.route('/user/logout', methods=['POST'])
 def logout():
-    return "???"
-    return None
+    return jsonify(
+        {"code": 20000, "data": {"token": "admin-txxoken", "role": "axxxdmin"}}
+    )
+
 
 @user_blueprint.route('/user/info', methods=['GET'])
 def user_info():

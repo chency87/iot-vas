@@ -4,16 +4,14 @@ from flask import jsonify, render_template, request
 from app.backend.models.dao import dao
 from . import firmware
 
+
 def core_risk(firmware_hash):
     # 获取表FirmwareRiskSummaryVulnerableComponentRelation中的信息
     firmware_risk_summary_vulnerable_component_relation = dao.query_firmware_risk_summary_vulnerable_component_relation(
         None, firmware_hash)
 
-
-
     if (firmware_risk_summary_vulnerable_component_relation is None):
-        return jsonify({"code":404,"status": "error", "message": "没有查询到相关信息"})
-
+        return jsonify({"code": 404, "status": "error", "message": "没有查询到相关信息"})
 
     id_RiskSummary = firmware_risk_summary_vulnerable_component_relation.id_RiskSummary
     id_VulnerableComponent = firmware_risk_summary_vulnerable_component_relation.id_VulnerableComponent
@@ -67,6 +65,7 @@ def core_risk(firmware_hash):
             "cvss_max": cvss_max
         }
     })
+
 
 def core_account(firmware_hash):
     # class DefaultAccount(db.Model):
@@ -138,6 +137,7 @@ def core_account(firmware_hash):
         }
     })
 
+
 def core_private_keys(firmware_hash):
     # class CryptoKey(db.Model):
     #     __tablename__ = 'cryptokey'
@@ -185,6 +185,7 @@ def core_private_keys(firmware_hash):
             "bits": str(bits)
         }
     })
+
 
 def core_weak_keys(firmware_hash):
     # class CryptoKey(db.Model):
@@ -234,6 +235,7 @@ def core_weak_keys(firmware_hash):
             "bits": str(bits)
         }
     })
+
 
 def core_expired_certs(firmware_hash):
     # class ExpiredCert(db.Model):
@@ -294,6 +296,7 @@ def core_expired_certs(firmware_hash):
             "valid_to": valid_to
         }]
     })
+
 
 def core_weak_certs(firmware_hash):
     # class WeakCert(db.Model):
@@ -357,6 +360,7 @@ def core_weak_certs(firmware_hash):
         }
     })
 
+
 def core_config_issues(firmware_hash):
     # class ConfigIssue(db.Model):
     #     __tablename__ = 'config_issue'
@@ -403,3 +407,213 @@ def core_config_issues(firmware_hash):
             "suggestions": suggestions
         }
     })
+
+
+def core_extract_banner(start, length, banner):
+    data = {
+        "data": [
+            {
+            "manufacturer": "11222",
+             "model_name": "P3346",
+             "firmware_version": "5.20",
+             "is_discontinued": 'true',
+             "cve_list":
+                 [{"cve_id": "CVE-2018-10660", "cvss": 10},
+                  {"cve_id": "CVE-2018-10662", "cvss": 10},
+                  {"cve_id": "CVE-2018-10661", "cvss": 10},
+                  {"cve_id": "CVE-2018-10658", "cvss": 5},
+                  {"cve_id": "CVE-2018-10659", "cvss": 5},
+                  {"cve_id": "CVE-2018-10663", "cvss": 5},
+                  {"cve_id": "CVE-2018-10664", "cvss": 5}],
+             "device_type": "IP Camera",
+             "firmware_info":
+            {
+                "name": "AXIS P3346 5.20", "version": "5.20",
+                "sha2": "af88b1aaac0b222df8539f3ae1479b5c8eaeae41f1776b5dd2fa805cb33a1175",
+                "release_date": "2010-12-03",
+                "download_url": "http://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_20/P3346_5_20.bin"},
+                "latest_firmware_info":
+            {
+                     "name": "AXIS P3346 5.51.7.3", "version": "5.51.7.3",
+                     "sha2": "a72361af68bd94f07cdf8b6c43389f4f382576bab752d4fb25dc74e93d4767a7",
+                     "release_date": "2020-12-03",
+                     "download_url": "https://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_51_7_3/P3346_5_51_7_3.bin"
+            }
+            },
+            {
+                "manufacturer": "Omron",
+                "model_name": "PLC 3000",
+                "firmware_version": "15.8",
+                "device_type": "PLC",
+                "is_discontinued": "True",
+                "cve_list":
+                    [
+                        {"cve_id": 1, "cvss": 25},
+                        {"cveId": 2, "cvss": 35}],
+                "firmware_info":
+                    [
+                        {"name": "S7 - 1001", "version": "30.2", "sha2": "shabbuhuiasd2131b2u23", "release_date": "2022.02.01",
+                  "download_url": "www.google.com"}],
+             "latest_firmware_info":
+                 {
+                      "name": "S7 - 1001",
+                      "version": "30.2",
+                      "sha2": "shabbuhuiasd2131b2u23",
+                      "release_date": "2022.02.01",
+                      "download_url": "www.google.com"
+                  }
+            }
+        ]
+    }
+
+    data_none = {
+        "data": [
+            {
+            "manufacturer": None,
+             "model_name": None,
+             "firmware_version": None,
+             "is_discontinued": None,
+             "cve_list":None,
+             "device_type": None,
+             "firmware_info":None,
+            "latest_firmware_info":None
+            }
+        ]
+    }
+
+    if banner is None or len(banner) == 0:
+        return ({'code': 404, 'msg': 'banner is None'})
+    dict1 = json.loads(banner)
+
+    print(dict1)
+
+    key = ""
+    value = ""
+
+    # 得到不空的key-value
+    for i in dict1:
+        if (dict1[i] != ""):
+            key = i
+            value = dict1[i]
+
+    if (key == ""):
+        print("key is None")
+        return {'code': 20000, 'data': data_none}
+
+    device_info1 = None
+
+    snmp_sysdescr = ""
+    snmp_sysoid = ""
+    ftp_banner = ""
+    telnet_banner = ""
+    hostname = ""
+    http_response = ""
+    https_response = ""
+    upnp_response = ""
+    nic_mac = ""
+
+    try:
+        if (key == "snmp_sysdescr"):
+            device_info1 = dao.query_all_device_features(None, str(value), None, None, None, None, None, None, None,
+                                                         None)
+        elif (key == "snmp_sysoid"):
+            device_info1 = dao.query_all_device_features(None, None, str(value), None, None, None, None, None, None,
+                                                         None)
+        elif (key == "ftp_banner"):
+            device_info1 = dao.query_all_device_features(None, None, None, str(value), None, None, None, None, None,
+                                                         None)
+        elif (key == "telnet_banner"):
+            device_info1 = dao.query_all_device_features(None, None, None, None, str(value), None, None, None, None,
+                                                         None)
+        elif (key == "hostname"):
+            device_info1 = dao.query_all_device_features(None, None, None, None, None, str(value), None, None, None,
+                                                         None)
+        elif (key == "http_response"):
+            device_info1 = dao.query_all_device_features(None, None, None, None, None, None, str(value), None, None,
+                                                         None)
+        elif (key == "https_response"):
+            device_info1 = dao.query_all_device_features(None, None, None, None, None, None, None, str(value), None,
+                                                         None)
+        elif (key == "upnp_response"):
+            device_info1 = dao.query_all_device_features(None, None, None, None, None, None, None, None, str(value),
+                                                         None)
+        elif (key == "nic_mac"):
+            device_info1 = dao.query_all_device_features(None, None, None, None, None, None, None, None, None,
+                                                         str(value))
+    except Exception as e:
+        return {
+            "code": 20000,
+            "data": data_none
+        }
+
+    if (device_info1 is None):
+        return {
+            "code": 20000,
+            "data": data_none
+        }
+
+    id = device_info1.id
+
+    if (id is None):
+        return {
+            "code": 20000,
+            "data": data_none
+        }
+
+    id_device_features = []
+    for i in range(0, len(device_info1)):
+        id_device_features.append(device_info1[i].id)
+
+    data = []
+
+    for i in range(0, len(id_device_features)):
+        device_temp_info = dao.query_device_features_info_relation(None, id_device_features[i], None)
+        id_device_info = device_temp_info.id_DeviceInfo
+        id_device_features_info = device_temp_info.id_DeviceFeaturesInfo
+        device_info = dao.query_device_infor(id_device_info,None,None,None,None,None)
+        device_features = dao.query_device_features(id_device_features_info, None, None, None, None, None, None, None,
+                                                    None, None)
+
+        snmp_sysdescr = device_info.snmp_sysdescr
+        snmp_sysoid = device_info.snmp_sysoid
+        ftp_banner = device_info.ftp_banner
+        telnet_banner = device_info.telnet_banner
+        hostname = device_info.hostname
+        http_response = device_info.http_response
+        https_response = device_info.https_response
+        upnp_response = device_info.upnp_response
+        nic_mac = device_info.nic_mac
+        manufacturer = device_features.manufacturer
+        model_name = device_features.model_name
+        firmware_version = device_features.firmware_version
+        is_discontinued = device_features.is_discontinued
+        cve_list = device_features.cve_list
+        device_type = device_features.device_type
+        firmware_info = device_features.firmware_info#id
+        latest_firmware_info = device_features.latest_firmware_info
+
+        dict = {
+            "manufacturer": manufacturer,
+             "model_name": model_name,
+             "firmware_version": firmware_version,
+             "is_discontinued": is_discontinued,
+             "cve_list":None,
+             "device_type": device_type,
+             "firmware_info":
+            {
+                "name": "AXIS P3346 5.20",
+                "version": "5.20",
+                "sha2": "af88b1aaac0b222df8539f3ae1479b5c8eaeae41f1776b5dd2fa805cb33a1175",
+                "release_date": "2010-12-03",
+                "download_url": "http://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_20/P3346_5_20.bin"},
+                "latest_firmware_info":
+                 {
+                     "name": "AXIS P3346 5.51.7.3", "version": "5.51.7.3",
+                     "sha2": "a72361af68bd94f07cdf8b6c43389f4f382576bab752d4fb25dc74e93d4767a7",
+                     "release_date": "2020-12-03",
+                     "download_url": "https://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_51_7_3/P3346_5_51_7_3.bin"
+                 }
+        }
+        data.append(dict)
+
+    return ({'code': 20000, 'data': data})

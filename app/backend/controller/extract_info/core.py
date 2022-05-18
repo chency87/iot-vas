@@ -1165,40 +1165,6 @@ def test_for_data():
 
 def core_extract_banner(banner):
 
-    return jsonify(
-        dict_temp = {
-            'manufacturer': 'Omron',
-            'model_name': 'PLC 3000',
-            'firmware_version': '15.8',
-            'device_type': 'PLC',
-            'is_discontinued': 'True',
-            'cve_list': [{
-                'cve_id': 1,
-                'cvss': 25
-            },
-            {
-                'cveId': 2,
-                'cvss': 35
-            }],
-            'firmware_info': [{
-            'name': 'S7 - 1001',
-            'version': '30.2',
-            'sha2': 'shabbuhuiasd2131b2u23',
-            'release_date': '2022.02.01',
-            'download_url': 'www.google.com'
-            }],
-            'latest_firmware_info': {
-            'name': 'S7 - 1001',
-            'version': '30.2',
-            'sha2': 'shabbuhuiasd2131b2u23',
-            'release_date': '2022.02.01',
-            'download_url': 'www.google.com'
-            }
-        }
-    )
-
-
-
     if banner is None or len(banner) == 0:
         return ({'code':404,'msg':'banner is None'})
     dict1 = json.loads(banner)
@@ -1215,6 +1181,7 @@ def core_extract_banner(banner):
             value = dict1[i]
 
     if (key == ""):
+        print("key is None")
         return {'code': 404, 'error': 'Error'}
 
     device_info1 = None
@@ -1310,11 +1277,6 @@ def core_extract_banner(banner):
         firmware_info = device_features.firmware_info
         latest_firmware_info = device_features.latest_firmware_info
 
-
-
-
-
-
         dict = {
             "snmp_sysdescr": snmp_sysdescr,
             "snmp_sysoid": snmp_sysoid,
@@ -1335,5 +1297,7 @@ def core_extract_banner(banner):
             "latest_firmware_info": latest_firmware_info
         }
         data.append(dict)
-
     return ({'code': 20000, 'data': data})
+
+def add_iot_device_database():
+    dao.add_update
