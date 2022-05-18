@@ -455,9 +455,28 @@ def delete_device_infor(id, manufacturer, model_name, firmware_version, is_disco
     db.session.delete(firminfor)
     db.session.commit()#找不到对应id？？删除失败？？？
 
-def query_device_infor(id, manufacturer, model_name, firmware_version, is_discontinued,cve_list,device_type,firmware_info,latest_firmware_info,cve_id,cvss,name,version,sha2,release_date,download_url):
+# class FirmwareInfo(db.Model):
+#     __tablename__ = 'firmware_info'
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(512))
+#     version = db.Column(db.String(512))
+#     sha2 = db.Column(db.String(512))
+#     release_date = db.Column(db.String(512))
+#     download_url = db.Column(db.String(512))
+
+def query_device_infor(id,name,version,sha2,release_date,download_url):
     if id:
-        return DeviceFeatures.query.filter_by(id=id).first(),Vulnerability.query.filter_by(id=id).first(),FirmwareInfo.query.filter_by(id=id).first()
+        return FirmwareInfo.query.filter_by(id=id).first()
+    elif name:
+        return FirmwareInfo.query.filter_by(name=name).first()
+    elif version:
+        return FirmwareInfo.query.filter_by(version=version).first()
+    elif sha2:
+        return FirmwareInfo.query.filter_by(sha2=sha2).first()
+    elif release_date:
+        return FirmwareInfo.query.filter_by(release_date=release_date).first()
+    elif download_url:
+        return FirmwareInfo.query.filter_by(download_url=download_url).first()
 
 def query_all_device_infor(id, manufacturer, model_name, firmware_version, is_discontinued,cve_list,device_type,firmware_info,latest_firmware_info,cve_id,cvss,name,version,sha2,release_date,download_url):
     if id:
