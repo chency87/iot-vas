@@ -1,29 +1,31 @@
 from app.backend.database.database import db
 
+
 class DeviceInfo(db.Model):
     __tablename__ = 'device_info'
     id = db.Column(db.Integer, primary_key=True)
     manufacturer = db.Column(db.String(1024))
     model_name = db.Column(db.String(1024))
     firmware_version = db.Column(db.String(256))
-    is_discontinued = db.Column(db.Boolean)
+    is_discontinued = db.Column(db.String(256))
     cve_list = db.Column(db.String(1024))  # List of CVES, refer to Vulnerability
     device_type = db.Column(db.String(256))
     firmware_info = db.Column(db.String(256))  # List of Device firmware information, refer to firmwareInfo
     latest_firmware_info = db.Column(db.Integer)  # Last Device firmware information, refer to firmwareInfo
 
     def __repr__(self):
-        return "{id:'%s', manufacturer:'%s', model_name:'%s',firmware_version:'%s', is_discontinued:'%s', cve_list:'%s', device_type:'%s', firmware_info:'%s', latest_firmware_info:'%s' }" % (
-            self.id,
-            self.manufacturer,
-            self.model_name,
-            self.firmware_version,
-            self.is_discontinued,
-            self.cve_list,
-            self.device_type,
-            self.firmware_info,
-            self.latest_firmware_info
-        )
+        return "{id:'%s', manufacturer:'%s', model_name:'%s',firmware_version:'%s', is_discontinued:'%s', " \
+               "cve_list:'%s', device_type:'%s', firmware_info:'%s', latest_firmware_info:'%s' }" % (
+                   self.id,
+                   self.manufacturer,
+                   self.model_name,
+                   self.firmware_version,
+                   self.is_discontinued,
+                   self.cve_list,
+                   self.device_type,
+                   self.firmware_info,
+                   self.latest_firmware_info
+               )
 
     def to_json(self):
         json_post = {
@@ -66,7 +68,6 @@ class DeviceFeatures(db.Model):
             self.upnp_response,
             self.nic_mac
         )
-    
 
 
 class FirmwareInfo(db.Model):
@@ -202,14 +203,15 @@ class Vulnerability(db.Model):
             self.cvss
         )
 
+
 class VulnerableComponent(db.Model):
     __tablename__ = 'vulnerable_component'
     id = db.Column(db.Integer, primary_key=True)
-    
+
     name = db.Column(db.String(512))
     version = db.Column(db.String(512))
     category = db.Column(db.String(256))
-    vulnerabilities =  db.Column(db.String(1024))
+    vulnerabilities = db.Column(db.String(1024))
     cvss_max = db.Column(db.Integer)
 
     def __repr__(self):
@@ -222,7 +224,8 @@ class VulnerableComponent(db.Model):
             self.cvss_max
         )
 
-#PostServiceRealation
+
+# PostServiceRealation
 class PortServiceRelation(db.Model):
     __tablename__ = 'port_service_relation'
     id = db.Column(db.Integer, primary_key=True)
@@ -230,7 +233,7 @@ class PortServiceRelation(db.Model):
     connection_mode = db.Column(db.String(512))
     port = db.Column(db.Integer)
     service = db.Column(db.String(512))
-    port_type = db.Column(db.Integer)   # 0:TCP static port 1:TCP dynamic port 2:UDP static port 3:UDP dynamic port
+    port_type = db.Column(db.Integer)  # 0:TCP static port 1:TCP dynamic port 2:UDP static port 3:UDP dynamic port
 
     def __repr__(self):
         return "{id:'%s', connection_mode:'%s', port:'%s', service:'%s', port_type:'%s' }" % (
@@ -241,12 +244,13 @@ class PortServiceRelation(db.Model):
             self.port_type
         )
 
+
 class FirmwareRisk(db.Model):
     __tablename__ = 'firmware_risk'
-    id=db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
 
-    risk_summary=db.Column(db.String(1024))
-    vulnerable_components=db.Column(db.String(1024))
+    risk_summary = db.Column(db.String(1024))
+    vulnerable_components = db.Column(db.String(1024))
 
     def __repr__(self):
         return "{id:'%s', risk_summary:'%s', vulnerable_components:'%s' }" % (
@@ -254,7 +258,6 @@ class FirmwareRisk(db.Model):
             self.risk_summary,
             self.vulnerable_components
         )
-
 
 
 class RiskSummary(db.Model):
@@ -265,10 +268,12 @@ class RiskSummary(db.Model):
     crypto_risk = db.Column(db.String(1024))
     kernel_risk = db.Column(db.String(1024))
     client_tools_risk = db.Column(db.String(1024))
+
     def __repr__(self):
         return "{id:'%s',net_services_risk:'%s',crypto_risk:'%s',kernel_risk:'%s',client_tools_risk:'%s'}" % (
-            self.id,self.net_services_risk, self.crypto_risk, self.kernel_risk, self.client_tools_risk
+            self.id, self.net_services_risk, self.crypto_risk, self.kernel_risk, self.client_tools_risk
         )
+
 
 class WeakCert(db.Model):
     __tablename__ = 'weak_cert'
@@ -277,15 +282,16 @@ class WeakCert(db.Model):
     file_name = db.Column(db.String(512))
     file_hash = db.Column(db.String(512))
     thumb_print = db.Column(db.String(512))
-    sign_algorithm=db.Column(db.String(512))
+    sign_algorithm = db.Column(db.String(512))
     subject_name = db.Column(db.String(512))
     valid_from = db.Column(db.String(512))
     valid_to = db.Column(db.String(512))
 
     def __repr__(self):
-       return "{id:'%s',file_name:'%s',file_hash:'%s',thumb_print:'%s',sign_algorithm:'%s',subject_name:'%s',valid_from:'%s',valid_to:'%s'}" % (
-                   self.id,self.file_name, self.file_hash, self.thumb_print, self.sign_algorithm, self.subject_name, self.valid_from, self.valid_to
-                      )
+        return "{id:'%s',file_name:'%s',file_hash:'%s',thumb_print:'%s',sign_algorithm:'%s',subject_name:'%s',valid_from:'%s',valid_to:'%s'}" % (
+            self.id, self.file_name, self.file_hash, self.thumb_print, self.sign_algorithm, self.subject_name,
+            self.valid_from, self.valid_to
+        )
 
 
 class ValidationError(db.Model):
@@ -298,40 +304,44 @@ class ValidationError(db.Model):
 
     def __repr__(self):
         return "{id:'%s',loc:'%s',msg:'%s',type:'%s'}" % (
-            self.id,self.loc, self.msg, self.type
+            self.id, self.loc, self.msg, self.type
         )
+
 
 class HTTPValidationError(db.Model):
     __tablename__ = 'http_validation_error'
     id = db.Column(db.Integer, primary_key=True)
 
     detail = db.Column(db.String(1024))
+
     def __repr__(self):
         return "{id:'%s',detail:'%s'}" % (
-            self.id,self.detail
+            self.id, self.detail
         )
+
 
 class DeviceFeaturesInfoRelation(db.Model):
     __tablename__ = 'device_features_info_relation'
     id = db.Column(db.Integer, primary_key=True)
-    id_DeviceFeatures = db.Column(db.Integer) #Reference_key to DeviceFeatures
-    id_DeviceInfo = db.Column(db.Integer)#Reference_key to DeviceInfo
+    id_DeviceFeatures = db.Column(db.Integer)  # Reference_key to DeviceFeatures
+    id_DeviceInfo = db.Column(db.Integer)  # Reference_key to DeviceInfo
 
     def __repr__(self):
         return "{id:'%s',id_DeviceFeatures:'%s',id_DeviceInfo:'%s'}" % (
-            self.id,self.id_DeviceFeatures, self.id_DeviceInfo
+            self.id, self.id_DeviceFeatures, self.id_DeviceInfo
         )
+
 
 class FirmwareRiskSummaryVulnerableComponentRelation(db.Model):
     __tablename__ = 'firmware_risk_summary_vulnerable_component_relation'
     id = db.Column(db.Integer, primary_key=True)
-    id_RiskSummary = db.Column(db.Integer) #Reference_key to RiskSummary
-    id_VulnerableComponent = db.Column(db.Integer)#Reference_key to VulnerableComponent
-    firmware_hash = db.Column(db.String(512)) #Reference_key to FirmwareInfo
+    id_RiskSummary = db.Column(db.Integer)  # Reference_key to RiskSummary
+    id_VulnerableComponent = db.Column(db.Integer)  # Reference_key to VulnerableComponent
+    firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
 
     def __repr__(self):
         return "{id:'%s',id_RiskSummary:'%s',id_VulnerableComponent:'%s',firmware_hash:'%s'}" % (
-            self.id,self.id_RiskSummary, self.id_VulnerableComponent, self.firmware_hash
+            self.id, self.id_RiskSummary, self.id_VulnerableComponent, self.firmware_hash
         )
 
     # class DefaultAccount(db.Model):
@@ -345,38 +355,42 @@ class FirmwareRiskSummaryVulnerableComponentRelation(db.Model):
     #     gid = db.Column(db.Integer)
     #     home_dir = db.Column(db.String(512))
 
+
 class DefaultAccountRelationship(db.Model):
     __tablename__ = 'default_account_relationship'
     id = db.Column(db.Integer, primary_key=True)
-    id_DefaultAccount = db.Column(db.Integer) #Reference_key to DefaultAccount
+    id_DefaultAccount = db.Column(db.Integer)  # Reference_key to DefaultAccount
     firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
 
     def __repr__(self):
         return "{id:'%s',id_DefaultAccount:'%s',firmware_hash:'%s'}" % (
-            self.id,self.id_DefaultAccount, self.firmware_hash
+            self.id, self.id_DefaultAccount, self.firmware_hash
         )
+
 
 class CryptoKeyRelation(db.Model):
     __tablename__ = 'crypto_key_relation'
     id = db.Column(db.Integer, primary_key=True)
-    id_CryptoKey = db.Column(db.Integer) #Reference_key to CryptoKey
+    id_CryptoKey = db.Column(db.Integer)  # Reference_key to CryptoKey
     firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
 
     def __repr__(self):
         return "{id:'%s',id_CryptoKey:'%s',firmware_hash:'%s'}" % (
-            self.id,self.id_CryptoKey, self.firmware_hash
+            self.id, self.id_CryptoKey, self.firmware_hash
         )
+
 
 class WeakCertRelation(db.Model):
     __tablename__ = 'weak_cert_relation'
     id = db.Column(db.Integer, primary_key=True)
-    id_WeakCert = db.Column(db.Integer) #Reference_key to WeakCert
+    id_WeakCert = db.Column(db.Integer)  # Reference_key to WeakCert
     firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
 
     def __repr__(self):
         return "{id:'%s',id_WeakCert:'%s',firmware_hash:'%s'}" % (
-            self.id,self.id_WeakCert, self.firmware_hash
+            self.id, self.id_WeakCert, self.firmware_hash
         )
+
 
 # class ConfigIssue(db.Model):
 #     __tablename__ = 'config_issue'
@@ -388,11 +402,13 @@ class WeakCertRelation(db.Model):
 class ConfigIssueRelation(db.Model):
     __tablename__ = 'config_issue_relation'
     id = db.Column(db.Integer, primary_key=True)
-    id_ConfigIssue = db.Column(db.Integer) #Reference_key to ConfigIssue
+    id_ConfigIssue = db.Column(db.Integer)  # Reference_key to ConfigIssue
     firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
 
     def __repr__(self):
-        return "{id:''%s',id_ConfigIssue:'%s' 'firmware_hash':'%s'}" % (self.id,self.id_ConfigIssue ,self.firmware_hash)
+        return "{id:''%s',id_ConfigIssue:'%s' 'firmware_hash':'%s'}" % (
+        self.id, self.id_ConfigIssue, self.firmware_hash)
+
 
 # class ExpiredCert(db.Model):
 #     __tablename__ = 'expired_cert'
@@ -408,16 +424,10 @@ class ConfigIssueRelation(db.Model):
 class ExpiredCertRelation(db.Model):
     __tablename__ = 'expired_cert_relation'
     id = db.Column(db.Integer, primary_key=True)
-    id_ExpiredCert = db.Column(db.Integer) #Reference_key to ExpiredCert
+    id_ExpiredCert = db.Column(db.Integer)  # Reference_key to ExpiredCert
     firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
 
     def __repr__(self):
         return "{id:'%s',id_ExpiredCert:'%s',firmware:'%s'}" % (
             self.id, self.id_ExpiredCert, self.firmware_hash
         )
-
-
-
-
-
-

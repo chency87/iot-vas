@@ -418,7 +418,7 @@ def add_update_device_infor(id, manufacturer, model_name, firmware_version, is_d
             manufacturer=str(manufacturer),
             model_name=str(model_name),
             firmware_version=str(firmware_version),
-            is_discontinued=is_discontinued,
+            is_discontinued=str(is_discontinued),
             cve_list=str(cve_list),
             device_type=str(device_type),
             firmware_info=str(firmware_info),
@@ -1314,8 +1314,10 @@ def use_report(listx):
         upnp_response=listx[index][ip].get('upnp_response','')
         nic_mac=listx[index][ip].get('nic_mac','')
 
-
-        add_update_device_infor(None,vendor,model_name,firmware_version,is_discontinued,None,device_type,None,None,str_cve_id,str_cvss,firmware_infor_name,firmware_infor_version,firmware_infor_sha2,None,None)
+        add_update_device_infor(None, vendor, model_name, firmware_version, is_discontinued, '', device_type, '', 0,
+                                str_cve_id, str_cvss, firmware_infor_name, firmware_infor_version, firmware_infor_sha2,
+                                '', '')
+        # add_update_device_infor(None,vendor,model_name,firmware_version,is_discontinued,None,device_type,None,None,str_cve_id,str_cvss,firmware_infor_name,firmware_infor_version,firmware_infor_sha2,None,None)
         add_update_device_features(None,snmp_sysdescr,snmp_sysoid,ftp_banner,telnet_banner,hostname,http_response,https_response,upnp_response,nic_mac)
 
 

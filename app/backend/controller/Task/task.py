@@ -159,8 +159,7 @@ class Schedule(object):
                                          id=self.info["task_id"], max_instances=10,
                                          kwargs={"params": self.info,
                                                  "id": self.info["task_id"]})  # kwargs表示向函数里func里传参
-            # print(self.scheduler.get_jobs())
-            print(type(self.scheduler.get_jobs()))
+            print(self.scheduler.get_jobs())
         # 定时任务以后再说
         elif self.triggers == 'interval':
             self.scheduler.add_job(func=func, trigger=self.triggers, seconds=180, id=self.info["task_id"],
@@ -185,6 +184,12 @@ class Schedule(object):
                                              id=self.info["task_id"], max_instances=10,
                                              kwargs={"params": params,
                                                      "id": self.info["task_id"]})
+        self.info['state'] = "run"
+        data = dict(
+            task_id=self.info["task_id"],
+            state=self.info['state']
+        )
+        return data
 
     def run_to_pause(self):
         if self.info['state'] != "running":
@@ -194,6 +199,12 @@ class Schedule(object):
             print("The Task is not running!")
         else:
             self.scheduler.pause_job(id=self.info['task_id'])
+            self.info['state'] = "pause"
+            data = dict(
+                task_id=self.info["task_id"],
+                state=self.info['state']
+            )
+            return data
 
     def pause_to_run(self):
         if self.info['state'] != "pause":
@@ -203,8 +214,14 @@ class Schedule(object):
             print('The Task isn\'t exist')
         else:
             self.scheduler.resume_job(id=self.info['task_id'])
+            self.info['state'] = "run"
+            data = dict(
+                task_id=self.info["task_id"],
+                state=self.info['state']
+            )
+            return data
 
-    def remove_task(self):
+    def delete_task(self):
         task_id = self.info['task_id']
         self.scheduler.remove_job(job_id=task_id)
         print("success delete")
@@ -218,15 +235,17 @@ class Schedule(object):
             self.finished_to_run()
 
 
-
 def exe_task(params, id):
     print(params)
     create_time = datetime.datetime.now()
+    print(create_time)
     task = Task(info=params)
     scan_report = task.create_task()
-    # use_report(scan_report)
+    use_report(scan_report)
     end_time = datetime.datetime.now()
-    if params['schedule']['trigger'] == 'date':
+    print(end_time)
+
+    if params['schedule']['triggers'] == 'date':
         add_schedule_history(id=id, create_time=create_time, scan_report=scan_report, end_time=end_time, params=params)
 
 # 增删改查    定时任务的暂停，启动  已经完成的再运行一遍

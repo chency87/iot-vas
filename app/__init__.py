@@ -2,6 +2,8 @@ from flask import Flask, send_from_directory
 import os
 
 from flask_login import LoginManager
+from flask_restx import reqparse
+
 from app import conf
 from app.backend.error.apiexception import APIException, ServerError
 from werkzeug.exceptions import HTTPException
@@ -24,6 +26,7 @@ from app.backend.controller.scan import scan as scan_blueprint
 from app.backend.controller.extract_info import extract_info as extract_info_blueprint
 from app.backend.controller.firmware import firmware as firmware_blueprint
 from app.backend.controller.user import user_blueprint as user_blueprint
+
 
 
 def init_app(config_name=None):
@@ -51,6 +54,7 @@ def init_app(config_name=None):
     create_super_admin()
     create_admin_user()
     create_test_user()
+
     return app
 
 
@@ -89,8 +93,9 @@ def register_extensions(app):
     scheduler.init_app(app)
     scheduler.start()
 
-
+#
 app = init_app()
+
 
 
 @app.errorhandler(Exception)

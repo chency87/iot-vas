@@ -122,8 +122,8 @@ class Scan(object):
         ips = self.get_ip(result)
         for i in range(len(ips)):
             self.results[i][ips[i]]["hostnames"] = result["scan"][ips[i]]["hostnames"]
-            # 获取厂商信息
 
+    # 获取厂商信息
     def get_vender(self, result):
         ips = list(result["scan"].keys())
         for i in range(len(ips)):
@@ -178,6 +178,9 @@ class Scan(object):
                 else:
                     self.results[i][ips[i]]["udp"][j]["snmp-sysdescr"] = ""
 
+    # def s7_info(self,result):
+
+
                     # banner 获取
 
     def get_banner(self, result):
@@ -203,45 +206,3 @@ class Scan(object):
 
     def get_result(self):
         return self.results
-
-# [{
-#    "198.53.49.46":
-#
-#    {
-#       "os": "string",
-#       "vendor": "manufacturer",
-#       "model_name": "string",
-#       "firmware_version": "string",
-#       "is_discontinued": "boolean",
-#       "cve_list": {
-#          "cve_id": "int",
-#          "cvss": "int"
-#       },
-#       "device_type": "string",
-#       "firmware_infor": {
-#          "name": "string",
-#          "version": "string",
-#          "sha2": "string"
-#       },
-#
-#       "tcp": [{
-#             "port": 21,
-#             "service": "tcpwrapped"
-#          },
-#          {
-#             "port": 23,
-#             "service": "tcpwrapped"
-#          }
-#       ],
-#       "udp": [{
-#             "port": 17,
-#             "service": "tcpwrapped"
-#          },
-#          {
-#             "port": 19,
-#             "service": "tcpwrapped"
-#          }
-#       ]
-#
-#    }
-# }]

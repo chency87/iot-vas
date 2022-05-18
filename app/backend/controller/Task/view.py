@@ -8,6 +8,7 @@ from app.backend.extensions import scheduler
 from app.backend.models.Task_data.table import Schedule_History
 from app.backend.database.database import db
 from flask_pagination import Pagination
+from app.backend.models.Task_data.curd import get_all_report
 
 
 @Task.route('/task/create', methods=['POST', "GET"])
@@ -18,18 +19,18 @@ def add_job():
     # 'task_deps_script': ['melsecq-discover-udp.nse', 'cr3-fingerprint.nse', 'enip-info.nse'],
     # 'task_trigger_type': 'cron', 'task_cron': '42 3 * * 5'}
     response = {'status': '-1'}
-    info = dict(
-        name="123",
-        target="198.53.49.46",
-        task_id="",
-        port="1-1000",
-        rate=10000,
-        scan_type=["UDP_Scan"],
-        config=["service", "banner"],
-        scan_desc="",
-        script=["snmp*"],
-        schedule={"triggers": "date"}
-    )
+    info={
+        "name":"123",
+        "target": "198.53.49.46",
+        "task_id":"",
+        "port": "161",
+        "rate": 10000,
+        "scan_type": ["UDP_Scan", "TCP_Scan"],
+        "config": ["service","banner"],
+        "scan_desc": "",
+        "script": ["snmp*"],
+        "schedule": {"triggers":"date"}
+        }
     # info = request.get_json(force=True)
     sc = Schedule(info)
     sc.add_new_task()
@@ -48,20 +49,43 @@ def task_change():
     return "success_change"
 
 
+# @Task.route('/task/delete',methods=['POST','GET'])
+# def delete():
+#     info = request.get_json(force=True)
+#     params = dict(
+#         task_id=info['taskID'],
+#         status=info['status']
+#     )
+#     sc = Schedule(info=params)
+#     sc.delete_task()
 
-@Task.route('/task/view', methods=['GET', 'POST'])
-def view_job(limit=10):
+
+@Task.route('/task', methods=['GET'])
+def view_job(page=None):
     """
     分页查看任务
     """
-    limit = 10
-    page = int(request.args.get("page"))
-    data = Schedule_History.query.all().paginate(page=page, max_per_page=10)  # 这样data就是 FlaskSQLAchemy中的Pagination类型的对象
-    # 要展示的页
-    start = (page - 1) * limit  # 开始展示的那个数据
-    end = page * limit if len(data) > page * limit else len(data)
+    start = request.args.get('start')
+    length = request.args.get('length')
+    search = request.args.get('search')
+    # print(info)
+    # data_none = {
+    #     "data": [
+    #         {
+    #             'name': '终端探测(82.102.188.9/24)',
+    #             'config': 'app.backend.handlers.schedule.core:exec_namp_scan',
+    #             'id': 'cron-489053f2861e4f91ae7245sfc78946a5',
+    #             'createdAt': '2022-09-12 12:37:58',
+    #             'status': 'Pause',
+    #             'target': '82.102.188.9/24',
+    #             'finished': '2022-09-12 12:37:59'
+    #         }
+    #     ]
+    # }
+    return jsonify(
+        {"code": 20000, "data":  get_all_report(start, length,search)}
+    )
 
-    return jsonify(data)
 
 #
 #
@@ -102,33 +126,22 @@ def view_job(limit=10):
 #         response['msg'] = str(e)
 #     return jsonify(response)
 
-#为web而造
+# 为web而造
 @Task.route('/task/delete', methods=['POST'])
 def delete_job():
     return None
 
-@Task.route('/task', methods=['POST'])
-def task():
-    return None
 
 @Task.route('/task/status', methods=['GET'])
 def task_status():
     return None
 
+
 @Task.route('/task/status', methods=['PUT'])
 def task_status1():
     return None
 
-# export function getTaskReport(task_id) {
-#   //   var queryString = Object.keys(search).map(key => key + '=' + search[key]).join('&');
-#   return request({
-#     url: `/task/report`,
-#     method: 'get',
-#     params: { task_id }
-#   })
-# }
+
 @Task.route('/task/report', methods=['GET'])
 def task_report():
     return None
-
-
