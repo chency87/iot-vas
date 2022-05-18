@@ -62,6 +62,9 @@ def view_job():
 
 
 
+
+
+
 #
 #
 # @Task.route('/task/resume', methods=['POST'])
@@ -100,3 +103,33 @@ def view_job():
 #     except Exception as e:
 #         response['msg'] = str(e)
 #     return jsonify(response)
+
+#为web而造
+@Task.route('/task/delete', methods=['POST'])
+def delete_job():
+    return None
+
+@Task.route('/task', methods=['POST'])
+def task():
+    return None
+
+@Task.route('/task/status', methods=['GET'])
+def task_status():
+    return None
+
+@Task.route('/task/status', methods=['PUT'])
+def task_status1():
+    return None
+
+# export function getTaskReport(task_id) {
+#   //   var queryString = Object.keys(search).map(key => key + '=' + search[key]).join('&');
+#   return request({
+#     url: `/task/report`,
+#     method: 'get',
+#     params: { task_id }
+#   })
+# }
+@Task.route('/task/report', methods=['GET'])
+def task_report():
+    return None
+

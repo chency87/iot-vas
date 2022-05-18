@@ -1164,9 +1164,44 @@ def test_for_data():
     pass
 
 def core_extract_banner(banner):
+
+    return jsonify(
+        dict_temp = {
+            'manufacturer': 'Omron',
+            'model_name': 'PLC 3000',
+            'firmware_version': '15.8',
+            'device_type': 'PLC',
+            'is_discontinued': 'True',
+            'cve_list': [{
+                'cve_id': 1,
+                'cvss': 25
+            },
+            {
+                'cveId': 2,
+                'cvss': 35
+            }],
+            'firmware_info': [{
+            'name': 'S7 - 1001',
+            'version': '30.2',
+            'sha2': 'shabbuhuiasd2131b2u23',
+            'release_date': '2022.02.01',
+            'download_url': 'www.google.com'
+            }],
+            'latest_firmware_info': {
+            'name': 'S7 - 1001',
+            'version': '30.2',
+            'sha2': 'shabbuhuiasd2131b2u23',
+            'release_date': '2022.02.01',
+            'download_url': 'www.google.com'
+            }
+        }
+    )
+
+
+
     if banner is None or len(banner) == 0:
         return ({'code':404,'msg':'banner is None'})
-    dict1 = json.loads(banner_text)
+    dict1 = json.loads(banner)
 
     print(dict1)
 
@@ -1274,6 +1309,11 @@ def core_extract_banner(banner):
         device_type = device_features.device_type
         firmware_info = device_features.firmware_info
         latest_firmware_info = device_features.latest_firmware_info
+
+
+
+
+
 
         dict = {
             "snmp_sysdescr": snmp_sysdescr,

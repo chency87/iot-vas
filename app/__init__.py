@@ -23,6 +23,7 @@ from app.backend.controller.Task import Task as Task_blueprint
 from app.backend.controller.scan import scan as scan_blueprint
 from app.backend.controller.extract_info import extract_info as extract_info_blueprint
 from app.backend.controller.firmware import firmware as firmware_blueprint
+from app.backend.controller.user import user_blueprint as user_blueprint
 
 
 def init_app(config_name=None):
@@ -68,6 +69,8 @@ def register_blueprints(app):
     app.register_blueprint(extract_info_blueprint)
     app.register_blueprint(Task_blueprint)
     app.register_blueprint(scan_blueprint)
+    app.register_blueprint(firmware_blueprint)
+    app.register_blueprint(user_blueprint)
     # app.register_blueprint(auth_blueprint, url_prefix='/auth')
     # app.register_blueprint(job_blueprint,url_prefix='/v1/cron/job')
 

@@ -66,6 +66,7 @@ class DeviceFeatures(db.Model):
             self.upnp_response,
             self.nic_mac
         )
+    
 
 
 class FirmwareInfo(db.Model):
