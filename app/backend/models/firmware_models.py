@@ -11,7 +11,7 @@ class DeviceInfo(db.Model):
     cve_list = db.Column(db.String(1024))  # List of CVES, refer to Vulnerability
     device_type = db.Column(db.String(256))
     firmware_info = db.Column(db.String(256))  # List of Device firmware information, refer to firmwareInfo
-    latest_firmware_info = db.Column(db.Integer)  # Last Device firmware information, refer to firmwareInfo
+    latest_firmware_info = db.Column(db.String(256))  # Last Device firmware information, refer to firmwareInfo
 
     def __repr__(self):
         return "{id:'%s', manufacturer:'%s', model_name:'%s',firmware_version:'%s', is_discontinued:'%s', " \
