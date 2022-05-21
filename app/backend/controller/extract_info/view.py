@@ -39,12 +39,12 @@ def extract_info_get():
 
         dao.add_update_device_features_info_relation(None, '1', '1')
         dao.add_update_device_features_info_relation(None, '1', '2')
-
-
-        dao.add_update_device_infor(None, manufacturer='Axis Communications AB', model_name='P3346', firmware_version='5.20', is_discontinued=True, cve_list='1,2,3,4,5,6,7,8,9,10',
-                                    device_type='IP Camera', firmware_info='1', latest_firmware_info = 1)
-        dao.add_update_device_infor(None, manufacturer='Omron', model_name='PCL 3000', firmware_version='15.8', is_discontinued=True, cve_list='1,2',device_type='PLC' ,firmware_info='1', latest_firmware_info = 1)
-
+        #
+        #
+        dao.add_update_device_infor(None, manufacturer='Axis Communications AB', model_name='P3346', firmware_version='5.20', is_discontinued=True,cve_list='1,2,3,4,5,6,7,8,9,10',
+                                    device_type='IP Camera', firmware_info='1', latest_firmware_info = '1')
+        dao.add_update_device_infor(None, manufacturer='Omron', model_name='PCL 3000', firmware_version='15.8', is_discontinued=True, cve_list='1,2',device_type='PLC' ,firmware_info='1', latest_firmware_info = '1')
+        #
         dao.add_update_firmware_risk_summary_vulnerable_component_relation(None,'1','1','20798FF15E8D5416')
         dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '2', '1', '20798FF15E8D5416')
         dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '2', '2', '20798FF15E8D5416')
