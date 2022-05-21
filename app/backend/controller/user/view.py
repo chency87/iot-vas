@@ -8,15 +8,23 @@ from . import core
 #为web而造
 @user_blueprint.route('/login', methods=['POST'])
 def login():
-    print("login")
-    return jsonify(
-        {"code":20000,"data":{"token":"admin-txxoken","role":"axxxdmin"}}
-    )
+    #POST接收参数
+    data = request.get_data(as_text=True)
+    #print(data)
+    data = json.loads(data)
+
+    username = data['username']
+    password = data['password']
+
+    return core.login(username, password)
+
+
+
 
 @user_blueprint.route('/user/logout', methods=['POST'])
 def logout():
     return jsonify(
-        {"code": 20000, "data": {"token": "admin-txxoken", "role": "axxxdmin"}}
+        {"code": 20000, "data": {"token": "admin-token", "role": "admin"}}
     )
 
 @user_blueprint.route('/user/info', methods=['GET'])

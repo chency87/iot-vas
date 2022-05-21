@@ -3,6 +3,9 @@ import bdb
 from app.backend.models.firmware_models import *
 
 # CryptoKey
+from app.backend.models.user import User
+
+
 def add_update_crypto_key(id, file_name, file_hash , pem_type, algorithm, bits):
     if id:
         cryptokey = CryptoKey.query.filter_by(id=id).first()
@@ -1262,6 +1265,67 @@ def  query_expired_cert_relation(id, id_ExpiredCert, firmware_hash):
     elif firmware_hash:
         return ExpiredCertRelation.query.filter_by(firmware_hash=firmware_hash).first()
 
+# class User(UserMixin, db.Model):
+#     __tablename__ = 'user_info'
+#
+#     # User id.
+#     id = db.Column(db.Integer, primary_key=True)
+#     # User name.
+#     username = db.Column(db.String(length=80))
+#     # User password.
+#     password = db.Column(db.String(80))
+#     # User email address.
+#     email = db.Column(db.String(length=80))
+#     # Creation time for user.
+#     created = db.Column(db.DateTime, default=datetime.utcnow)
+#     # Modifie time for user.
+#     modified = db.Column(db.DateTime, default=datetime.utcnow)
+#     # Unless otherwise stated default role is user.
+#     user_role = db.Column(db.String, default=Role.user)
+#     # Last Login Time
+#     lastlogin = db.Column(db.DateTime, default=datetime.utcnow)
+
+def add_update_user(id, username, password, email, user_role, lastlogin):
+    if id:
+        df=User.query.filter_by(id=id).first()
+        df.username=username if username else df.username
+        df.password=password if password else df.password
+        df.email=email if email else df.email
+        df.user_role=user_role if user_role else df.user_role
+        df.lastlogin=lastlogin if lastlogin else df.lastlogin
+    else:
+        data = dict(
+            username=username,
+            password=password,
+            email=email,
+            user_role=user_role,
+            lastlogin=lastlogin
+        )
+        df = User(**data)
+        db.session.add(df)
+        db.session.commit()
+
+def delete_user(id):
+    if id:
+        df=User.query.filter_by(id=id).first()
+        db.session.delete(df)
+        db.session.commit()
+
+def query_user(id, username, password, email, user_role, lastlogin):
+    if id:
+        return User.query.filter_by(id=id).first()
+    elif username:
+        return User.query.filter_by(username=username).first()
+    elif password:
+        return User.query.filter_by(password=password).first()
+    elif email:
+        return User.query.filter_by(email=email).first()
+    elif user_role:
+        return User.query.filter_by(user_role=user_role).first()
+    elif lastlogin:
+        return User.query.filter_by(lastlogin=lastlogin).first()
+
+
 def use_report(listx):
     for index in range(len(listx)):
         ip = list(listx[index].keys())[0]
@@ -1324,6 +1388,8 @@ def use_report(listx):
                                 '', '')
         # add_update_device_infor(None,vendor,model_name,firmware_version,is_discontinued,None,device_type,None,None,str_cve_id,str_cvss,firmware_infor_name,firmware_infor_version,firmware_infor_sha2,None,None)
         add_update_device_features(None,snmp_sysdescr,snmp_sysoid,ftp_banner,telnet_banner,hostname,http_response,https_response,upnp_response,nic_mac)
+
+
 
 
 
