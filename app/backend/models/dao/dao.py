@@ -389,7 +389,7 @@ def query_all_device_features(id, snmp_sysdescr, snmp_sysoid , ftp_banner, telne
 #     download_url = db.Column(db.String(512))
 
 
-def add_update_device_infor(id, manufacturer, model_name, firmware_version, is_discontinued,cve_list,device_type,firmware_info,latest_firmware_info):
+def add_update_device_infor(id, manufacturer, model_name, firmware_version, is_discontinued,cve_list,device_type,firmware_info,latest_firmware_info,cve_id,cvss,name,version,sha2,release_date,download_url):
     if id:
         deviceinfor=DeviceInfo.query.filter_by(id=id).first()
         deviceinfor.manufacturer=manufacturer if manufacturer else deviceinfor.manufacturer
@@ -400,6 +400,18 @@ def add_update_device_infor(id, manufacturer, model_name, firmware_version, is_d
         deviceinfor.device_type=device_type if device_type else deviceinfor.device_type
         deviceinfor.firmware_info=firmware_info if firmware_info else deviceinfor.firmware_info
         deviceinfor.latest_firmware_info=latest_firmware_info if latest_firmware_info else deviceinfor.latest_firmware_info
+
+        vulnerability=Vulnerability.query.filter_by(id=id).first()
+        vulnerability.cve_id=cve_id if cve_id else vulnerability.cve_id
+        vulnerability.cvss=int(cvss) if cvss else vulnerability.cvss
+
+        firminfor=FirmwareInfo.query.filter_by(id=id).first()
+        firminfor.name=name if name else firminfor.name
+        firminfor.version=version if version else firminfor.version
+        firminfor.sha2=sha2 if sha2 else firminfor.sha2
+        firminfor.release_date=release_date if release_date else firminfor.release_date
+        firminfor.download_url=download_url if download_url else firminfor.download_url
+
         db.session.commit()
     else:
         data = dict(
@@ -412,8 +424,24 @@ def add_update_device_infor(id, manufacturer, model_name, firmware_version, is_d
             firmware_info=str(firmware_info),
             latest_firmware_info=latest_firmware_info
         )
+        data0=dict(
+            cve_id=str(cve_id),
+            cvss=cvss
+        )
+        data1=dict(
+            name=str(name),
+            version=str(version),
+            sha2=str(sha2),
+            release_date=str(release_date),
+            download_url=str(download_url)
+        )
         df = DeviceInfo(**data)
+        df0=Vulnerability(**data0)
+        df1=FirmwareInfo(**data1)
+
         db.session.add(df)
+        db.session.add(df0)
+        db.session.add(df1)
         db.session.commit()
 
 def delete_device_infor(id, manufacturer, model_name, firmware_version, is_discontinued,cve_list,device_type,firmware_info,latest_firmware_info,cve_id,cvss,name,version,sha2,release_date,download_url):
@@ -1224,13 +1252,6 @@ def query_config_issue_relation(id, id_ConfigIssue, firmware_hash):
     elif firmware_hash:
         return ConfigIssueRelation.query.filter_by(firmware_hash=firmware_hash).first()
 
-def query_all_config_issue_relation(id,id_ConfigIssue,firmware_hash):
-    if id:
-        return ConfigIssueRelation.query.filter_by(id=id).all()
-    elif id_ConfigIssue:
-        return ConfigIssueRelation.query.filter_by(id_ConfigIssue=id_ConfigIssue).all()
-    elif firmware_hash:
-        return ConfigIssueRelation.query.filter_by(firmware_hash=firmware_hash).all()
 # class ExpiredCertRelation(db.Model):
 #     __tablename__ = 'expired_cert_relation'
 #     id = db.Column(db.Integer, primary_key=True)
