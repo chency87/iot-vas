@@ -96,7 +96,7 @@ class Scan(object):
             self.results[i][ips[i]]["vendor"] = ""
             self.results[i][ips[i]]["model_name"] = ""
             self.results[i][ips[i]]["firmware_version"] = ""
-            self.results[i][ips[i]]["is_discontinued"] = ""
+            self.results[i][ips[i]]["is_discontinued"] = "False"
             self.results[i][ips[i]]["cve_list"] = {"cve_id": "", "cvss": ""}
             self.results[i][ips[i]]["decive_type"] = ""
             self.results[i][ips[i]]["firmware_infor"] = {"name": "", "version": "", "shar2": ""}
@@ -134,15 +134,21 @@ class Scan(object):
         ips = self.get_ip(result)
         for i in range(len(ips)):
             if "tcp" in result["scan"][ips[i]].keys():
-                tcp_ports = list(result["scan"][ips[i]]["tcp"].keys())
+                tcp_ports = list(result["scan"][ips[i]]["tcp"].keys()) if "tcp" in result["scan"][ips[i]] else []
                 for j in range(len(tcp_ports)):
                     self.results[i][ips[i]]["tcp"][j]["service"] = result["scan"][ips[i]]["tcp"][int(tcp_ports[j])][
                         "name"]
             if "udp" in result["scan"][ips[i]].keys():
-                udp_ports = list(result["scan"][ips[i]]["udp"].keys())
+                udp_ports = list(result["scan"][ips[i]]["udp"].keys()) if "udp" in result["scan"][ips[i]] else []
                 for j in range(len(udp_ports)):
                     self.results[i][ips[i]]["udp"][j]["service"] = result["scan"][ips[i]]["udp"][int(udp_ports[j])][
                         "name"]
+
+    def os_match(self, result):
+        ips = self.get_ip(result)
+        for i in range(len(ips)):
+            if "osmatch" in result["scan"][ips[i]]:
+                self.results[i][ips[i]]["OS"] = result["scan"][ips[i]]["osmatch"][0]['name']
 
     # 脆弱性信息获取
     # 这里要做字符串处理，挺麻烦的，到时候再弄吧
@@ -152,17 +158,18 @@ class Scan(object):
         for i in range(len(ips)):
             if "tcp" in result["scan"][ips[i]].keys():
                 tcp_ports = list(result["scan"][ips[i]]["tcp"].keys()) if "tcp" in result["scan"][ips[i]] else []
-                for t_port in tcp_ports:
-                    if "vulscan" in result["scan"][ips[i]]["tcp"][int(t_port)]["script"]:
-                        self.results[i][ips[i]][t_port][t_port]["cve"] = \
-                            result["scan"][ips[i]]["tcp"][int(t_port)]["script"][
-                                "vulscan"]
+                for j in range(len(tcp_ports)):
+                    if "script" in result["scan"][ips[i]]["tcp"][int(tcp_ports[j])] and "vulscan" in \
+                            result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"]:
+                        self.results[i][ips[i]]["cve_list"]['cve_id'] = result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"][
+                            "vulscan"]
             if "udp" in result["scan"][ips[i]].keys():
                 udp_ports = list(result["scan"][ips[i]]["udp"].keys()) if "udp" in result["scan"][ips[i]] else []
-                for u_port in udp_ports:
-                    if "vulscan" in result["scan"][ips[i]]["tcp"][int(u_port)]["script"]:
-                        self.results[i][ips[i]][u_port]["cve"] = result["scan"][ips[i]]["tcp"][int(u_port)]["script"][
+                for j in range(len(udp_ports)):
+                    if "vulscan" in result["scan"][ips[i]]["tcp"][j]["script"]:
+                        self.results[i][ips[i]]["cve_list"]['cve_id'] = result["scan"][ips[i]]["udp"][j]["script"][
                             "vulscan"]
+
 
     # snmp信息获取，只在161端口
     def snmp_info(self, result):
@@ -175,34 +182,36 @@ class Scan(object):
                         result["scan"][ips[i]]["udp"][161]["script"]:
                     self.results[i][ips[i]]["udp"][j]["snmp-sysdescr"] = result["scan"][ips[i]]["udp"][161]["script"][
                         "snmp-sysdescr"]
-                else:
-                    self.results[i][ips[i]]["udp"][j]["snmp-sysdescr"] = ""
 
-    # def s7_info(self,result):
-
-
-                    # banner 获取
+    # banner 获取
 
     def get_banner(self, result):
         ips = self.get_ip(result)
-
         for i in range(len(ips)):
             t_ports = list(result["scan"][ips[i]]["tcp"].keys())
             for j in range(len(t_ports)):
                 # 获取ftp_banner
                 if self.results[i][ips[i]]["tcp"][j]["port"] == 21 and "banner" in result["scan"][ips[i]]["tcp"][21][
                     "script"]:
-                    self.results[i][ips[i]]["tcp"][j]["port"]["ftp_banner"] = \
+                    self.results[i][ips[i]]["tcp"][j]["ftp_banner"] = \
                         result["scan"][ips[i]]["tcp"][21]["script"]["banner"]
-                else:
-                    self.results[i][ips[i]]["tcp"][j]["port"]["ftp_banner"] = ""
                 # 获取telnet_banner
                 if self.results[i][ips[i]]["tcp"][j]["port"] == 23 and "banner" in result["scan"][ips[i]]["tcp"][23][
                     "script"]:
                     self.results[i][ips[i]]["tcp"][j]["port"]["telnet_banner"] = \
                         result["scan"][ips[i]]["tcp"][23]["script"]["banner"]
-                else:
-                    self.results[i][ips[i]]["tcp"][j]["port"]["telnet_banner"] = ""
+
+    def s7_info(self, result):
+        print("s7-info:")
+        ips = self.get_ip(result)
+        for i in range(len(ips)):
+            t_ports = list(result["scan"][ips[i]]["tcp"].keys())
+            if 102 in t_ports and "s7-info" in result["scan"][ips[i]]["tcp"][102]["script"]:
+                self.results[i][ips[i]]["model_name"] = 's7'
+                self.results[i][ips[i]]['vendor'] = 'Siemens'
+
+    def mod_bus(self, result):
+        print
 
     def get_result(self):
         return self.results

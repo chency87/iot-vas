@@ -193,8 +193,8 @@ class PublicKey(db.Model):
 class Vulnerability(db.Model):
     __tablename__ = 'vulnerability'
     id = db.Column(db.Integer, primary_key=True)
-    cve_id = db.Column(db.String(512))
-    cvss = db.Column(db.Integer)
+    cve_id = db.Column(db.Text)
+    cvss = db.Column(db.String(256))
 
     def __repr__(self):
         return "{id:'%s', cve_id:'%s',cvss:'%s'}" % (

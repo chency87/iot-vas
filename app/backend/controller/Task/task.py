@@ -1,3 +1,4 @@
+import ast
 from app.backend.controller.scan.core import Scan
 import uuid
 from app.backend.extensions import scheduler
@@ -35,19 +36,6 @@ class Task(object):
         self.rate = None
         self.info = info
         self.scan_argument = ""
-
-    info = dict(
-        name="",
-        target="",
-        task_id="",
-        port="",
-        rate="",
-        scan_type=[],
-        config=["", "", "", ""],
-        scan_desc="",
-        script=["snmp*"],
-
-    )
 
     def info_process(self):
         self.scan_name = self.info['name'] if 'name' in self.info else ""
@@ -88,8 +76,8 @@ class Task(object):
                 self.scan_argument = self.scan_argument + ' ' + '-sT'
             if scan_type == 'UDP_Scan':
                 self.scan_argument = self.scan_argument + ' ' + '-sU'
-            if scan_type == 'Ping_Scan':
-                self.scan_argument = self.scan_argument + ' ' + '-sP'
+            if scan_type == '禁用Ping':
+                self.scan_argument = self.scan_argument + ' ' + '-Pn'
 
     # 暂时还不知道怎么配置vuldb
     def set_vuldb(self):
@@ -123,14 +111,16 @@ class Task(object):
                 sc.service(result=result)
             elif config == 'vul':
                 sc.vul_detection(result=result)
+            elif config == 'os':
+                sc.os_match(result=result)
+            elif config == 'banner':
+                sc.get_banner(result=result)
 
             # 脚本信息获取部分
             if 'snmp*' in self.script:
                 sc.snmp_info(result=result)
-            if 'vulscan/vulscan' in self.script:
-                sc.vul_detection(result=result)
-            if 'banner' in self.script:
-                sc.get_banner(result=result)
+            if 's7-info' in self.script:
+                sc.s7_info(result=result)
         print(sc.get_result())
         return sc.get_result()
 
@@ -142,7 +132,7 @@ class Schedule(object):
         self.scheduler = scheduler
 
     def init_task_id(self):
-        self.triggers = self.info['schedule']['triggers']
+        self.triggers = self.info['trigger']
         # 通过伪随机码创造ID
         task_id = "{}-{}".format(self.triggers, uuid.uuid4().hex)
         return task_id
@@ -158,7 +148,7 @@ class Schedule(object):
             job = self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(),
                                          id=self.info["task_id"], max_instances=10,
                                          kwargs={"params": self.info,
-                                                 "id": self.info["task_id"]})  # kwargs表示向函数里func里传参
+                                                 "id": self.info["task_id"]})  # kwargs表示向函数func里传参
             print(self.scheduler.get_jobs())
         # 定时任务以后再说
         elif self.triggers == 'interval':
@@ -173,66 +163,67 @@ class Schedule(object):
 
     def finished_to_run(self):
         func = __name__ + ":" + "exe_task"
-        if self.info['state'] != "finished":
+        if self.info['status'] != "Finished":
             return "ERROR!"
         elif self.scheduler.get_job(id=(self.info['task_id'])):
             return "The task is running!"
         else:
-            params = Schedule_History.query.filter(id=self.info['task_id'])['params']
-            if self.triggers == 'date':
-                job = self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(),
-                                             id=self.info["task_id"], max_instances=10,
-                                             kwargs={"params": params,
-                                                     "id": self.info["task_id"]})
-        self.info['state'] = "run"
-        data = dict(
-            task_id=self.info["task_id"],
-            state=self.info['state']
-        )
+            data = Schedule_History.query.filter_by(task_id=self.info['task_id']).first()
+            print(data)
+            params = ast.literal_eval(data.params)  # 字符串字典化
+            job = self.scheduler.add_job(func=func, trigger=self.triggers, run_date=datetime.datetime.now(),
+                                         id=self.info["task_id"], max_instances=10,
+                                         kwargs={"params": params,
+                                                 "id": self.info["task_id"]})
+        self.info['status'] = "Running"
+        data = {self.info['task_id']: self.info['status']}
         return data
 
     def run_to_pause(self):
-        if self.info['state'] != "running":
-            print("state error")
+        if self.info['status'] != "Running":
+            print("status error")
             return
         elif not self.scheduler.get_job(id=self.info['task_id']):
             print("The Task is not running!")
         else:
             self.scheduler.pause_job(id=self.info['task_id'])
-            self.info['state'] = "pause"
-            data = dict(
-                task_id=self.info["task_id"],
-                state=self.info['state']
-            )
+            self.info['status'] = "Pause"
+            data = {self.info['task_id']: self.info['status']}
             return data
 
     def pause_to_run(self):
-        if self.info['state'] != "pause":
-            print("state error")
+        if self.info['status'] != "Pause":
+            print("status error")
             return
         elif not self.scheduler.get_job(id=self.info['task_id']):
             print('The Task isn\'t exist')
         else:
             self.scheduler.resume_job(id=self.info['task_id'])
-            self.info['state'] = "run"
-            data = dict(
-                task_id=self.info["task_id"],
-                state=self.info['state']
-            )
+            self.info['status'] = "Running"
+            data = {self.info['task_id']: self.info['status']}
             return data
 
     def delete_task(self):
         task_id = self.info['task_id']
-        self.scheduler.remove_job(job_id=task_id)
-        print("success delete")
+        for id in task_id:
+            if scheduler.get_job(id=id):
+                self.scheduler.remove_job(id=id)
+            else:
+                try:
+                    data = Schedule_History.query.filter_by(task_id=id).first()
+                    db.session.delete(data)
+                    db.session.commit()
+                except Exception as e:
+                    print(e)
 
-    def state_change(self):
-        if self.info['state'] == "pause":
-            self.pause_to_run()
-        elif self.info['state'] == "run":
-            self.run_to_pause()
-        elif self.info['state'] == "finished":
-            self.finished_to_run()
+    def status_change(self):
+        print(self.info)
+        if self.info['status'] == "Pause":
+            return self.pause_to_run()
+        elif self.info['status'] == "Running":
+            return self.run_to_pause()
+        elif self.info['status'] == "Finished":
+            return self.finished_to_run()
 
 
 def exe_task(params, id):
@@ -245,7 +236,7 @@ def exe_task(params, id):
     end_time = datetime.datetime.now()
     print(end_time)
 
-    if params['schedule']['triggers'] == 'date':
+    if params['trigger'] == 'date':
         add_schedule_history(id=id, create_time=create_time, scan_report=scan_report, end_time=end_time, params=params)
 
 # 增删改查    定时任务的暂停，启动  已经完成的再运行一遍

@@ -1,9 +1,13 @@
-from app.backend.controller.Task.task import Schedule
+import datetime
+
+import nmap
+from app.backend.controller.Task.task import Schedule, exe_task
 from app.backend.controller.Task.task import Task
 from app.backend.extensions import scheduler
 from app.backend.models.Task_data.table import Schedule_History
 from app.backend.database.database import db
-from app.backend.models.Task_data.curd import get_all_report
+from app.backend.models.Task_data.curd import get_all_report, get_report_by_id, add_schedule_history
+from app.backend.models.dao.dao import use_report
 
 
 def add_job():
@@ -13,36 +17,43 @@ def add_job():
     # 'task_deps_script': ['melsecq-discover-udp.nse', 'cr3-fingerprint.nse', 'enip-info.nse'],
     # 'task_trigger_type': 'cron', 'task_cron': '42 3 * * 5'}
     response = {'status': '-1'}
-    info={
-        "name":"123",
-        "target": "198.53.49.46",
-        "task_id":"",
-        "port": "161",
+    info = {
+        "name": "1123",
+        "desc": "",
+        "target": "1.1.1.1",
+        "port": "80",
+        "trigger": "date",
         "rate": 10000,
-        "scan_type": ["UDP_Scan", "TCP_Scan"],
-        "config": ["service","banner"],
-        "scan_desc": "",
-        "script": ["snmp*"],
-        "schedule": {"triggers":"date"}
-        }
+        "config": [
+            "banner"
+        ],
+        "vuldb": [],
+        "script": []
+    }
     # info = request.get_json(force=True)
     sc = Schedule(info)
     sc.add_new_task()
-    while(True):
+    while (True):
         pass
-add_job()
 
-# if start + length - 1 > len(data):
-#     for i in range(start - 1, len(data) - start + 1):
-#         print(data[i])
 
-#
-# start  = 1 11 21 31 41
-# if start + 9 > total
-# total = 30
-#
-# return_data = []
-# start  =  1
-# length = 10
-#
-# start = 1
+def delete():
+    task_id = 'date-0d89b8eaa2734878adb3958b4896252a'
+    status = 'running'
+    params = dict(
+        task_id=task_id,
+        status=status
+    )
+    sc = Schedule(info=params)
+    sc.delete_task()
+    print("success")
+    return "success"
+
+
+
+params = {"name": "脆弱性测试", "desc": "", "target": "195.145.172.34", "port": "443", "trigger": "date",
+          "scan_type": ["TCP_Scan"], "rate": 100, "config": ["vul", "service"], "vuldb": [], "script": ["s7-info"]}
+id = 'date-5e11b81ddacd41ceb3efd6f8a0133072'
+exe_task(params=params, id=id)
+while True:
+    pass
