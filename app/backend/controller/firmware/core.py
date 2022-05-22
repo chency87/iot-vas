@@ -1045,10 +1045,14 @@ def core_config_issues(firmware_hash):
         return jsonify({
             "code":20000,
             "data":{
+                "data":[
+                {
                 'service_name': None,
                 'config_file': None,
-                'issues': None,
-                'suggestions': None
+                'issues': [],
+                'suggestions': []
+                }
+              ]
             }
         })
 
@@ -1068,13 +1072,72 @@ def core_config_issues(firmware_hash):
     # 获取表ConfigIssue中的信息
 
 
-    return ({
+    return jsonify({
         "code": 20000,
-        "data": ConfigIssue_list
+        "data":
+            {
+                "data":ConfigIssue_list
+            }
     })
 
 
 def core_extract_banner(start, length, banner):
+
+#     data_temp_test = {"data":[{
+#   'manufacturer': 'Axis Communications AB',
+#   'model_name': 'P3346',
+#   'firmware_version': '5.20',
+#   'is_discontinued': 'true',
+#   'cve_list': [
+#     {
+#       'cve_id': 'CVE-2018-10660',
+#       'cvss': 10
+#     },
+#     {
+#       'cve_id': 'CVE-2018-10662',
+#       'cvss': 10
+#     },
+#     {
+#       'cve_id': 'CVE-2018-10661',
+#       'cvss': 10
+#     },
+#     {
+#       'cve_id': 'CVE-2018-10658',
+#       'cvss': 5
+#     },
+#     {
+#       'cve_id': 'CVE-2018-10659',
+#       'cvss': 5
+#     },
+#     {
+#       'cve_id': 'CVE-2018-10663',
+#       'cvss': 5
+#     },
+#     {
+#       'cve_id': 'CVE-2018-10664',
+#       'cvss': 5
+#     }
+#   ],
+#   'device_type': 'IP Camera',
+#   'firmware_info': {
+#     'name': 'AXIS P3346 5.20',
+#     'version': '5.20',
+#     'sha2': 'af88b1aaac0b222df8539f3ae1479b5c8eaeae41f1776b5dd2fa805cb33a1175',
+#     'release_date': '2010-12-03',
+#     'download_url': 'http://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_20/P3346_5_20.bin'
+#   },
+#   'latest_firmware_info': {
+#     'name': 'AXIS P3346 5.51.7.3',
+#     'version': '5.51.7.3',
+#     'sha2': 'a72361af68bd94f07cdf8b6c43389f4f382576bab752d4fb25dc74e93d4767a7',
+#     'release_date': '2020-12-03',
+#     'download_url': 'https://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_51_7_3/P3346_5_51_7_3.bin'
+#   }
+# }]}
+#     return jsonify({
+#         "code": 20000,
+#         "data": data_temp_test
+#     })
 
     device_all = DeviceInfo.query.all()
 
