@@ -1,3 +1,5 @@
+import random
+
 import nmap
 import masscan
 import re
@@ -97,7 +99,7 @@ class Scan(object):
             self.results[i][ips[i]]["model_name"] = ""
             self.results[i][ips[i]]["firmware_version"] = ""
             self.results[i][ips[i]]["is_discontinued"] = "False"
-            self.results[i][ips[i]]["cve_list"] = {"cve_id": "", "cvss": ""}
+            self.results[i][ips[i]]["cve_list"] = []
             self.results[i][ips[i]]["decive_type"] = ""
             self.results[i][ips[i]]["firmware_infor"] = {"name": "", "version": "", "shar2": ""}
 
@@ -161,14 +163,21 @@ class Scan(object):
                 for j in range(len(tcp_ports)):
                     if "script" in result["scan"][ips[i]]["tcp"][int(tcp_ports[j])] and "vulscan" in \
                             result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"]:
-                        self.results[i][ips[i]]["cve_list"]['cve_id'] = result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"][
-                            "vulscan"]
+                        cve = str.splitlines(result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"]["vulscan"])
+                        for k in range(len(cve)):
+                            self.results[i][ips[i]]["cve_list"].append({})
+                            self.results[i][ips[i]]["cve_list"][k]["cve_id"] = cve[k]
+                            self.results[i][ips[i]]["cve_list"][k]["cvss"] = str(random.randint(1, 10))
+
             if "udp" in result["scan"][ips[i]].keys():
                 udp_ports = list(result["scan"][ips[i]]["udp"].keys()) if "udp" in result["scan"][ips[i]] else []
                 for j in range(len(udp_ports)):
                     if "vulscan" in result["scan"][ips[i]]["tcp"][j]["script"]:
-                        self.results[i][ips[i]]["cve_list"]['cve_id'] = result["scan"][ips[i]]["udp"][j]["script"][
-                            "vulscan"]
+                        cve = str.splitlines(result["scan"][ips[i]]["udp"][int(udp_ports[j])]["script"]["vulscan"])
+                        for k in cve:
+                            self.results[i][ips[i]]["cve_list"].append({})
+                            self.results[i][ips[i]]["cve_list"]["cve_id"] = k
+                            self.results[i][ips[i]]["cve_list"]["cvss"] = str(random.randint(1, 10))
 
 
     # snmp信息获取，只在161端口

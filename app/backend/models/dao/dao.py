@@ -1,4 +1,5 @@
 import bdb
+import random
 
 from app.backend.models.firmware_models import *
 
@@ -904,9 +905,16 @@ def delete_vulnerability(id):
         db.session.delete(df)
         db.session.commit()
 
+def query_vulnerability_2(id, cve_id):
+    if id:
+        return Vulnerability.query.filter_by(id=id).first()
+    elif cve_id:
+        return Vulnerability.query.filter_by(cve_id=cve_id).first()
+
 def query_vulnerability(id):
     if id:
         return Vulnerability.query.filter_by(id=id).first()
+
 
 # class FirmwareInfo(db.Model):
 #     __tablename__ = 'firmware_info'
@@ -1343,9 +1351,9 @@ def use_report(listx):
         str_cve_list = ''
         for j in range(len(listx[index][ip][cve_list])):
             if j != len(listx[index][ip][cve_list]) - 1:
-                str_cve_list = str_cve_list + query_vulnerability(id=None, cve_id=cve_id[j]).id + ','
+                str_cve_list = str_cve_list + str(query_vulnerability_2(id=None, cve_id=cve_id[j]).id) + ','
                 break
-            str_cve_list = str_cve_list + query_vulnerability(id=None, cve_id=cve_id[j]).id
+            str_cve_list = str_cve_list + str(query_vulnerability_2(id=None, cve_id=cve_id[j]).id)
 
         device_type = listx[index][ip].get('device_type', 'NULL')
         firmware_infor = list(listx[index][ip].keys())[7]
