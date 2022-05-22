@@ -1134,7 +1134,7 @@ def core_extract_banner(start, length, banner):
 #     'download_url': 'https://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_51_7_3/P3346_5_51_7_3.bin'
 #   }
 # }]}
-#     return jsonify({
+#     return ({
 #         "code": 20000,
 #         "data": data_temp_test
 #     })
@@ -1143,76 +1143,79 @@ def core_extract_banner(start, length, banner):
 
     data_all = []
 
-    for device_info in device_all:
-        manufacturer = device_info.manufacturer
-        model_name = device_info.model_name
-        firmware_version = device_info.firmware_version
-        is_discontinued = device_info.is_discontinued
-        cve_list = device_info.cve_list
-        device_type = device_info.device_type
-        firmware_info = device_info.firmware_info
-        latest_firmware_info = device_info.latest_firmware_info
-        # 查找漏洞
-        cve_all = []
-        cve_list_id = cve_list.split(',')
-        for i in cve_list_id:
-            cve_i = dao.query_vulnerability(i)
-            if (cve_i is not None):
-                cve_id = cve_i.cve_id
-                cvss = cve_i.cvss
-                cve = {
-                    "cve_id": cve_id,
-                    "cvss": cvss
-                }
-                cve_all.append(cve)
+    try:
+        for device_info in device_all:
+            manufacturer = device_info.manufacturer
+            model_name = device_info.model_name
+            firmware_version = device_info.firmware_version
+            is_discontinued = device_info.is_discontinued
+            cve_list = device_info.cve_list
+            device_type = device_info.device_type
+            firmware_info = device_info.firmware_info
+            latest_firmware_info = device_info.latest_firmware_info
+            # 查找漏洞
+            cve_all = []
+            cve_list_id = cve_list.split(',')
+            for i in cve_list_id:
+                cve_i = dao.query_vulnerability(i)
+                if (cve_i is not None):
+                    cve_id = cve_i.cve_id
+                    cvss = cve_i.cvss
+                    cve = {
+                        "cve_id": cve_id,
+                        "cvss": cvss
+                    }
+                    cve_all.append(cve)
 
-        # #查找最新的固件信息
-        firmware_info = firmware_info.split(',')
-        firmware_info_list = []
-        for i in firmware_info:
-            firmware_temp = dao.query_firmware_info(i)
-            if (firmware_temp is not None):
-                name = firmware_temp.name
-                version = firmware_temp.version
-                sha2 = firmware_temp.sha2
-                release_date = firmware_temp.release_date
-                download_url = firmware_temp.download_url
-                firmware_info_list.append({
+            # #查找最新的固件信息
+            firmware_info = firmware_info.split(',')
+            firmware_info_list = []
+            for i in firmware_info:
+                firmware_temp = dao.query_firmware_info(i)
+                if (firmware_temp is not None):
+                    name = firmware_temp.name
+                    version = firmware_temp.version
+                    sha2 = firmware_temp.sha2
+                    release_date = firmware_temp.release_date
+                    download_url = firmware_temp.download_url
+                    firmware_info_list.append({
+                        "name": name,
+                        "version": version,
+                        "sha2": sha2,
+                        "release_date": release_date,
+                        "download_url": download_url
+                    })
+
+            # 查找最新的固件信息
+            latest_firmware_info = dao.query_firmware_info(latest_firmware_info)
+            if (latest_firmware_info is not None):
+                name = latest_firmware_info.name
+                version = latest_firmware_info.version
+                sha2 = latest_firmware_info.sha2
+                release_date = latest_firmware_info.release_date
+                download_url = latest_firmware_info.download_url
+                latest_firmware_info = {
                     "name": name,
                     "version": version,
                     "sha2": sha2,
                     "release_date": release_date,
                     "download_url": download_url
-                })
+                }
 
-        # 查找最新的固件信息
-        latest_firmware_info = dao.query_firmware_info(latest_firmware_info)
-        if (latest_firmware_info is not None):
-            name = latest_firmware_info.name
-            version = latest_firmware_info.version
-            sha2 = latest_firmware_info.sha2
-            release_date = latest_firmware_info.release_date
-            download_url = latest_firmware_info.download_url
-            latest_firmware_info = {
-                "name": name,
-                "version": version,
-                "sha2": sha2,
-                "release_date": release_date,
-                "download_url": download_url
+            dict = {
+                "manufacturer": manufacturer,
+                "model_name": model_name,
+                "firmware_version": firmware_version,
+                "is_discontinued": is_discontinued,
+                "cve_list": cve_all,
+                "device_type": device_type,
+                "firmware_info": firmware_info_list,
+                "latest_firmware_info": latest_firmware_info
             }
-
-        dict = {
-            "manufacturer": manufacturer,
-            "model_name": model_name,
-            "firmware_version": firmware_version,
-            "is_discontinued": is_discontinued,
-            "cve_list": cve_all,
-            "device_type": device_type,
-            "firmware_info": firmware_info_list,
-            "latest_firmware_info": latest_firmware_info
-        }
-        data_all.append(dict)
-        data2_all = {"data": data_all}
+            data_all.append(dict)
+            data2_all = {"data": data_all}
+    except Exception as e:
+        print(e)
 
     data_none = {
         "data": [
@@ -1229,8 +1232,11 @@ def core_extract_banner(start, length, banner):
         ]
     }
 
+
+
+
     if banner is None or len(banner) == 0:
-        return ({'code': 20000, 'data': data2_all})
+        return jsonify({'code': 20000, 'data': data2_all})
     dict1 = json.loads(banner)
 
     print(dict1)
@@ -1246,7 +1252,7 @@ def core_extract_banner(start, length, banner):
 
     if (key == ""):
         print("key is None")
-        return {'code': 20000, 'data': data2_all}
+        return jsonify({'code': 20000, 'data': data2_all})
 
     device_info1 = None
 

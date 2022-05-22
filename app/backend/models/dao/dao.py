@@ -916,6 +916,7 @@ def query_vulnerability(id):
         return Vulnerability.query.filter_by(id=id).first()
 
 
+
 # class FirmwareInfo(db.Model):
 #     __tablename__ = 'firmware_info'
 #     id = db.Column(db.Integer, primary_key=True)
