@@ -970,48 +970,48 @@ def core_weak_certs(firmware_hash):
 
 
 def core_config_issues(firmware_hash):
-    #test
-#     data_temp2 =[
-#   {
-#     'service_name': 'Telnet',
-#     'config_file': '/etc/init.d/rcS',
-#     'issues': [
-#       'Result: telnet enabled in path'
-#     ],
-#     'suggestions': [
-#       'Disable telnet in path and use SSH instead'
-#     ]
-#   },
-#   {
-#     'service_name': 'Telnet',
-#     'config_file': '/etc/init.d/rcS.v2.0',
-#     'issues': [
-#       'Result: telnet enabled in path'
-#     ],
-#     'suggestions': [
-#       'Disable telnet in path and use SSH instead'
-#     ]
-#   },
-#   {
-#     'service_name': 'SNMP',
-#     'config_file': '/usr/local/etc/ippf/base/snmpd.conf',
-#     'issues': [
-#       'Result: found easy guessable snmp community string'
-#     ],
-#     'suggestions': [
-#       'Change public/private community strings to another value'
-#     ]
-#   }
-# ]
-#     data_temp ={
-#         "data":data_temp2
-#     }
-#     return jsonify(
-#         {
-#             "code": 20000,
-#             "data": data_temp
-#         }
-#     )
+
+    data_temp2 =[
+  {
+    'service_name': 'Telnet',
+    'config_file': '/etc/init.d/rcS',
+    'issues': [
+      'Result: telnet enabled in path'
+    ],
+    'suggestions': [
+      'Disable telnet in path and use SSH instead'
+    ]
+  },
+  {
+    'service_name': 'Telnet',
+    'config_file': '/etc/init.d/rcS.v2.0',
+    'issues': [
+      'Result: telnet enabled in path'
+    ],
+    'suggestions': [
+      'Disable telnet in path and use SSH instead'
+    ]
+  },
+  {
+    'service_name': 'SNMP',
+    'config_file': '/usr/local/etc/ippf/base/snmpd.conf',
+    'issues': [
+      'Result: found easy guessable snmp community string'
+    ],
+    'suggestions': [
+      'Change public/private community strings to another value'
+    ]
+  }
+]
+    data_temp ={
+        "data":data_temp2
+    }
+    return jsonify(
+        {
+            "code": 20000,
+            "data": data_temp
+        }
+    )
 
 
     # class ConfigIssue(db.Model):
@@ -1045,14 +1045,10 @@ def core_config_issues(firmware_hash):
         return jsonify({
             "code":20000,
             "data":{
-                "data":[
-                {
                 'service_name': None,
                 'config_file': None,
-                'issues': [],
-                'suggestions': []
-                }
-              ]
+                'issues': None,
+                'suggestions': None
             }
         })
 
@@ -1072,12 +1068,9 @@ def core_config_issues(firmware_hash):
     # 获取表ConfigIssue中的信息
 
 
-    return jsonify({
+    return ({
         "code": 20000,
-        "data":
-            {
-                "data":ConfigIssue_list
-            }
+        "data": ConfigIssue_list
     })
 
 
@@ -1235,6 +1228,7 @@ def core_extract_banner(start, length, banner):
 
 
 
+
     if banner is None or len(banner) == 0:
         return jsonify({'code': 20000, 'data': data2_all})
     dict1 = json.loads(banner)
@@ -1255,16 +1249,6 @@ def core_extract_banner(start, length, banner):
         return jsonify({'code': 20000, 'data': data2_all})
 
     device_info1 = None
-
-    snmp_sysdescr = ""
-    snmp_sysoid = ""
-    ftp_banner = ""
-    telnet_banner = ""
-    hostname = ""
-    http_response = ""
-    https_response = ""
-    upnp_response = ""
-    nic_mac = ""
 
     try:
         if (key == "snmp_sysdescr"):
@@ -1295,16 +1279,16 @@ def core_extract_banner(start, length, banner):
             device_info1 = dao.query_all_device_features(None, None, None, None, None, None, None, None, None,
                                                          str(value))
     except Exception as e:
-        return {
+        return ({
             "code": 20000,
             "data": data_none
-        }
+        })
 
-    if (device_info1 is None):
-        return {
+    if (len(device_info1) == 0):
+        return jsonify({
             "code": 20000,
             "data": data_none
-        }
+        })
 
     id_info = []
     for i in device_info1:

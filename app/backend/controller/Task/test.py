@@ -50,7 +50,6 @@ def delete():
     return "success"
 
 
-
 params = {"name": "脆弱性测试", "desc": "", "target": "195.145.172.34", "port": "443", "trigger": "date",
           "scan_type": ["TCP_Scan"], "rate": 100, "config": ["vul", "service"], "vuldb": [], "script": ["s7-info"]}
 id = 'date-5e11b81ddacd41ceb3efd6f8a0133072'

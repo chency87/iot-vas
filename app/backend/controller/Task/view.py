@@ -15,7 +15,6 @@ def view_job():
     start = request.args.get('start')
     length = request.args.get('length')
     search = request.args.get('search')
-    # print(info)
     return jsonify(
         {"code": 20000, "data": get_all_report(start, length, search)}
     )
@@ -51,7 +50,6 @@ def delete():
 
 @Task.route('/task/scanreport', methods=['GET'])
 def view_report():
-    print('hello')
     task_id = request.args.get('task_id')
     data = get_report_by_id(task_id=task_id)
     return jsonify(

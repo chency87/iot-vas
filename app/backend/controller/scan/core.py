@@ -1,3 +1,4 @@
+import ast
 import random
 
 import nmap
@@ -167,12 +168,23 @@ class Scan(object):
                         for k in range(len(cve)):
                             self.results[i][ips[i]]["cve_list"].append({})
                             self.results[i][ips[i]]["cve_list"][k]["cve_id"] = cve[k]
+                            self.results[i][ips[i]]["cve_list"][k]["cvss"] = str(random.randint(1,10))
+
+                        cve = str.splitlines(result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"]["vulscan"])
+                        for k in range(len(cve)):
+                            self.results[i][ips[i]]["cve_list"].append({})
+                            self.results[i][ips[i]]["cve_list"][k]["cve_id"] = cve[k]
                             self.results[i][ips[i]]["cve_list"][k]["cvss"] = str(random.randint(1, 10))
 
             if "udp" in result["scan"][ips[i]].keys():
                 udp_ports = list(result["scan"][ips[i]]["udp"].keys()) if "udp" in result["scan"][ips[i]] else []
                 for j in range(len(udp_ports)):
                     if "vulscan" in result["scan"][ips[i]]["tcp"][j]["script"]:
+                        cve = str.splitlines(result["scan"][ips[i]]["udp"][int(udp_ports[j])]["script"]["vulscan"])
+                        for k in cve:
+                            self.results[i][ips[i]]["cve_list"].append({})
+                            self.results[i][ips[i]]["cve_list"]["cve_id"] = k
+                            self.results[i][ips[i]]["cve_list"]["cvss"] = str(random.randint(1,10))
                         cve = str.splitlines(result["scan"][ips[i]]["udp"][int(udp_ports[j])]["script"]["vulscan"])
                         for k in cve:
                             self.results[i][ips[i]]["cve_list"].append({})
@@ -215,9 +227,13 @@ class Scan(object):
         ips = self.get_ip(result)
         for i in range(len(ips)):
             t_ports = list(result["scan"][ips[i]]["tcp"].keys())
-            if 102 in t_ports and "s7-info" in result["scan"][ips[i]]["tcp"][102]["script"]:
+            if 102 in t_ports and "script" in result["scan"][ips[i]]["tcp"][102] and "s7-info" in result["scan"][ips[i]]["tcp"][102]["script"]:
                 self.results[i][ips[i]]["model_name"] = 's7'
                 self.results[i][ips[i]]['vendor'] = 'Siemens'
+                s7_info = str.splitlines(result["scan"][ips[i]]["tcp"][102]["script"]['s7-info'])
+                self.results[i][ips[i]]["firmware_infor"]["name"] = s7_info[1]
+                self.results[i][ips[i]]["firmware_infor"]["version"] = s7_info[3]
+
 
     def mod_bus(self, result):
         print
