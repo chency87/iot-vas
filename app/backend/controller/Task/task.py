@@ -232,7 +232,7 @@ def exe_task(params, id):
     print(create_time)
     task = Task(info=params)
     scan_report = task.create_task()
-    use_report(scan_report)
+    # use_report(scan_report) # 这个地方要改
     end_time = datetime.datetime.now()
     print(end_time)
 
@@ -240,4 +240,4 @@ def exe_task(params, id):
         add_schedule_history(id=id, create_time=create_time, scan_report=scan_report, end_time=end_time, params=params)
 
 # 增删改查    定时任务的暂停，启动  已经完成的再运行一遍
-# task_id 创建时间 完成时间 info参数 scan_report
+# # task_id 创建时间 完成时间 info参数 scan_report

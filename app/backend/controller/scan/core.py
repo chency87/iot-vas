@@ -4,6 +4,7 @@ import random
 import nmap
 import masscan
 import re
+import csv
 
 
 # 你是API的定制者，是你来设置端口参数的格式，让别人去匹配！
@@ -75,7 +76,6 @@ class Scan(object):
         """
         Method which detect the service
         """
-
         print("star nmap_scan")
 
         if self.ports is None:
@@ -101,9 +101,8 @@ class Scan(object):
             self.results[i][ips[i]]["firmware_version"] = ""
             self.results[i][ips[i]]["is_discontinued"] = "False"
             self.results[i][ips[i]]["cve_list"] = []
-            self.results[i][ips[i]]["decive_type"] = ""
-            self.results[i][ips[i]]["firmware_infor"] = {"name": "", "version": "", "shar2": ""}
-
+            self.results[i][ips[i]]["device_type"] = ""
+            self.results[i][ips[i]]["firmware_infor"] = {"name": "", "version": "", "sha2": ""}
             # 与端口有关的信息，请插入到这里
             self.results[i][ips[i]]["tcp"] = []
             self.results[i][ips[i]]["udp"] = []
@@ -152,9 +151,21 @@ class Scan(object):
         for i in range(len(ips)):
             if "osmatch" in result["scan"][ips[i]]:
                 self.results[i][ips[i]]["OS"] = result["scan"][ips[i]]["osmatch"][0]['name']
+        # 设备类型探测
+        device_type_list = []
+        device_type = ""
+        for i in range(len(ips)):
+            if "osmatch" in result["scan"][ips[i]]:
+                for j in range(len(result["scan"][ips[i]]["osmatch"])):
+                    device_type_list.append(result["scan"][ips[i]]["osmatch"][j]["osclass"][0]["type"])
+                device_type_list = list(set(device_type_list))  # 列表去重
+                for k in range(len(device_type_list)):
+                    device_type = "|" + device_type_list[k] + "|"
+                self.results[i][ips[i]]["device_type"] = device_type
+        print(device_type)
 
     # 脆弱性信息获取
-    # 这里要做字符串处理，挺麻烦的，到时候再弄吧
+
     def vul_detection(self, result):
         cve = {}  # 存储cve的字典，key是端口 value是该端口的cve信息
         ips = self.get_ip(result)
@@ -164,33 +175,47 @@ class Scan(object):
                 for j in range(len(tcp_ports)):
                     if "script" in result["scan"][ips[i]]["tcp"][int(tcp_ports[j])] and "vulscan" in \
                             result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"]:
-                        cve = str.splitlines(result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"]["vulscan"])
-                        for k in range(len(cve)):
+                        # cve = str.splitlines(result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"]["vulscan"])
+                        cve = result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"]["vulscan"]
+                        CVE_ID = re.findall('CVE-\\d{4}-\\d{1,5}', cve)  # 提取CVE编号
+                        temp = []
+                        for id in CVE_ID:  # 排除掉重复的CVE_ID
+                            if id not in temp:
+                                temp.append(id)
+                        CVE_ID = temp
+                        csv_reader = csv.reader(open('cvss.csv'))  # 读取cvss文件
+                        CVE = {}
+                        for line in csv_reader:
+                            CVE[line[0]] = line[3]
+                        CVE_CVSS = {}
+                        for cve_id in CVE_ID:
+                            print(cve_id)
+                            CVE_CVSS[cve_id] = CVE.get(cve_id)
+                        for k in range(len(CVE_ID)):
                             self.results[i][ips[i]]["cve_list"].append({})
-                            self.results[i][ips[i]]["cve_list"][k]["cve_id"] = cve[k]
-                            self.results[i][ips[i]]["cve_list"][k]["cvss"] = str(random.randint(1,10))
+                            self.results[i][ips[i]]["cve_list"][k]["cve_id"] = CVE_ID[k]
+                            self.results[i][ips[i]]["cve_list"][k]["cvss"] = CVE_CVSS[CVE_ID[k]]
 
-                        cve = str.splitlines(result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"]["vulscan"])
-                        for k in range(len(cve)):
-                            self.results[i][ips[i]]["cve_list"].append({})
-                            self.results[i][ips[i]]["cve_list"][k]["cve_id"] = cve[k]
-                            self.results[i][ips[i]]["cve_list"][k]["cvss"] = str(random.randint(1, 10))
+                        # cve = str.splitlines(result["scan"][ips[i]]["tcp"][int(tcp_ports[j])]["script"]["vulscan"])
+                        # for k in range(len(cve)):
+                        #     self.results[i][ips[i]]["cve_list"].append({})
+                        #     self.results[i][ips[i]]["cve_list"][k]["cve_id"] = cve[k]
+                        #     self.results[i][ips[i]]["cve_list"][k]["cvss"] = str(random.randint(1, 10))
 
             if "udp" in result["scan"][ips[i]].keys():
                 udp_ports = list(result["scan"][ips[i]]["udp"].keys()) if "udp" in result["scan"][ips[i]] else []
                 for j in range(len(udp_ports)):
-                    if "vulscan" in result["scan"][ips[i]]["tcp"][j]["script"]:
-                        cve = str.splitlines(result["scan"][ips[i]]["udp"][int(udp_ports[j])]["script"]["vulscan"])
-                        for k in cve:
-                            self.results[i][ips[i]]["cve_list"].append({})
-                            self.results[i][ips[i]]["cve_list"]["cve_id"] = k
-                            self.results[i][ips[i]]["cve_list"]["cvss"] = str(random.randint(1,10))
+                    if "vulscan" in result["scan"][ips[i]]["udp"][j]["script"]:
                         cve = str.splitlines(result["scan"][ips[i]]["udp"][int(udp_ports[j])]["script"]["vulscan"])
                         for k in cve:
                             self.results[i][ips[i]]["cve_list"].append({})
                             self.results[i][ips[i]]["cve_list"]["cve_id"] = k
                             self.results[i][ips[i]]["cve_list"]["cvss"] = str(random.randint(1, 10))
-
+                        # cve = str.splitlines(result["scan"][ips[i]]["udp"][int(udp_ports[j])]["script"]["vulscan"])
+                        # for k in cve:
+                        #     self.results[i][ips[i]]["cve_list"].append({})
+                        #     self.results[i][ips[i]]["cve_list"]["cve_id"] = k
+                        #     self.results[i][ips[i]]["cve_list"]["cvss"] = str(random.randint(1, 10))
 
     # snmp信息获取，只在161端口
     def snmp_info(self, result):
@@ -227,7 +252,8 @@ class Scan(object):
         ips = self.get_ip(result)
         for i in range(len(ips)):
             t_ports = list(result["scan"][ips[i]]["tcp"].keys())
-            if 102 in t_ports and "script" in result["scan"][ips[i]]["tcp"][102] and "s7-info" in result["scan"][ips[i]]["tcp"][102]["script"]:
+            if 102 in t_ports and "script" in result["scan"][ips[i]]["tcp"][102] and "s7-info" in \
+                    result["scan"][ips[i]]["tcp"][102]["script"]:
                 self.results[i][ips[i]]["model_name"] = 's7'
                 self.results[i][ips[i]]['vendor'] = 'Siemens'
                 s7_info = str.splitlines(result["scan"][ips[i]]["tcp"][102]["script"]['s7-info'])
@@ -235,8 +261,6 @@ class Scan(object):
                 self.results[i][ips[i]]["firmware_infor"]["version"] = s7_info[3]
 
 
-    def mod_bus(self, result):
-        print
 
     def get_result(self):
         return self.results

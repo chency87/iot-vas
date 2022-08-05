@@ -8,7 +8,7 @@ from app.backend.models.Task_data.table import Schedule_History
 from app.backend.database.database import db
 from app.backend.models.Task_data.curd import get_all_report, get_report_by_id, add_schedule_history
 from app.backend.models.dao.dao import use_report
-
+import csv
 
 def add_job():
     '''新增作业'''
@@ -51,8 +51,11 @@ def delete():
 
 
 params = {"name": "脆弱性测试", "desc": "", "target": "195.145.172.34", "port": "443", "trigger": "date",
-          "scan_type": ["TCP_Scan"], "rate": 100, "config": ["vul", "service"], "vuldb": [], "script": ["s7-info"]}
+          "scan_type": ["TCP_Scan"], "rate": 100, "config": ["os", "service"], "vuldb": [], "script": ["s7-info"]}
 id = 'date-5e11b81ddacd41ceb3efd6f8a0133072'
 exe_task(params=params, id=id)
+# csv_reader = csv.reader(open('cvss.csv'))
+# for line in csv_reader:
+#     print(line)
 while True:
     pass
