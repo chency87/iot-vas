@@ -4,9 +4,28 @@ from flask import jsonify, render_template, request
 from app.backend.models.dao import dao
 from . import extract_info
 
-def add_iot_data():
-    # return 'extract_info.html'
-    # insert the right data into the database
+# Python计算字符串或文件的MD5/SHA值
+import time
+import os
+import hashlib
+
+# 计算字符串的SHA 224值
+def str(text, algorithm):
+    algorithm.update(text.encode(encoding='UTF-8'))
+    return algorithm.hexdigest()
+
+def Str2Sha224(text):
+    return str(text, hashlib.sha224())
+
+# insert the right data into the database
+
+# 1 ConfigIssue ConfigIssueRelation
+# 2 ExpiredCert and ExpiredCertRelation
+# 3 CryptoKey CryptoKeyRelation
+# 4 DefaultAccount DefaultAccountRelationship
+
+def addConfigIssue():
+    # 1 ConfigIssue ConfigIssueRelation
     # class ConfigIssue(db.Model):
     #     __tablename__ = 'config_issue'
     #     id = db.Column(db.Integer, primary_key=True)
@@ -51,15 +70,15 @@ def add_iot_data():
     #     }
     # ]
 
-    #     firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
-    # add the data to the Configissue and ConfigIssueRelation tables
+    #    firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
+    #    add the data to the Configissue and ConfigIssueRelation tables
     try:
         dao.add_update_config_issue(None, 'Telnet', '/etc/init.d/rcS', 'Result: telnet enabled in path',
                                     'Disable telnet in path and use SSH instead')
         dao.add_update_config_issue(None, 'Telnet', '/etc/init.d/rcS.v2.0', 'Result: telnet enabled in path',
                                     'Disable telnet in path and use SSH instead')
         dao.add_update_config_issue(None, 'SNMP', '/usr/local/etc/ippf/base/snmpd.conf',
-                                    'Result: found easy guessable snmp community string',
+                                    'Result: found e asy guessable snmp community string',
                                     'Change public/private community strings to another value')
 
         dao.add_update_config_issue_relation(None, 1,
@@ -71,6 +90,9 @@ def add_iot_data():
     except Exception as e:
         print(e)
 
+# 2 ExpiredCert and ExpiredCertRelation
+def addExpiredCert():
+    # 2 ExpiredCert and ExpiredCertRelation
     # class ExpiredCert(db.Model):
     #     __tablename__ = 'expired_cert'
     #     id = db.Column(db.Integer, primary_key=True)
@@ -277,6 +299,8 @@ def add_iot_data():
                                 '2009-10-08T23:42:14Z', '2010-10-08T23:42:14Z', 'RSA', 1024)
     dao.add_update_expired_cert_relation(None, 9, 'ac7c090c34338ea6a3b335004755e24578e7e4eee739c5c33736f0822b64907e')
 
+def addCryptoKey():
+    # 3 CryptoKey CryptoKeyRelation
     # class CryptoKey(db.Model):
     #     __tablename__ = 'cryptokey'
     #     id = db.Column(db.Integer, primary_key=True)
@@ -303,7 +327,6 @@ def add_iot_data():
     dao.add_update_crypto_key(None, 'key.pem', '5c26251e4db4acd0b21d0bbb703ce4fe921e28eadc9f252348c1de4d6d114cf2',
                               'RSAPrivateKey', 'RSA', 512)
     dao.add_update_crypto_key_relation(None, 10, '852031776c09f8152c90496f2c3fac85b46a938d20612d7fc03eea8aab46f23e')
-
     # [
     #     {
     #         "file_name": "luacp",
@@ -316,7 +339,6 @@ def add_iot_data():
     dao.add_update_crypto_key(None, 'luacp', '9a2c5168bea132279bb4ce006e8a5c6ce210c073e1298848d0b4129c0549423d',
                               'RSAPrivateKey', 'encrypted', None)
     dao.add_update_crypto_key_relation(None, 11, 'af88b1aaac0b222df8539f3ae1479b5c8eaeae41f1776b5dd2fa805cb33a1175')
-
     # [
     #     {
     #         "file_name": "server.pem",
@@ -330,6 +352,8 @@ def add_iot_data():
                               'RSAPrivateKey', 'RSA', 1024)
     dao.add_update_crypto_key_relation(None, 12, '90e3e68e1c61850f20c50e551816d47d484d7feb46890f5bc0a0e0dab3e3ba0b')
 
+def addDefaultAccount():
+    # 4 DefaultAccount DefaultAccountRelationship
     # class DefaultAccount(db.Model):
     #     __tablename__ = 'default_account'
     #     id = db.Column(db.Integer, primary_key=True)
@@ -358,7 +382,6 @@ def add_iot_data():
     #     "gid": 127,
     #     "home_dir": "/"
     # },
-
     dao.add_update_default_account(None, 'sessioncgi', '*', None, '/bin/false', 127, 127, '/')
     dao.add_update_default_account_relationship(None, 1,
                                                 'af88b1aaac0b222df8539f3ae1479b5c8eaeae41f1776b5dd2fa805cb33a1175')
@@ -1018,6 +1041,25 @@ def add_iot_data():
     dao.add_update_default_account_relationship(None, 52,
                                                 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
 
+# 5
+def addRisk():
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '1', '1', '20798FF15E8D5416')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '2', '1', '20798FF15E8D5416')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '2', '2', '20798FF15E8D5416')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '1', '2', '20798FF15E8D5416')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '1', '2', '20798FF15E8D5416')
+    dao.add_update_vulnerability(None, '45', 66)
+    dao.add_update_vulnerability(None, '23', 55)
+    dao.add_update_vulnerability(None, '11', 74)
+
+    pass
+
+def add_iot_data():
+    addConfigIssue()
+    addCryptoKey()
+    addDefaultAccount()
+    addExpiredCert()
+
 def test_for_data():
     # 测试1
     # dao.add_update_firmware_risk_summary_vulnerable_component_relation(None,2,3,'test')
@@ -1164,7 +1206,6 @@ def test_for_data():
     pass
 
 def core_extract_banner(banner):
-
     if banner is None or len(banner) == 0:
         return ({'code':404,'msg':'banner is None'})
     dict1 = json.loads(banner)
@@ -1298,6 +1339,3 @@ def core_extract_banner(banner):
         }
         data.append(dict)
     return ({'code': 20000, 'data': data})
-
-def add_iot_device_database():
-    dao.add_update
