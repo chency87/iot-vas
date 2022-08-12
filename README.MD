@@ -1,4 +1,3 @@
-
 ## Installation
 
 1. 确保已经安装 python3.8 Postgresql数据库、nmap

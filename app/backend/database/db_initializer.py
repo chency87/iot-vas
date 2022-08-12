@@ -57,8 +57,8 @@ def create_admin_user():
         # base64.encode(generate_password_hash("admin"),pw)
         user = User(
             username="admin",
-            password=generate_password_hash("admin", method='plain'),
-            email="admin_email@example.com",
+            password="111111",
+            email="admin34_email@example.com",
             user_role=Role.admin,
         )
 

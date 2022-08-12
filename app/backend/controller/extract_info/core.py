@@ -5,8 +5,6 @@ from app.backend.models.dao import dao
 from . import extract_info
 
 # Python计算字符串或文件的MD5/SHA值
-import time
-import os
 import hashlib
 
 # 计算字符串的SHA 224值
@@ -25,51 +23,6 @@ def Str2Sha224(text):
 # 4 DefaultAccount DefaultAccountRelationship
 
 def addConfigIssue():
-    # 1 ConfigIssue ConfigIssueRelation
-    # class ConfigIssue(db.Model):
-    #     __tablename__ = 'config_issue'
-    #     id = db.Column(db.Integer, primary_key=True)
-    #     service_name = db.Column(db.String(512))
-    #     config_file = db.Column(db.String(512))
-    #     issues = db.Column(db.String(512))  # List of detected issues
-    #     suggestions = db.Column(db.String(512)) # List of suggestions to fix the issues
-    # class ConfigIssueRelation(db.Model):
-    #     __tablename__ = 'config_issue_relation'
-    #     id = db.Column(db.Integer, primary_key=True)
-    #     id_ConfigIssue = db.Column(db.Integer)  # Reference_key to ConfigIssue
-    # [
-    #     {
-    #         "service_name": "Telnet",
-    #         "config_file": "/etc/init.d/rcS",
-    #         "issues": [
-    #             "Result: telnet enabled in path"
-    #         ],
-    #         "suggestions": [
-    #             "Disable telnet in path and use SSH instead"
-    #         ]
-    #     },
-    #     {
-    #         "service_name": "Telnet",
-    #         "config_file": "/etc/init.d/rcS.v2.0",
-    #         "issues": [
-    #             "Result: telnet enabled in path"
-    #         ],
-    #         "suggestions": [
-    #             "Disable telnet in path and use SSH instead"
-    #         ]
-    #     },
-    #     {
-    #         "service_name": "SNMP",
-    #         "config_file": "/usr/local/etc/ippf/base/snmpd.conf",
-    #         "issues": [
-    #             "Result: found easy guessable snmp community string"
-    #         ],
-    #         "suggestions": [
-    #             "Change public/private community strings to another value"
-    #         ]
-    #     }
-    # ]
-
     #    firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
     #    add the data to the Configissue and ConfigIssueRelation tables
     try:
@@ -80,278 +33,70 @@ def addConfigIssue():
         dao.add_update_config_issue(None, 'SNMP', '/usr/local/etc/ippf/base/snmpd.conf',
                                     'Result: found e asy guessable snmp community string',
                                     'Change public/private community strings to another value')
-
-        dao.add_update_config_issue_relation(None, 1,
-                                             'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-        dao.add_update_config_issue_relation(None, 2,
-                                             'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-        dao.add_update_config_issue_relation(None, 3,
-                                             'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
     except Exception as e:
         print(e)
 
 # 2 ExpiredCert and ExpiredCertRelation
 def addExpiredCert():
     # 2 ExpiredCert and ExpiredCertRelation
-    # class ExpiredCert(db.Model):
-    #     __tablename__ = 'expired_cert'
-    #     id = db.Column(db.Integer, primary_key=True)
-    #     file_name = db.Column(db.String(512))
-    #     file_hash = db.Column(db.String(512))
-    #     thumb_print = db.Column(db.String(512))
-    #     public_key = db.Column(db.Integer) # public key , refer to  PublicKey
-    #     subject_name = db.Column(db.String(512))
-    #     valid_form = db.Column(db.String(512))
-    #     valid_to =  db.Column(db.String(512))
-
-    # class ExpiredCertRelation(db.Model):
-    #     __tablename__ = 'expired_cert_relation'
-    #     id = db.Column(db.Integer, primary_key=True)
-    #     id_ExpiredCert = db.Column(db.Integer)  # Reference_key to ExpiredCert
-    #     firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
-
-    # [
-    #     {
-    #         "file_name": "nwsoc_RootCert.pem",
-    #         "file_hash": "4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b",
-    #         "thumb_print": "02faf3e291435468607857694df5e45b68851868",
-    #         "public_key": {
-    #             "algorithm": "RSA",
-    #             "bits": 2048
-    #         },
-    #         "subject_name": "C=SE,O=AddTrust AB,OU=AddTrust External TTP Network,CN=AddTrust External CA Root",
-    #         "valid_from": "2000-05-30T10:48:38Z",
-    #         "valid_to": "2020-05-30T10:48:38Z"
-    #     },
     dao.add_update_expired_cert(None, 'nwsoc_RootCert.pem',
                                 '4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b',
                                 '02faf3e291435468607857694df5e45b68851868', None,
                                 'C=SE,O=AddTrust AB,OU=AddTrust External TTP Network,CN=AddTrust External CA Root',
                                 '2000-05-30T10:48:38Z', '2020-05-30T10:48:38Z', 'RSA', 2048)
-    dao.add_update_expired_cert_relation(None, 1, 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-    #     {
-    #         "file_name": "nwsoc_RootCert.pem",
-    #         "file_hash": "4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b",
-    #         "thumb_print": "ccab0ea04c2301d6697bdd379fcd12eb24e3949d",
-    #         "public_key": {
-    #             "algorithm": "RSA",
-    #             "bits": 2048
-    #         },
-    #         "subject_name": "C=SE,O=AddTrust AB,OU=AddTrust TTP Network,CN=AddTrust Class 1 CA Root",
-    #         "valid_from": "2000-05-30T10:38:31Z",
-    #         "valid_to": "2020-05-30T10:38:31Z"
-    #     },
     dao.add_update_expired_cert(None, 'nwsoc_RootCert.pem',
                                 '4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b',
                                 'ccab0ea04c2301d6697bdd379fcd12eb24e3949d', None,
                                 'C=SE,O=AddTrust AB,OU=AddTrust TTP Network,CN=AddTrust Class 1 CA Root',
                                 '2000-05-30T10:38:31Z', '2020-05-30T10:38:31Z', 'RSA', 2048)
-    dao.add_update_expired_cert_relation(None, 2, 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-    #     {
-    #         "file_name": "nwsoc_RootCert.pem",
-    #         "file_hash": "4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b",
-    #         "thumb_print": "4d2378ec919539b5007f758f033b211ec54d8bcf",
-    #         "public_key": {
-    #             "algorithm": "RSA",
-    #             "bits": 2048
-    #         },
-    #         "subject_name": "C=SE,O=AddTrust AB,OU=AddTrust TTP Network,CN=AddTrust Qualified CA Root",
-    #         "valid_from": "2000-05-30T10:44:50Z",
-    #         "valid_to": "2020-05-30T10:44:50Z"
-    #     },
     dao.add_update_expired_cert(None, 'nwsoc_RootCert.pem',
                                 '4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b',
                                 '4d2378ec919539b5007f758f033b211ec54d8bcf', None,
                                 'C=SE,O=AddTrust AB,OU=AddTrust TTP Network,CN=AddTrust Qualified CA Root',
                                 '2000-05-30T10:44:50Z', '2020-05-30T10:44:50Z', 'RSA', 2048)
-    dao.add_update_expired_cert_relation(None, 3, 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-    #     {
-    #         "file_name": "nwsoc_RootCert.pem",
-    #         "file_hash": "4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b",
-    #         "thumb_print": "2ab628485e78fbf3ad9e7910dd6bdf99722c96e5",
-    #         "public_key": {
-    #             "algorithm": "RSA",
-    #             "bits": 2048
-    #         },
-    #         "subject_name": "C=SE,O=AddTrust AB,OU=AddTrust TTP Network,CN=AddTrust Public CA Root",
-    #         "valid_from": "2000-05-30T10:41:50Z",
-    #         "valid_to": "2020-05-30T10:41:50Z"
-    #     },
     dao.add_update_expired_cert(None, 'nwsoc_RootCert.pem',
                                 '4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b',
                                 '2ab628485e78fbf3ad9e7910dd6bdf99722c96e5', None,
                                 'C=SE,O=AddTrust AB,OU=AddTrust TTP Network,CN=AddTrust Public CA Root',
                                 '2000-05-30T10:41:50Z', '2020-05-30T10:41:50Z', 'RSA', 2048)
-    dao.add_update_expired_cert_relation(None, 4, 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-
-    # add the data to the ExpiredCert and ExpiredCertRelation tables
-
-    #     {
-    #         "file_name": "nwsoc_RootCert.pem",
-    #         "file_hash": "4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b",
-    #         "thumb_print": "a9e9780814375888f20519b06d2b0d2b6016907d",
-    #         "public_key": {
-    #             "algorithm": "RSA",
-    #             "bits": 2048
-    #         },
-    #         "subject_name": "C=US,O=GeoTrust Inc.,CN=GeoTrust Global CA 2",
-    #         "valid_from": "2004-03-04T05:00:00Z",
-    #         "valid_to": "2019-03-04T05:00:00Z"
-    #     },
     dao.add_update_expired_cert(None, 'nwsoc_RootCert.pem',
                                 '4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b',
                                 'a9e9780814375888f20519b06d2b0d2b6016907d', None,
                                 'C=US,O=GeoTrust Inc.,CN=GeoTrust Global CA 2', '2004-03-04T05:00:00Z',
                                 '2019-03-04T05:00:00Z', 'RSA', 2048)
-    dao.add_update_expired_cert_relation(None, 5, 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-
-    #     {
-    #         "file_name": "nwsoc_RootCert.pem",
-    #         "file_hash": "4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b",
-    #         "thumb_print": "58119f0e128287ea50fdd987456f4f78dcfad6d4",
-    #         "public_key": {
-    #             "algorithm": "RSA",
-    #             "bits": 2048
-    #         },
-    #         "subject_name": "C=US,ST=UT,L=Salt Lake City,O=The USERTRUST Network,OU=http://www.usertrust.com,CN=UTN - DATACorp SGC",
-    #         "valid_from": "1999-06-24T18:57:21Z",
-    #         "valid_to": "2019-06-24T19:06:30Z"
-    #     },
     dao.add_update_expired_cert(None, 'nwsoc_RootCert.pem',
                                 '4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b',
                                 '58119f0e128287ea50fdd987456f4f78dcfad6d4', None,
                                 'C=US,ST=UT,L=Salt Lake City,O=The USERTRUST Network,OU=http://www.usertrust.com,CN=UTN - DATACorp SGC',
                                 '1999-06-24T18:57:21Z', '2019-06-24T19:06:30Z', 'RSA', 2048)
-    dao.add_update_expired_cert_relation(None, 6, 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-
-    #     {
-    #         "file_name": "nwsoc_RootCert.pem",
-    #         "file_hash": "4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b",
-    #         "thumb_print": "d23209ad23d314232174e40d7f9d62139786633a",
-    #         "public_key": {
-    #             "algorithm": "RSA",
-    #             "bits": 1024
-    #         },
-    #         "subject_name": "C=US,O=Equifax,OU=Equifax Secure Certificate Authority",
-    #         "valid_from": "1998-08-22T16:41:51Z",
-    #         "valid_to": "2018-08-22T16:41:51Z"
-    #     },
     dao.add_update_expired_cert(None, 'nwsoc_RootCert.pem',
                                 '4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b',
                                 'd23209ad23d314232174e40d7f9d62139786633a', None,
                                 'C=US,O=Equifax,OU=Equifax Secure Certificate Authority', '1998-08-22T16:41:51Z',
                                 '2018-08-22T16:41:51Z', 'RSA', 1024)
-    dao.add_update_expired_cert_relation(None, 7, 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-    #     {
-    #         "file_name": "nwsoc_RootCert.pem",
-    #         "file_hash": "4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b",
-    #         "thumb_print": "0483ed3399ac3608058722edbc5e4600e3bef9d7",
-    #         "public_key": {
-    #             "algorithm": "RSA",
-    #             "bits": 2048
-    #         },
-    #         "subject_name": "C=US,ST=UT,L=Salt Lake City,O=The USERTRUST Network,OU=http://www.usertrust.com,CN=UTN-USERFirst-Hardware",
-    #         "valid_from": "1999-07-09T18:10:42Z",
-    #         "valid_to": "2019-07-09T18:19:22Z"
-    #     },
     dao.add_update_expired_cert(None, 'nwsoc_RootCert.pem',
                                 '4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b',
                                 '0483ed3399ac3608058722edbc5e4600e3bef9d7', None,
                                 'C=US,ST=UT,L=Salt Lake City,O=The USERTRUST Network,OU=http://www.usertrust.com,CN=UTN-USERFirst-Hardware',
                                 '1999-07-09T18:10:42Z', '2019-07-09T18:19:22Z', 'RSA', 2048)
-    dao.add_update_expired_cert_relation(None, 8, 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-
-    #     {
-    #         "file_name": "nwsoc_RootCert.pem",
-    #         "file_hash": "4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b",
-    #         "thumb_print": "b18d9d195669ba0f7829517566c25f422a277104",
-    #         "public_key": {
-    #             "algorithm": "RSA",
-    #             "bits": 2048
-    #         },
-    #         "subject_name": "C=US,O=VeriSign, Inc.,OU=VeriSign Trust Network,OU=Terms of use at https://www.verisign.com/rpa (c)10,CN=VeriSign Class 3 International Server CA - G3",
-    #         "valid_from": "2010-02-08T00:00:00Z",
-    #         "valid_to": "2020-02-07T23:59:59Z"
-    #     }
-    # ]
     dao.add_update_expired_cert(None, 'nwsoc_RootCert.pem',
                                 '4b5b840d5becdda4eb8a44a488db551bd68557c5b2e9811d473506aa28302d2b',
                                 'b18d9d195669ba0f7829517566c25f422a277104', None,
                                 'C=US,O=VeriSign, Inc.,OU=VeriSign Trust Network,OU=Terms of use at https://www.verisign.com/rpa (c)10,CN=VeriSign Class 3 International Server CA - G3',
                                 '2010-02-08T00:00:00Z', '2020-02-07T23:59:59Z', 'RSA', 2048)
-    dao.add_update_expired_cert_relation(None, 9, 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
-
-    # {
-    #     "file_name": "server.pem",
-    #     "file_hash": "e8944eba6be07e26aeefe15893c47b9ab93828d2000e60033cd5db61e93a8910",
-    #     "thumb_print": "dfad9b22e5c8531314df3ab8b25258115af06af2",
-    #     "public_key": {
-    #         "algorithm": "RSA",
-    #         "bits": 1024
-    #     },
-    #     "subject_name": "C=US,ST=CA,L=SJ,O=Cisco,OU=CDTG,CN=ut610n,emailAddress=ut610n@cdtg.cisco.com",
-    #     "valid_from": "2009-10-08T23:42:14Z",
-    #     "valid_to": "2010-10-08T23:42:14Z"
-    # }
     dao.add_update_expired_cert(None, 'server.pem', 'e8944eba6be07e26aeefe15893c47b9ab93828d2000e60033cd5db61e93a8910',
                                 'dfad9b22e5c8531314df3ab8b25258115af06af2', None,
                                 'C=US,ST=CA,L=SJ,O=Cisco,OU=CDTG,CN=ut610n,emailAddress=ut610n@cdtg.cisco.com',
                                 '2009-10-08T23:42:14Z', '2010-10-08T23:42:14Z', 'RSA', 1024)
-    dao.add_update_expired_cert_relation(None, 9, 'ac7c090c34338ea6a3b335004755e24578e7e4eee739c5c33736f0822b64907e')
 
 def addCryptoKey():
     # 3 CryptoKey CryptoKeyRelation
-    # class CryptoKey(db.Model):
-    #     __tablename__ = 'cryptokey'
-    #     id = db.Column(db.Integer, primary_key=True)
-    #     file_name = db.Column(db.String(512))
-    #     file_hash = db.Column(db.String(512))
-    #     pem_type = db.Column(db.String(512))
-    #     algorithm = db.Column(db.String(512))
-    #     bits = db.Column(db.Integer)
-    # class CryptoKeyRelation(db.Model):
-    #     __tablename__ = 'crypto_key_relation'
-    #     id = db.Column(db.Integer, primary_key=True)
-    #     id_CryptoKey = db.Column(db.Integer)  # Reference_key to CryptoKey
-    #     firmware_hash = db.Column(db.String(512))  # Reference_key to FirmwareInfo
-    # add the data to the CryptoKey table and CryptoKeyRelation table
-    # [
-    #     {
-    #         "file_name": "key.pem",
-    #         "file_hash": "5c26251e4db4acd0b21d0bbb703ce4fe921e28eadc9f252348c1de4d6d114cf2",
-    #         "pem_type": "RSAPrivateKey",
-    #         "algorithm": "RSA",
-    #         "bits": 512
-    #     }
-    # ]
     dao.add_update_crypto_key(None, 'key.pem', '5c26251e4db4acd0b21d0bbb703ce4fe921e28eadc9f252348c1de4d6d114cf2',
                               'RSAPrivateKey', 'RSA', 512)
-    dao.add_update_crypto_key_relation(None, 10, '852031776c09f8152c90496f2c3fac85b46a938d20612d7fc03eea8aab46f23e')
-    # [
-    #     {
-    #         "file_name": "luacp",
-    #         "file_hash": "9a2c5168bea132279bb4ce006e8a5c6ce210c073e1298848d0b4129c0549423d",
-    #         "pem_type": "RSAPrivateKey",
-    #         "algorithm": "encrypted",
-    #         "bits": null
-    #     }
-    # ]
     dao.add_update_crypto_key(None, 'luacp', '9a2c5168bea132279bb4ce006e8a5c6ce210c073e1298848d0b4129c0549423d',
                               'RSAPrivateKey', 'encrypted', None)
-    dao.add_update_crypto_key_relation(None, 11, 'af88b1aaac0b222df8539f3ae1479b5c8eaeae41f1776b5dd2fa805cb33a1175')
-    # [
-    #     {
-    #         "file_name": "server.pem",
-    #         "file_hash": "e8944eba6be07e26aeefe15893c47b9ab93828d2000e60033cd5db61e93a8910",
-    #         "pem_type": "RSAPrivateKey",
-    #         "algorithm": "RSA",
-    #         "bits": 1024
-    #     }
-    # ]
     dao.add_update_crypto_key(None, 'server.pem', 'e8944eba6be07e26aeefe15893c47b9ab93828d2000e60033cd5db61e93a8910',
                               'RSAPrivateKey', 'RSA', 1024)
-    dao.add_update_crypto_key_relation(None, 12, '90e3e68e1c61850f20c50e551816d47d484d7feb46890f5bc0a0e0dab3e3ba0b')
-
 def addDefaultAccount():
     # 4 DefaultAccount DefaultAccountRelationship
     # class DefaultAccount(db.Model):
@@ -1041,16 +786,54 @@ def addDefaultAccount():
     dao.add_update_default_account_relationship(None, 52,
                                                 'aa96e4d41a4b0ceb3f1ae4d94f3cb445621b9501e3a9c69e6b9eb37c5888a03c')
 
-# 5
+
+def add_vulnerability():
+    import csv
+    csv_reader = csv.reader(open('./cvss.csv'))  # 读取cvss文件
+    i = 0
+    for line in csv_reader:
+        dao.add_update_vulnerability(None, line[0] , line[3])
+        i += 1
+        if i > 10000:
+            break
+# 5 vulnerability relation riskSummary
 def addRisk():
-    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '1', '1', '20798FF15E8D5416')
-    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '2', '1', '20798FF15E8D5416')
-    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '2', '2', '20798FF15E8D5416')
-    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '1', '2', '20798FF15E8D5416')
-    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '1', '2', '20798FF15E8D5416')
-    dao.add_update_vulnerability(None, '45', 66)
-    dao.add_update_vulnerability(None, '23', 55)
-    dao.add_update_vulnerability(None, '11', 74)
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '1', '1', '6263adf17b021d5f8043937837ee5acf8ad853a1ebe6d7aab9347af6')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '2', '2', 'fb5c031fb18da2e23f6e72eac3344da37200fcfe292ea1dae8d09274')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '3', '3', '6b3472eeb4c24a0c95575f459de9f6e3bc419f4229b44f3a85312a77')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '4', '4', '5f5cb11c55a8ee842829bf8ec7d75f1a4c379d176f5459088c329fbb')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '5', '5', '6929026b7c9dc6718e28911801dc022d6a1353e75dd463b131205680')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '6', '6', '7e0376406e66fc3e9c01eb36dd8f19fdd58c0b6f677facb28c2ce0c6')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '7', '7', '59ce5a6b72f4e5dc15f793d2808af9edd6469968a80ea69ad241a889')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '8', '8', '5833e198dc69cccb304836785b684d9c2746907ee79018fc0009e61f')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '9', '9', '6944444e37a1b94b2473fc7b76cff86a3127cb4b5e8e5043d6484da9')
+    dao.add_update_firmware_risk_summary_vulnerable_component_relation(None, '10', '10', '6994471aac1ef3516ec6e503cd05003efa739d97b72883c4c2a6cf36')
+
+    add_vulnerability()
+
+    dao.add_update_risk_summary(None, 'Critical', 'Hign', 'Medium', 'Low')
+    dao.add_update_risk_summary(None, 'Critical', 'Critica', 'Medium', 'Low')
+    dao.add_update_risk_summary(None, 'Hign', 'Hign', 'Medium', 'Low')
+    dao.add_update_risk_summary(None, 'Medium', 'Hign', 'Medium', 'Low')
+    dao.add_update_risk_summary(None, 'Critical', 'Critical', 'Medium', 'Low')
+    dao.add_update_risk_summary(None, 'Critical', 'Hign', 'Medium', 'Low')
+    dao.add_update_risk_summary(None, 'Critical', 'Critica', 'Medium', 'Low')
+    dao.add_update_risk_summary(None, 'Hign', 'Hign', 'Medium', 'Low')
+    dao.add_update_risk_summary(None, 'Medium', 'Hign', 'Medium', 'Low')
+    dao.add_update_risk_summary(None, 'Critical', 'Critical', 'Medium', 'Low')
+
+    dao.add_update_vulnerable_component(None, 'openssl', '0.9.7m', 'Crypto Library', '23,342,45,56,67,87,43,12,54,563,212', '5.9')
+    dao.add_update_vulnerable_component(None, 'Endress+Hauser Fieldgate', 'FXA520', 'Fieldgate', '232,234,32,455,23,12,324,34,34,23,54,65,76,43,23,45,323,345,23,54,2343,45', '5.20')
+    dao.add_update_vulnerable_component(None, 'CJ2M', '02.01', 'CPU', '2343,322,3434,323,1222,2332,43,2323,2343,2332,1234,4564,2333,2345,3423,345,6545', '5.20')
+    dao.add_update_vulnerable_component(None, 'CJ2M', '1.11', 'CPU', '1112,1233,1412,1329,2313,2132,2343,5465,4533,4563,4532,4563,1233', '5.20')
+    dao.add_update_vulnerable_component(None, 'NPort 5150', '3.4 Build 11080114', 'serial-to-IP converter', '435,124,657,223,123,32,87', '5.20')
+    dao.add_update_vulnerable_component(None, 'Mitsubishi', 'Q-series', 'CPU', '234,435,654,345,234,456,245,78,213', '5.20')
+    dao.add_update_vulnerable_component(None, 'power-misc', 'Null', 'Server', '332,123,435,657,345,44,32,43,76,34,65,76', '5.20')
+    dao.add_update_vulnerable_component(None, 'pop3d', '4vO', 'Server', '77,234,322,232,123,34,23,54,56,342,234,564', '5.12')
+    dao.add_update_vulnerable_component(None, 'imapd', 'Null', 'Server', '344,456,768,23,465,345,345,235,234', '5.20')
+    dao.add_update_vulnerable_component(None, 'OpenSSH', '7.6p1 Ubuntu 4ubuntu0.3', 'Server', '23,454,656,22,34,546,23,34', '4.32')
+    dao.add_update_vulnerable_component(None, 'libupnp', '1.4.1', 'UPnP Server', '2,6,7', '5.9')
+    dao.add_update_vulnerable_component(None, 'CJ2M-EIP21', '2.7', 'EtherNet-IP-2', '1,2,3,4,6', '5.9')
 
     pass
 
@@ -1059,6 +842,7 @@ def add_iot_data():
     addCryptoKey()
     addDefaultAccount()
     addExpiredCert()
+    addRisk()
 
 def test_for_data():
     # 测试1

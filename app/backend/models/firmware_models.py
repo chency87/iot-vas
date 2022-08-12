@@ -47,7 +47,7 @@ class DeviceFeatures(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     snmp_sysdescr = db.Column(db.String(512))
     snmp_sysoid = db.Column(db.String(512))
-    ftp_banner = db.Column(db.String(256))
+    ftp_banner = db.Column(db.Text)
     telnet_banner = db.Column(db.String(256))
     hostname = db.Column(db.String(512))
     http_response = db.Column(db.String(512))
@@ -212,7 +212,7 @@ class VulnerableComponent(db.Model):
     version = db.Column(db.String(512))
     category = db.Column(db.String(256))
     vulnerabilities = db.Column(db.String(1024))
-    cvss_max = db.Column(db.Integer)
+    cvss_max = db.Column(db.String(256))
 
     def __repr__(self):
         return "{id:'%s', name:'%s', version:'%s', category:'%s', vulnerabilities:'%s', cvss_max:'%s' }" % (

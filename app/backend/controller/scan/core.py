@@ -183,7 +183,7 @@ class Scan(object):
                             if id not in temp:
                                 temp.append(id)
                         CVE_ID = temp
-                        csv_reader = csv.reader(open('cvss.csv'))  # 读取cvss文件
+                        csv_reader = csv.reader(open('./cvss.csv'))  # 读取cvss文件
                         CVE = {}
                         for line in csv_reader:
                             CVE[line[0]] = line[3]

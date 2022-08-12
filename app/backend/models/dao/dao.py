@@ -624,7 +624,7 @@ def delete_expired_cert(id, file_name, file_hash , thumb_print, public_key,subje
 
 def query_expired_cert(id, file_name, file_hash , thumb_print, public_key,subject_name,valid_form,valid_to,algorithm,bits):
     if id:
-        return ExpiredCert.query.filter_by(id=id).first(),PublicKey.query.filter_by(id=id).first()
+        return ExpiredCert.query.filter_by(id=id).first()
 
 def query_all_expired_cert(id, file_name, file_hash , thumb_print, public_key,subject_name,valid_form,valid_to,algorithm,bits):
     if id:
@@ -781,7 +781,6 @@ def add_update_weak_cert(id, file_name, file_hash , thumb_print, sign_algorithm,
         weakcert.subject_name=subject_name if subject_name else weakcert.subject_name
         weakcert.valid_form=valid_from if valid_from else weakcert.valid_from
         weakcert.valid_to=valid_to if valid_to else weakcert.valid_to
-
         db.session.commit()
     else:
         current = WeakCert.query.filter_by(file_name=file_name,file_hash=file_hash).first()
@@ -800,16 +799,23 @@ def add_update_weak_cert(id, file_name, file_hash , thumb_print, sign_algorithm,
         db.session.add(df)
         db.session.commit()
 
-def delete_weak_cert(id, file_name, file_hash , thumb_print, sign_algorithm,subject_name,valid_from,valid_to):
-    if id:
-        weakcert=WeakCert.query.filter_by(id=id).first()
-
-    db.session.delete(weakcert)
-    db.session.commit()
-
 def query_weak_cert(id, file_name, file_hash , thumb_print, sign_algorithm,subject_name,valid_from,valid_to):
     if id:
         return WeakCert.query.filter_by(id=id).first()
+    elif file_name:
+        return WeakCert.query.filter_by(file_name=file_name).first()
+    elif file_hash:
+        return WeakCert.query.filter_by(file_hash=file_hash).first()
+    elif thumb_print:
+        return WeakCert.query.filter_by(thumb_print=thumb_print).first()
+    elif sign_algorithm:
+        return WeakCert.query.filter_by(sign_algorithm=sign_algorithm).first()
+    elif subject_name:
+        return WeakCert.query.filter_by(subject_name=subject_name).first()
+    elif valid_from:
+        return WeakCert.query.filter_by(valid_from=valid_from).first()
+    elif valid_to:
+        return WeakCert.query.filter_by(valid_to=valid_to).first()
 
 # HTTPValidationError(db.Model):
 #     __tablename__ = 'http_validation_error'
@@ -853,21 +859,6 @@ def add_update_http_validation_error(id, detail,loc,msg,type):
         db.session.add(df)
         db.session.add(df1)
         db.session.commit()
-
-def delete_weak_cert(id, file_name, file_hash , thumb_print, sign_algorithm,subject_name,valid_from,valid_to):
-    if id:
-        http=HTTPValidationError.query.filter_by(id=id).first()
-        ve = ValidationError.query.filter_by(id=id).first()
-
-    db.session.delete(http)
-    db.session.delete(ve)
-    db.session.commit()
-
-def query_weak_cert(id, file_name, file_hash , thumb_print, sign_algorithm,subject_name,valid_from,valid_to):
-    if id:
-        return HTTPValidationError.query.filter_by(id=id).first(),ValidationError.query.filter_by(id=id).first()
-
-
 # class DeviceFeaturesInfoRelation(db.Model):
 #     __tablename__ = 'device_features_info_relation'
 #     id = db.Column(db.Integer, primary_key=True)
@@ -969,6 +960,14 @@ def query_firmware_risk_summary_vulnerable_component_relation(id, firmware_hash)
         return FirmwareRiskSummaryVulnerableComponentRelation.query.filter_by(id=id).first()
     elif firmware_hash:
         return FirmwareRiskSummaryVulnerableComponentRelation.query.filter_by(firmware_hash=firmware_hash).first()
+
+def query_all_firmware_risk_summary_vulnerable_component_relation(id, risk_summary_id, firmware_hash):
+    if id:
+        return FirmwareRiskSummaryVulnerableComponentRelation.query.filter_by(id=id).all()
+    elif risk_summary_id:
+        return FirmwareRiskSummaryVulnerableComponentRelation.query.filter_by(id_RiskSummary=risk_summary_id).all()
+    elif firmware_hash:
+        return FirmwareRiskSummaryVulnerableComponentRelation.query.filter_by(firmware_hash=firmware_hash).all()
 
 # class Vulnerability(db.Model):
 #     __tablename__ = 'vulnerability'
@@ -1222,7 +1221,13 @@ def query_default_account_relationship(id, id_DefaultAccount, firmware_hash):
     elif firmware_hash:
         return DefaultAccountRelationship.query.filter_by(firmware_hash=firmware_hash).first()
 
-
+def query_all_default_account_relationship(id, id_DefaultAccount, firmware_hash):
+    if id:
+        return DefaultAccountRelationship.query.filter_by(id=id).all()
+    elif id_DefaultAccount:
+        return DefaultAccountRelationship.query.filter_by(id_DefaultAccount=id_DefaultAccount).all()
+    elif firmware_hash:
+        return DefaultAccountRelationship.query.filter_by(firmware_hash=firmware_hash).all()
 
 # class CryptoKeyRelation(db.Model):
 #     __tablename__ = 'crypto_key_relation'
@@ -1258,6 +1263,14 @@ def query_crypto_key_relation(id, id_CryptoKey, firmware_hash):
     elif firmware_hash:
         return CryptoKeyRelation.query.filter_by(firmware_hash=firmware_hash).first()
 
+def query_all_crypto_key_relation(id, id_CryptoKey, firmware_hash):
+    if id:
+        return CryptoKeyRelation.query.filter_by(id=id).all()
+    elif id_CryptoKey:
+        return CryptoKeyRelation.query.filter_by(id_CryptoKey=id_CryptoKey).all()
+    elif firmware_hash:
+        return CryptoKeyRelation.query.filter_by(firmware_hash=firmware_hash).all()
+
 # class WeakCertRelation(db.Model):
 #     __tablename__ = 'weak_cert_relation'
 #     id = db.Column(db.Integer, primary_key=True)
@@ -1292,6 +1305,14 @@ def query_weak_cert_relation(id, id_WeakCert, firmware_hash):
     elif firmware_hash:
         return WeakCertRelation.query.filter_by(firmware_hash=firmware_hash).first()
 
+def query_all_weak_cert_relation(id, id_WeakCert, firmware_hash):
+    if id:
+        return WeakCertRelation.query.filter_by(id=id).all()
+    elif id_WeakCert:
+        return WeakCertRelation.query.filter_by(id_WeakCert=id_WeakCert).all()
+    elif firmware_hash:
+        return WeakCertRelation.query.filter_by(firmware_hash=firmware_hash).all()
+
 # class ConfigIssueRelation(db.Model):
 #     __tablename__ = 'config_issue_relation'
 #     id = db.Column(db.Integer, primary_key=True)
@@ -1324,6 +1345,14 @@ def query_config_issue_relation(id, id_ConfigIssue, firmware_hash):
         return ConfigIssueRelation.query.filter_by(id_ConfigIssue=id_ConfigIssue).first()
     elif firmware_hash:
         return ConfigIssueRelation.query.filter_by(firmware_hash=firmware_hash).first()
+
+def query_all_config_issue_relation(id, id_ConfigIssue, firmware_hash):
+    if id:
+        return ConfigIssueRelation.query.filter_by(id=id).all()
+    elif id_ConfigIssue:
+        return ConfigIssueRelation.query.filter_by(id_ConfigIssue=id_ConfigIssue).all()
+    elif firmware_hash:
+        return ConfigIssueRelation.query.filter_by(firmware_hash=firmware_hash).all()
 
 # class ExpiredCertRelation(db.Model):
 #     __tablename__ = 'expired_cert_relation'
@@ -1358,6 +1387,14 @@ def  query_expired_cert_relation(id, id_ExpiredCert, firmware_hash):
         return ExpiredCertRelation.query.filter_by(id_ExpiredCert=id_ExpiredCert).first()
     elif firmware_hash:
         return ExpiredCertRelation.query.filter_by(firmware_hash=firmware_hash).first()
+
+def query_all_expired_cert_relation(id, id_ExpiredCert, firmware_hash):
+    if id:
+        return ExpiredCertRelation.query.filter_by(id=id).all()
+    elif id_ExpiredCert:
+        return ExpiredCertRelation.query.filter_by(id_ExpiredCert=id_ExpiredCert).all()
+    elif firmware_hash:
+        return ExpiredCertRelation.query.filter_by(firmware_hash=firmware_hash).all()
 
 # class User(UserMixin, db.Model):
 #     __tablename__ = 'user_info'

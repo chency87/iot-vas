@@ -21,8 +21,10 @@ def view_firmware():
     #因此创建表FirmwareRiskSummaryVulnerableComponentRelation
     #获取firmware_hash
     firmware_hash = request.args.get('firmware_hash')
-    return core.core_risk(firmware_hash)
-
+    try:
+        return core.core_risk(firmware_hash)
+    except Exception as e:
+        print(e)
 #已测试
 @firmware.route('/firmware/accounts', methods=['GET'])
 def view_firmware_accounts():
@@ -33,8 +35,10 @@ def view_firmware_accounts():
 @firmware.route('/firmware/private-keys', methods=['GET'])
 def view_firmware_private_keys():
     firmware_hash = request.args.get('firmware_hash')
-    return core.core_private_keys(firmware_hash)
-
+    try:
+        return core.core_private_keys(firmware_hash)
+    except Exception as e:
+        print(e)
 #已测试
 @firmware.route('/firmware/weak-keys', methods=['GET'])
 def view_firmware_weak_keys():
@@ -45,18 +49,26 @@ def view_firmware_weak_keys():
 @firmware.route('/firmware/expired-certs', methods=['GET'])
 def view_firmware_expired_certs():
     firmware_hash = request.args.get('firmware_hash')
-    return core.core_expired_certs(firmware_hash)
-
+    try:
+        return core.core_expired_certs(firmware_hash)
+    except Exception as e:
+        print(e)
 #已测试
 @firmware.route('/firmware/weak-certs', methods=['GET'])
 def view_firmware_weak_certs():
     firmware_hash = request.args.get('firmware_hash')
-    return core.core_weak_certs(firmware_hash)
+    try:
+        return core.core_weak_certs(firmware_hash)
+    except Exception as e:
+        print(e)
 
 #已测试
 @firmware.route('/firmware/config-issues', methods=['GET'])
 def view_firmware_config_issues():
     firmware_hash = request.args.get('firmware_hash')
-    return core.core_config_issues(firmware_hash)
+    try:
+        return core.core_config_issues(firmware_hash)
+    except Exception as e:
+        print(e)
 
 

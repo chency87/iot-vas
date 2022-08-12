@@ -68,7 +68,7 @@ from ...models.firmware_models import DeviceInfo
 
 
 def core_risk(firmware_hash):
-    #     data_temp ={
+    # data_temp ={
     #   'risk_summary': {
     #     'net_services_risk': 'Critical',
     #     'crypto_risk': 'Critical',
@@ -138,38 +138,6 @@ def core_risk(firmware_hash):
     #           'cvss': 7.5
     #         },
     #         {
-    #           'cve_id': 'CVE-2014-3567',
-    #           'cvss': 7.1
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2012-2333',
-    #           'cvss': 6.8
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2014-0195',
-    #           'cvss': 6.8
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2015-0209',
-    #           'cvss': 6.8
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2015-1791',
-    #           'cvss': 6.8
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2016-2176',
-    #           'cvss': 6.4
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2009-3555',
-    #           'cvss': 5.8
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2014-0224',
-    #           'cvss': 5.8
-    #         },
-    #         {
     #           'cve_id': 'CVE-2011-4354',
     #           'cvss': 5.8
     #         },
@@ -210,18 +178,6 @@ def core_risk(firmware_hash):
     #           'cvss': 5
     #         },
     #         {
-    #           'cve_id': 'CVE-2011-4619',
-    #           'cvss': 5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2012-0027',
-    #           'cvss': 5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2012-0884',
-    #           'cvss': 5
-    #         },
-    #         {
     #           'cve_id': 'CVE-2012-1165',
     #           'cvss': 5
     #         },
@@ -250,22 +206,6 @@ def core_risk(firmware_hash):
     #           'cvss': 5
     #         },
     #         {
-    #           'cve_id': 'CVE-2015-0288',
-    #           'cvss': 5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2015-0289',
-    #           'cvss': 5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2015-0293',
-    #           'cvss': 5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2015-1790',
-    #           'cvss': 5
-    #         },
-    #         {
     #           'cve_id': 'CVE-2015-1792',
     #           'cvss': 5
     #         },
@@ -290,51 +230,11 @@ def core_risk(firmware_hash):
     #           'cvss': 4.3
     #         },
     #         {
-    #           'cve_id': 'CVE-2008-7270',
-    #           'cvss': 4.3
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2010-0433',
-    #           'cvss': 4.3
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2010-4180',
-    #           'cvss': 4.3
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2011-4108',
-    #           'cvss': 4.3
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2011-4577',
-    #           'cvss': 4.3
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2013-6449',
-    #           'cvss': 4.3
-    #         },
-    #         {
     #           'cve_id': 'CVE-2014-0221',
     #           'cvss': 4.3
     #         },
     #         {
     #           'cve_id': 'CVE-2014-3470',
-    #           'cvss': 4.3
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2014-3568',
-    #           'cvss': 4.3
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2015-0204',
-    #           'cvss': 4.3
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2015-1788',
-    #           'cvss': 4.3
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2015-1789',
     #           'cvss': 4.3
     #         },
     #         {
@@ -358,14 +258,6 @@ def core_risk(firmware_hash):
     #           'cvss': 2.6
     #         },
     #         {
-    #           'cve_id': 'CVE-2016-7056',
-    #           'cvss': 2.1
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2014-0076',
-    #           'cvss': 1.9
-    #         },
-    #         {
     #           'cve_id': 'CVE-2007-3108',
     #           'cvss': 1.2
     #         }
@@ -382,18 +274,6 @@ def core_risk(firmware_hash):
     #           'cvss': 7.8
     #         },
     #         {
-    #           'cve_id': 'CVE-2016-2148',
-    #           'cvss': 7.5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2018-1000517',
-    #           'cvss': 7.5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2013-1813',
-    #           'cvss': 7.2
-    #         },
-    #         {
     #           'cve_id': 'CVE-2011-2716',
     #           'cvss': 6.8
     #         },
@@ -408,22 +288,6 @@ def core_risk(firmware_hash):
     #         {
     #           'cve_id': 'CVE-2011-5325',
     #           'cvss': 5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2016-2147',
-    #           'cvss': 5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2018-20679',
-    #           'cvss': 5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2019-5747',
-    #           'cvss': 5
-    #         },
-    #         {
-    #           'cve_id': 'CVE-2015-9261',
-    #           'cvss': 4.3
     #         },
     #         {
     #           'cve_id': 'CVE-2014-9645',
@@ -446,30 +310,32 @@ def core_risk(firmware_hash):
     #     }
     #   ]
     # }
-    #     data_temp2 = {
-    #         "data":data_temp
+    # data_temp2 = {
+    #     "data":data_temp
+    # }
+    # return jsonify(
+    #     {
+    #         "code": 20000,
+    #         "data":data_temp2
     #     }
-    #     return jsonify(
-    #         {
-    #             "code": 20000,
-    #             "data":data_temp2
-    #         }
-    #     )
+    # )
 
     data_none ={
       'risk_summary': {
         'net_services_risk': 'None',
-        'crypto_risk': 'None',
+        'crypto_risk': 'Normal',
         'kernel_risk': 'None',
         'client_tools_risk': 'None'
-      }
+      },
+        'vulnerable_components':
+        [None]
     }
 
     # 获取表FirmwareRiskSummaryVulnerableComponentRelation中的信息
-    firmware_risk_summary_vulnerable_component_relation = dao.query_firmware_risk_summary_vulnerable_component_relation(
-        None, firmware_hash)
+    firmware_risk_summary_vulnerable_component_relation = dao.query_all_firmware_risk_summary_vulnerable_component_relation(
+        None, None, firmware_hash)
 
-    if (firmware_risk_summary_vulnerable_component_relation is None):
+    if (firmware_risk_summary_vulnerable_component_relation is None or len(firmware_risk_summary_vulnerable_component_relation) == 0):
         return jsonify(
             {
                 "code": 20000,
@@ -480,27 +346,14 @@ def core_risk(firmware_hash):
             }
         )
 
-    id_RiskSummary = firmware_risk_summary_vulnerable_component_relation.id_RiskSummary
-    # 获取表RiskSummary中的信息
-    risk_summary = dao.query_risk_summary(id_RiskSummary)
-
-    if(risk_summary is None):
-        return jsonify(
-            {
-                "code": 20000,
-                "data":
-                    {
-                        "data": data_none
-                    }
-            }
-        )
-
-    net_services_risk = ""
-    crypto_risk = ""
-    kernel_risk = ""
-    client_tools_risk = ""
-
-    try:
+    for firmware_risk_summary_vulnerable_component_relation_item in firmware_risk_summary_vulnerable_component_relation:
+        id_RiskSummary = firmware_risk_summary_vulnerable_component_relation_item.id_RiskSummary
+        risk_summary = dao.query_risk_summary(id_RiskSummary)
+        if(risk_summary is None):
+            continue
+        vulnerable_component = dao.query_vulnerable_component(id_RiskSummary)
+        if(vulnerable_component is None):
+            continue
         net_services_risk = risk_summary.net_services_risk
         crypto_risk = risk_summary.crypto_risk
         kernel_risk = risk_summary.kernel_risk
@@ -511,363 +364,354 @@ def core_risk(firmware_hash):
             'kernel_risk': kernel_risk,
             'client_tools_risk': client_tools_risk
         }
-    except Exception as e:
-        print(e)
 
-    ids_VulnerableComponent = []
-    dict_vulnerable_components = []
-    for i in range(len(firmware_risk_summary_vulnerable_component_relation)):
-        ids_VulnerableComponent.append(firmware_risk_summary_vulnerable_component_relation[i].id_VulnerableComponent)
-        vulnerable_component = dao.query_vulnerable_component(
-            firmware_risk_summary_vulnerable_component_relation[i].id_VulnerableComponent)
-        name = ""
-        version = ""
-        category = ""
-        cvss_max = ""
-        vulnerabilities = ""
-        try:
-            name = vulnerable_component.name
-            version = vulnerable_component.version
-            category = vulnerable_component.category
-            vulnerabilities = vulnerable_component.vulnerabilities
-            cvss_max = vulnerable_component.cvss_max
-            list_vulnerabilities = []
-            ids = []
-            cve_id = []
-            cvss = []
-            dict_vulnerabilities = []
-            try:
-                list_vulnerabilities = vulnerabilities.split(',')
-                for i in range(len(list_vulnerabilities)):
-                    ids.append(list_vulnerabilities[i])
-                for i in range(len(ids)):
-                    vulnerabilities_i = dao.query_vulnerability(ids[i])
-                    dict_vulnerabilities.append({
-                        "cve_id": vulnerabilities_i.cve_id,
-                        "cvss": vulnerabilities_i.cvss
-                    })
-            except Exception as e:
-                print(e)
-        except Exception as e:
-            print(e)
+        name = vulnerable_component.name
+        version = vulnerable_component.version
+        category = vulnerable_component.category
+        vulnerabilities = vulnerable_component.vulnerabilities
+        cvss_max = vulnerable_component.cvss_max
+
+        ids = []
+        dict_vulnerabilities = []
+
+        list_vulnerabilities = vulnerabilities.split(',')
+        for i in range(len(list_vulnerabilities)):
+            ids.append(list_vulnerabilities[i])
+        for i in range(len(ids)):
+            vulnerabilities_i = dao.query_vulnerability(ids[i])
+            dict_vulnerabilities.append({
+                "cve_id": vulnerabilities_i.cve_id,
+                "cvss": vulnerabilities_i.cvss
+            })
+        dict_vulnerable_components = []
         dict_vulnerable_components.append({
             "name": name,
             "version": version,
             "category": category,
-            "vulnerabilities": dict_vulnerabilities
+            "vulnerabilities": dict_vulnerabilities,
+            "cvss_max": cvss_max
         })
-    newdata = {
-        "data": [
-            {
-                "risk_summary": dict_risk_summary,
-                "vulnerable_components": dict_vulnerable_components
-            }
-        ]
-    }
-    # 返回数据
-    return ({'code': 20000, 'data': newdata})
-
-
-def core_account(firmware_hash):
-    accounts = [
-        {
-            'name': 'sessioncgi',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 127,
-            'gid': 127,
-            'home_dir': '/'
-        },
-        {
-            'name': 'environment',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 132,
-            'gid': 132,
-            'home_dir': '/'
-        },
-        {
-            'name': 'mediaclipcgi',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 134,
-            'gid': 254,
-            'home_dir': '/'
-        },
-        {
-            'name': 'wsdd',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 136,
-            'gid': 136,
-            'home_dir': '/'
-        },
-        {
-            'name': 'triggerd',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 120,
-            'gid': 120,
-            'home_dir': '/'
-        },
-        {
-            'name': 'tampering',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 122,
-            'gid': 122,
-            'home_dir': '/'
-        },
-        {
-            'name': 'storage',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 123,
-            'gid': 123,
-            'home_dir': '/'
-        },
-        {
-            'name': 'focus',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 124,
-            'gid': 124,
-            'home_dir': '/'
-        },
-        {
-            'name': 'wsd',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 137,
-            'gid': 137,
-            'home_dir': '/'
-        },
-        {
-            'name': 'capbufd',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 138,
-            'gid': 138,
-            'home_dir': '/'
-        },
-        {
-            'name': 'bin',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/sh',
-            'uid': 1,
-            'gid': 1,
-            'home_dir': '/bin'
-        },
-        {
-            'name': 'root',
-            'pwd_hash': 'AiADGkJIfIlXk',
-            'hash_algorithm': '0',
-            'shell': '/bin/sh',
-            'uid': 0,
-            'gid': 0,
-            'home_dir': '/root'
-        },
-        {
-            'name': 'anonymous',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 57,
-            'gid': 57,
-            'home_dir': '/var/empty/'
-        },
-        {
-            'name': 'daemon',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/sh',
-            'uid': 2,
-            'gid': 2,
-            'home_dir': '/usr/sbin'
-        },
-        {
-            'name': 'bw',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 102,
-            'gid': 102,
-            'home_dir': '/'
-        },
-        {
-            'name': 'messagebus',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 101,
-            'gid': 101,
-            'home_dir': '/'
-        },
-        {
-            'name': 'event',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 104,
-            'gid': 104,
-            'home_dir': '/'
-        },
-        {
-            'name': 'motion',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 103,
-            'gid': 103,
-            'home_dir': '/'
-        },
-        {
-            'name': 'axisns',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 106,
-            'gid': 106,
-            'home_dir': '/'
-        },
-        {
-            'name': 'streamer',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 105,
-            'gid': 105,
-            'home_dir': '/'
-        },
-        {
-            'name': 'iod',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 109,
-            'gid': 109,
-            'home_dir': '/'
-        },
-        {
-            'name': 'mld',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 108,
-            'gid': 108,
-            'home_dir': '/'
-        },
-        {
-            'name': 'ptzadm',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 113,
-            'gid': 113,
-            'home_dir': '/'
-        },
-        {
-            'name': 'lang_handler',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 110,
-            'gid': 110,
-            'home_dir': '/'
-        },
-        {
-            'name': 'upnp',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 115,
-            'gid': 115,
-            'home_dir': '/'
-        },
-        {
-            'name': 'gtourd',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 114,
-            'gid': 114,
-            'home_dir': '/'
-        },
-        {
-            'name': 'stunnel',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 117,
-            'gid': 117,
-            'home_dir': '/'
-        },
-        {
-            'name': 'rendezvous',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 116,
-            'gid': 116,
-            'home_dir': '/'
-        },
-        {
-            'name': 'acd',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 119,
-            'gid': 119,
-            'home_dir': '/'
-        },
-        {
-            'name': 'imaged',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 118,
-            'gid': 118,
-            'home_dir': '/'
-        },
-        {
-            'name': 'nobody',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 254,
-            'gid': 254,
-            'home_dir': '/var/empty'
-        },
-        {
-            'name': 'certcgi',
-            'pwd_hash': '*',
-            'hash_algorithm': 'null',
-            'shell': '/bin/false',
-            'uid': 142,
-            'gid': 142,
-            'home_dir': '/'
+        newdata = {
+            "data":
+                {
+                    "risk_summary": dict_risk_summary,
+                    "vulnerable_components": dict_vulnerable_components
+                }
         }
-    ]
-    data_test = {
-        "data": accounts
-    }
-    return (
+        # 返回数据
+        print(newdata)
+        return ({'code': 20000, 'data': newdata})
+
+    return jsonify(
         {
             "code": 20000,
-            "data": data_test
+            "data":
+                {
+                    "data": data_none
+                }
         }
     )
+
+def core_account(firmware_hash):
+    # accounts = [
+    #     {
+    #         'name': 'sessioncgi',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 127,
+    #         'gid': 127,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'environment',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 132,
+    #         'gid': 132,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'mediaclipcgi',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 134,
+    #         'gid': 254,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'wsdd',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 136,
+    #         'gid': 136,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'triggerd',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 120,
+    #         'gid': 120,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'tampering',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 122,
+    #         'gid': 122,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'storage',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 123,
+    #         'gid': 123,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'focus',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 124,
+    #         'gid': 124,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'wsd',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 137,
+    #         'gid': 137,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'capbufd',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 138,
+    #         'gid': 138,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'bin',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/sh',
+    #         'uid': 1,
+    #         'gid': 1,
+    #         'home_dir': '/bin'
+    #     },
+    #     {
+    #         'name': 'root',
+    #         'pwd_hash': 'AiADGkJIfIlXk',
+    #         'hash_algorithm': '0',
+    #         'shell': '/bin/sh',
+    #         'uid': 0,
+    #         'gid': 0,
+    #         'home_dir': '/root'
+    #     },
+    #     {
+    #         'name': 'anonymous',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 57,
+    #         'gid': 57,
+    #         'home_dir': '/var/empty/'
+    #     },
+    #     {
+    #         'name': 'daemon',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/sh',
+    #         'uid': 2,
+    #         'gid': 2,
+    #         'home_dir': '/usr/sbin'
+    #     },
+    #     {
+    #         'name': 'bw',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 102,
+    #         'gid': 102,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'messagebus',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 101,
+    #         'gid': 101,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'event',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 104,
+    #         'gid': 104,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'motion',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 103,
+    #         'gid': 103,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'axisns',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 106,
+    #         'gid': 106,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'streamer',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 105,
+    #         'gid': 105,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'iod',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 109,
+    #         'gid': 109,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'mld',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 108,
+    #         'gid': 108,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'ptzadm',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 113,
+    #         'gid': 113,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'lang_handler',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 110,
+    #         'gid': 110,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'upnp',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 115,
+    #         'gid': 115,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'gtourd',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 114,
+    #         'gid': 114,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'stunnel',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 117,
+    #         'gid': 117,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'rendezvous',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 116,
+    #         'gid': 116,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'acd',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 119,
+    #         'gid': 119,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'imaged',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 118,
+    #         'gid': 118,
+    #         'home_dir': '/'
+    #     },
+    #     {
+    #         'name': 'nobody',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 254,
+    #         'gid': 254,
+    #         'home_dir': '/var/empty'
+    #     },
+    #     {
+    #         'name': 'certcgi',
+    #         'pwd_hash': '*',
+    #         'hash_algorithm': 'null',
+    #         'shell': '/bin/false',
+    #         'uid': 142,
+    #         'gid': 142,
+    #         'home_dir': '/'
+    #     }
+    # ]
+    # data_test = {
+    #     "data": accounts
+    # }
+    # return (
+    #     {
+    #         "code": 20000,
+    #         "data": data_test
+    #     }
+    # )
 
     # class DefaultAccount(db.Model):
     #     __tablename__ = 'default_account'
@@ -900,76 +744,51 @@ def core_account(firmware_hash):
         ]
     }
 
-    default_account_relationship = dao.query_default_account_relationship(None, None, firmware_hash)
+    default_account_relationship = dao.query_all_default_account_relationship(None, None, firmware_hash)
 
-    if (default_account_relationship is None):
+    if (default_account_relationship is None or len(default_account_relationship) == 0):
         return ({
             "code": 20000,
             "data": data_none
         })
-    id_DefaultAccount = default_account_relationship.id_DefaultAccount
-    if (id_DefaultAccount is None):
+    id_DefaultAccount = []
+    for default_account_relationship_item in default_account_relationship:
+        id_DefaultAccount.append(default_account_relationship_item.id_DefaultAccount)
+    if (id_DefaultAccount is None or len(id_DefaultAccount) == 0):
         return ({
             "code": 20000,
             "data": data_none
         })
 
+    data_test_list = []
+    for id_DefaultAccount_item in id_DefaultAccount:
         # 获取表DefaultAccount中的信息
+        default_account = dao.query_default_account(id_DefaultAccount_item, None, None, None, None, None, None, None)
+        name = default_account.name
+        pwd_hash = default_account.pwd_hash
+        hash_algorithm = default_account.hash_algorithm
+        shell = default_account.shell
+        uid = default_account.uid
+        gid = default_account.gid
+        home_dir = default_account.home_dir
 
-        name = ""
-        pwd_hash = ""
-        hash_algorithm = ""
-        shell = ""
-        uid = ""
-        gid = ""
-        home_dir = ""
-
-        try:
-            default_account = dao.query_default_account(id_DefaultAccount, None, None, None, None, None, None, None)
-            name = default_account.name
-            pwd_hash = default_account.pwd_hash
-            hash_algorithm = default_account.hash_algorithm
-            shell = default_account.shell
-            uid = default_account.uid
-            gid = default_account.gid
-            home_dir = default_account.home_dir
-        except Exception as e:
-            print(e)
-
-        # data_none = {
-        #         "data": [
-        #             {
-        #             "manufacturer": None,
-        #              "model_name": None,
-        #              "firmware_version": None,
-        #              "is_discontinued": None,
-        #              "cve_list":None,
-        #              "device_type": None,
-        #              "firmware_info":None,
-        #             "latest_firmware_info":None
-        #             }
-        #         ]
-        #     }
-        # 返回数据
-        newdata = {
-            "data": [
-                {
-                    "name": name,
-                    "pwd_hash": pwd_hash,
-                    "hash_algorithm": hash_algorithm,
-                    "shell": shell,
-                    "uid": uid,
-                    "gid": gid,
-                    "home_dir": home_dir
-                }
-            ]
+        data_test = {
+            "name": name,
+            "pwd_hash": pwd_hash,
+            "hash_algorithm": hash_algorithm,
+            "shell": shell,
+            "uid": uid,
+            "gid": gid,
+            "home_dir": home_dir
         }
-        return (
-            {
-                "code": 20000,
-                "data": newdata
-            }
-        )
+        data_test_list.append(data_test)
+
+    return (
+        {
+            "code": 20000,
+            "data": {"data": data_test_list}
+        }
+    )
 
 
 def core_private_keys(firmware_hash):
@@ -994,47 +813,47 @@ def core_private_keys(firmware_hash):
                 'pem_type': None,
                 "algorithm": None,
                 "bits": None
-
             }
         ]
     }
 
     # 获取表CryptoKeyRelationship中的信息
-    crypto_key_relationship = dao.query_crypto_key_relation(None, None, firmware_hash)
-    if (crypto_key_relationship is None):
+    crypto_key_relationship = dao.query_all_crypto_key_relation(None, None, firmware_hash)
+
+    if (crypto_key_relationship is None or len(crypto_key_relationship) == 0):
         return ({"code": 20000, "data": data_none})
-    id_CryptoKey = crypto_key_relationship.id_CryptoKey
+
+    id_CryptoKey = []
+    for crypto_key_relationship_item in crypto_key_relationship:
+        id_CryptoKey.append(crypto_key_relationship_item.id_CryptoKey)
+
+    if (id_CryptoKey is None or len(id_CryptoKey) == 0):
+        return ({"code": 20000, "data": data_none})
 
     # 获取表CryptoKey中的信息
-    file_name = ""
-    file_hash = ""
-    pem_type = ""
-    algorithm = ""
-    bits = 0
-    try:
-        crypto_key = dao.query_crypto_key(id_CryptoKey, None, None, None, None, None)
+    data_test_list = []
+    for id_CryptoKey_item in id_CryptoKey:
+        crypto_key = dao.query_crypto_key(id_CryptoKey_item, None, None, None, None, None)
+        if(crypto_key is None):
+            continue
         file_name = crypto_key.file_name
         file_hash = crypto_key.file_hash
         pem_type = crypto_key.pem_type
         algorithm = crypto_key.algorithm
         bits = crypto_key.bits
-    except Exception as e:
-        print(e)
 
-    newdata = {
-        "data": [
-            {
-                'file_name': file_name,
-                'file_hash': file_hash,
-                'pem_type': pem_type,
-                'algorithm': algorithm,
-                'bits': bits
-            }
-        ]
-    }
+        data_test = {
+            "file_name": file_name,
+            "file_hash": file_hash,
+            "pem_type": pem_type,
+            "algorithm": algorithm,
+            "bits": bits
+        }
+        data_test_list.append(data_test)
+
     return ({
         "code": 20000,
-        "data": newdata
+        "data": {"data": data_test_list }
     })
 
 
@@ -1060,7 +879,6 @@ def core_weak_keys(firmware_hash):
                 'pem_type': None,
                 "algorithm": None,
                 "bits": None
-
             }
         ]
     }
@@ -1129,10 +947,7 @@ def core_expired_certs(firmware_hash):
                 'file_name': None,
                 'file_hash': None,
                 'thumb_print': None,
-                'public_key': {
-                    "algorithm": None,
-                    "bits": None
-                },
+                'public_key': None,
                 'subject_name': None,
                 'valid_from': None,
                 'valid_to': None,
@@ -1140,62 +955,52 @@ def core_expired_certs(firmware_hash):
         ]
     }
     # 获取表ExpiredCertRelationship中的信息
-    expired_cert_relationship = dao.query_expired_cert_relation(None, None, firmware_hash)
-    if (expired_cert_relationship is None):
+    expired_cert_relationship = dao.query_all_expired_cert_relation(None, None, firmware_hash)
+
+    if (expired_cert_relationship is None or len(expired_cert_relationship) == 0):
         return jsonify({
             "code": 20000, "data": data_none
         })
-    id_ExpiredCert = expired_cert_relationship.id_ExpiredCert
+    id_ExpiredCert = []
+    for expired_cert_relationship_item in expired_cert_relationship:
+        id_ExpiredCert.append(expired_cert_relationship_item.id_ExpiredCert)
 
-    # 获取表ExpiredCert中的信息
-    file_name = ""
-    file_hash = ""
-    thumb_print = ""
-    public_key = ""
-    subject_name = ""
-    valid_form = ""
-    valid_to = ""
-    algorithm = ""
-    bits = ""
-    dict_public_key = ""
-    try:
-        expired_cert, public_key = dao.query_expired_cert(id_ExpiredCert, None, None, None, None, None, None, None,
-                                                          None, None)
+    test_list = []
+    for id_ExpiredCert_item in id_ExpiredCert:
+        expired_cert = dao.query_expired_cert(id_ExpiredCert_item, None, None, None, None, None, None, None,
+                                                      None, None)
+        if(expired_cert is None):
+            continue
         file_name = expired_cert.file_name
         file_hash = expired_cert.file_hash
         thumb_print = expired_cert.thumb_print
         public_key = expired_cert.public_key
         subject_name = expired_cert.subject_name
-        valid_form = expired_cert.valid_form
+        valid_from = expired_cert.valid_form
         valid_to = expired_cert.valid_to
-    except Exception as e:
-        print(e)
-    public_key_table = dao.query_public_key(public_key)
-    algorithm = public_key_table.algorithm
-    bits = public_key_table.bits
-    dict_public_key = {
-        "algorithm": algorithm,
-        "bits": bits
-    }
 
-    newdata = {
-        "data": [
-            {
-                'file_name': file_name,
-                'file_hash': file_hash,
-                'thumb_print': thumb_print,
-                'public_key': dict_public_key,
-                'subject_name': subject_name,
-                'valid_from': valid_form,
-                'valid_to': valid_to
-            }
-        ]
-    }
+        public_key_data = dao.query_public_key(public_key)
+        algorithm = public_key_data.algorithm if public_key_data is not None else None
+        bits = public_key_data.bits if public_key_data is not None else None
+        data_test = {
+            "file_name": file_name,
+            "file_hash": file_hash,
+            "thumb_print": thumb_print,
+            "public_key": {
+                "algorithm": algorithm,
+                "bits": bits
+            },
+            "subject_name": subject_name,
+            "valid_from": valid_from,
+            "valid_to": valid_to
+        }
+        test_list.append(data_test)
+
+    #print(test_list)
     return ({
         "code": 20000,
-        "data": newdata
+        "data": {"data": test_list}
     })
-
 
 def core_weak_certs(firmware_hash):
     # class WeakCert(db.Model):
@@ -1231,23 +1036,20 @@ def core_weak_certs(firmware_hash):
     }
 
     # 获取表WeakCertRelationship中的信息
-    weak_cert_relationship = dao.query_weak_cert_relation(None, None, firmware_hash)
+    weak_cert_relationship = dao.query_all_weak_cert_relation(None, None, firmware_hash)
 
-    if (weak_cert_relationship is None):
+    if (weak_cert_relationship is None or len(weak_cert_relationship) == 0):
         return ({"code": 20000, "data": data_none})
 
-    id_WeakCert = weak_cert_relationship.id_WeakCert
+    id_WeakCert = []
+    for weak_cert_relationship_item in weak_cert_relationship:
+        id_WeakCert.append(weak_cert_relationship_item.id_WeakCert)
 
-    # 获取表WeakCert中的信息
-    file_name = ""
-    file_hash = ""
-    thumb_print = ""
-    sign_algorithm = ""
-    subject_name = ""
-    valid_from = ""
-    valid_to = ""
-    try:
-        weak_cert = dao.query_weak_cert(id_WeakCert, None, None, None, None, None, None)
+    test_list = []
+    for id_WeakCert_item in id_WeakCert:
+        weak_cert = dao.query_weak_cert(id_WeakCert_item,None, None, None, None, None, None, None)
+        if(weak_cert is None):
+            continue
         file_name = weak_cert.file_name
         file_hash = weak_cert.file_hash
         thumb_print = weak_cert.thumb_print
@@ -1255,72 +1057,66 @@ def core_weak_certs(firmware_hash):
         subject_name = weak_cert.subject_name
         valid_from = weak_cert.valid_from
         valid_to = weak_cert.valid_to
-    except Exception as e:
-        print(e)
 
-    newdata = {
-        "data": [
-            {
-                'file_name': file_name,
-                'file_hash': file_hash,
-                'thumb_print': thumb_print,
-                'sign_algorithm': sign_algorithm,
-                'subject_name': subject_name,
-                'valid_from': valid_from,
-                'valid_to': valid_to
-            }
-        ]
-    }
-
+        data_test = {
+            "file_name": file_name,
+            "file_hash": file_hash,
+            "thumb_print": thumb_print,
+            "sign_algorithm": sign_algorithm,
+            "subject_name": subject_name,
+            "valid_from": valid_from,
+            "valid_to": valid_to
+        }
+        test_list.append(data_test)
     return ({
         "code": 20000,
-        "data": newdata
+        "data": {"data": test_list}
     })
 
 
 def core_config_issues(firmware_hash):
     # test
-    data_temp2 = [
-        {
-            'service_name': 'Telnet',
-            'config_file': '/etc/init.d/rcS',
-            'issues': [
-                'Result: telnet enabled in path'
-            ],
-            'suggestions': [
-                'Disable telnet in path and use SSH instead'
-            ]
-        },
-        {
-            'service_name': 'Telnet',
-            'config_file': '/etc/init.d/rcS.v2.0',
-            'issues': [
-                'Result: telnet enabled in path'
-            ],
-            'suggestions': [
-                'Disable telnet in path and use SSH instead'
-            ]
-        },
-        {
-            'service_name': 'SNMP',
-            'config_file': '/usr/local/etc/ippf/base/snmpd.conf',
-            'issues': [
-                'Result: found easy guessable snmp community string'
-            ],
-            'suggestions': [
-                'Change public/private community strings to another value'
-            ]
-        }
-    ]
-    data_temp = {
-        "data": data_temp2
-    }
-    return jsonify(
-        {
-            "code": 20000,
-            "data": data_temp
-        }
-    )
+    # data_temp2 = [
+    #     {
+    #         'service_name': 'Telnet',
+    #         'config_file': '/etc/init.d/rcS',
+    #         'issues': [
+    #             'Result: telnet enabled in path'
+    #         ],
+    #         'suggestions': [
+    #             'Disable telnet in path and use SSH instead'
+    #         ]
+    #     },
+    #     {
+    #         'service_name': 'Telnet',
+    #         'config_file': '/etc/init.d/rcS.v2.0',
+    #         'issues': [
+    #             'Result: telnet enabled in path'
+    #         ],
+    #         'suggestions': [
+    #             'Disable telnet in path and use SSH instead'
+    #         ]
+    #     },
+    #     {
+    #         'service_name': 'SNMP',
+    #         'config_file': '/usr/local/etc/ippf/base/snmpd.conf',
+    #         'issues': [
+    #             'Result: found easy guessable snmp community string'
+    #         ],
+    #         'suggestions': [
+    #             'Change public/private community strings to another value'
+    #         ]
+    #     }
+    # ]
+    # data_temp = {
+    #     "data": data_temp2
+    # }
+    # return jsonify(
+    #     {
+    #         "code": 20000,
+    #         "data": data_temp
+    #     }
+    # )
 
     # class ConfigIssue(db.Model):
     #     __tablename__ = 'config_issue'
@@ -1347,131 +1143,135 @@ def core_config_issues(firmware_hash):
     #     ]
     # },
 
+    data_none = {
+        "data": [
+            {
+                'service_name': None,
+                'config_file': None,
+                'issues': None,
+                'suggestions': None
+            }
+        ]
+    }
+
     # 获取表ConfigIssueRelationship中的信息
-    config_issue_relationship = dao.add_update_config_issue_relation(None, None, firmware_hash)
-    if (config_issue_relationship is None):
-        return jsonify({
-            "code": 20000,
-            "data": {
-                "data": [
-                    {
-                        'service_name': None,
-                        'config_file': None,
-                        'issues': ['None'],
-                        'suggestions': ['None']
-                    }
-                ]
-            }
-        })
+    config_issue_relationship = dao.query_all_config_issue_relation(None, None, firmware_hash)
 
-    ConfigIssue_list = []
+    if (config_issue_relationship is None or len(config_issue_relationship) == 0):
+        return ({"code": 20000, "data": data_none})
 
-    for i in config_issue_relationship:
-        config_issue_temp = dao.query_config_issue(i.id_ConfigIssue, None, None, None, None)
-        ConfigIssue_list.append(
-            {
-                'service_name': config_issue_temp.service_name,
-                'config_file': config_issue_temp.config_file,
-                'issues': config_issue_temp.issues.split(','),
-                'suggestions': config_issue_temp.suggestions.split(',')
-            }
-        )
+    id_ConfigIssue = []
+    for config_issue_relationship_item in config_issue_relationship:
+        id_ConfigIssue.append(config_issue_relationship_item.id_ConfigIssue)
 
-    # 获取表ConfigIssue中的信息
+    test_list = []
+    for id_ConfigIssue_item in id_ConfigIssue:
+        config_issue = dao.query_config_issue(id_ConfigIssue_item,None, None, None, None)
+        if(config_issue is None):
+            continue
+        service_name = config_issue.service_name
+        config_file = config_issue.config_file
+        issues = config_issue.issues
+        suggestions = config_issue.suggestions
 
-    return jsonify({
+        data_test = {
+            "service_name": service_name,
+            "config_file": config_file,
+            "issues": [issues],
+            "suggestions": [suggestions]
+        }
+        test_list.append(data_test)
+    print(test_list)
+    return ({
         "code": 20000,
-        "data":
-            {
-                "data": ConfigIssue_list
-            }
+        "data": {"data": test_list}
     })
 
 
 def core_extract_banner(start, length, banner):
-    data_temp_test = {"data":
-        [
-            {
-                'manufacturer': 'Axis Communications AB',
-                'model_name': 'P3346',
-                'firmware_version': '5.20',
-                'is_discontinued': "true",
-                'cve_list': [
-                    {
-                        'cve_id': 'CVE-2018-10660',
-                        'cvss': 10
-                    },
-                    {
-                        'cve_id': 'CVE-2018-10662',
-                        'cvss': 10
-                    },
-                    {
-                        'cve_id': 'CVE-2018-10661',
-                        'cvss': 10
-                    },
-                    {
-                        'cve_id': 'CVE-2018-10658',
-                        'cvss': 5
-                    },
-                    {
-                        'cve_id': 'CVE-2018-10659',
-                        'cvss': 5
-                    },
-                    {
-                        'cve_id': 'CVE-2018-10663',
-                        'cvss': 5
-                    },
-                    {
-                        'cve_id': 'CVE-2018-10664',
-                        'cvss': 5
-                    }
-                ],
-                'device_type': 'IP Camera',
-                'firmware_info': {
-                    'name': 'AXIS P3346 5.20',
-                    'version': '5.20',
-                    'sha2': 'af88b1aaac0b222df8539f3ae1479b5c8eaeae41f1776b5dd2fa805cb33a1175',
-                    'release_date': '2010-12-03',
-                    'download_url': 'http://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_20/P3346_5_20.bin'
-                },
-                'latest_firmware_info': {
-                    'name': 'AXIS P3346 5.51.7.3',
-                    'version': '5.51.7.3',
-                    'sha2': 'a72361af68bd94f07cdf8b6c43389f4f382576bab752d4fb25dc74e93d4767a7',
-                    'release_date': '2020-12-03',
-                    'download_url': 'https://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_51_7_3/P3346_5_51_7_3.bin'
-                }
-            }, {
-            'manufacturer': 'Omron',
-            'model_name': 'PLC 3000',
-            'firmware_version': '15.8',
-            'device_type': 'PLC',
-            'is_discontinued': 'True',
-            'cve_list': [{
-                'cve_id': 1,
-                'cvss': 25
-            },
-                {
-                    'cveId': 2,
-                    'cvss': 35
-                }],
-            'firmware_info': [{
-                'name': 'S7 - 1001',
-                'version': '30.2',
-                'sha2': 'shabbuhuiasd2131b2u23',
-                'release_date': '2022.02.01',
-                'download_url': 'www.google.com'
-            }],
-            'latest_firmware_info': {
-                'name': 'S7 - 1001',
-                'version': '30.2',
-                'sha2': 'shabbuhuiasd2131b2u23',
-                'release_date': '2022.02.01',
-                'download_url': 'www.google.com'
-            }
-        }
-        ]
-    }
+    # data_temp_test = {"data":
+    #     [
+    #         {
+    #             'manufacturer': 'Axis Communications AB',
+    #             'model_name': 'P3346',
+    #             'firmware_version': '5.20',
+    #             'is_discontinued': "true",
+    #             'cve_list': [
+    #                 {
+    #                     'cve_id': 'CVE-2018-10660',
+    #                     'cvss': 10
+    #                 },
+    #                 {
+    #                     'cve_id': 'CVE-2018-10662',
+    #                     'cvss': 10
+    #                 },
+    #                 {
+    #                     'cve_id': 'CVE-2018-10661',
+    #                     'cvss': 10
+    #                 },
+    #                 {
+    #                     'cve_id': 'CVE-2018-10658',
+    #                     'cvss': 5
+    #                 },
+    #                 {
+    #                     'cve_id': 'CVE-2018-10659',
+    #                     'cvss': 5
+    #                 },
+    #                 {
+    #                     'cve_id': 'CVE-2018-10663',
+    #                     'cvss': 5
+    #                 },
+    #                 {
+    #                     'cve_id': 'CVE-2018-10664',
+    #                     'cvss': 5
+    #                 }
+    #             ],
+    #             'device_type': 'IP Camera',
+    #             'firmware_info': {
+    #                 'name': 'AXIS P3346 5.20',
+    #                 'version': '5.20',
+    #                 'sha2': 'af88b1aaac0b222df8539f3ae1479b5c8eaeae41f1776b5dd2fa805cb33a1175',
+    #                 'release_date': '2010-12-03',
+    #                 'download_url': 'http://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_20/P3346_5_20.bin'
+    #             },
+    #             'latest_firmware_info': {
+    #                 'name': 'AXIS P3346 5.51.7.3',
+    #                 'version': '5.51.7.3',
+    #                 'sha2': 'a72361af68bd94f07cdf8b6c43389f4f382576bab752d4fb25dc74e93d4767a7',
+    #                 'release_date': '2020-12-03',
+    #                 'download_url': 'https://cdn.axis.com/ftp/pub_soft/MPQT/P3346/5_51_7_3/P3346_5_51_7_3.bin'
+    #             }
+    #         }, {
+    #         'manufacturer': 'Omron',
+    #         'model_name': 'PLC 3000',
+    #         'firmware_version': '15.8',
+    #         'device_type': 'PLC',
+    #         'is_discontinued': 'True',
+    #         'cve_list': [{
+    #             'cve_id': 1,
+    #             'cvss': 25
+    #         },
+    #             {
+    #                 'cveId': 2,
+    #                 'cvss': 35
+    #             }],
+    #         'firmware_info': [{
+    #             'name': 'S7 - 1001',
+    #             'version': '30.2',
+    #             'sha2': 'shabbuhuiasd2131b2u23',
+    #             'release_date': '2022.02.01',
+    #             'download_url': 'www.google.com'
+    #         }],
+    #         'latest_firmware_info': {
+    #             'name': 'S7 - 1001',
+    #             'version': '30.2',
+    #             'sha2': 'shabbuhuiasd2131b2u23',
+    #             'release_date': '2022.02.01',
+    #             'download_url': 'www.google.com'
+    #         }
+    #     }
+    #     ]
+    # }
     device_all = DeviceInfo.query.all()
 
     data_all = []
@@ -1581,7 +1381,7 @@ def core_extract_banner(start, length, banner):
             value = dict1[i]
 
     if (key == ""):
-        print("key is None")
+        #print("key is None")
         return jsonify({'code': 20000, 'data': data2_all})
 
     device_info1 = None
