@@ -150,7 +150,15 @@ class Scan(object):
         ips = self.get_ip(result)
         for i in range(len(ips)):
             if "osmatch" in result["scan"][ips[i]]:
-                self.results[i][ips[i]]["OS"] = result["scan"][ips[i]]["osmatch"][0]['name']
+                if len(result["scan"][ips[i]]["osmatch"])>0:
+                    self.results[i][ips[i]]["OS"] = result["scan"][ips[i]]["osmatch"][0].get("name", "NULL")
+                else:
+                    self.results[i][ips[i]]["OS"] = "NULL"
+                # print("osmatch")
+                # print(result["scan"][ips[i]]["osmatch"])
+                # print("osmatch")
+                #self.results[i][ips[i]]["OS"] = result["scan"][ips[i]]["osmatch"][0].get("name","NULL")
+                #self.results[i][ips[i]]["OS"] = result["scan"][ips[i]]["osmatch"][0]['name']
         # 设备类型探测
         device_type_list = []
         device_type = ""
@@ -259,8 +267,6 @@ class Scan(object):
                 s7_info = str.splitlines(result["scan"][ips[i]]["tcp"][102]["script"]['s7-info'])
                 self.results[i][ips[i]]["firmware_infor"]["name"] = s7_info[1]
                 self.results[i][ips[i]]["firmware_infor"]["version"] = s7_info[3]
-
-
 
     def get_result(self):
         return self.results

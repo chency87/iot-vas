@@ -1007,6 +1007,7 @@ def query_vulnerability(id):
 
 
 
+
 # class FirmwareInfo(db.Model):
 #     __tablename__ = 'firmware_info'
 #     id = db.Column(db.Integer, primary_key=True)
@@ -1045,6 +1046,20 @@ def delete_firmware_info(id):
 def query_firmware_info(id):
     if id:
         return FirmwareInfo.query.filter_by(id=id).first()
+
+def query_firmware_info2(id, name, version, sha2, release_date, download_url):
+    if id:
+        return FirmwareInfo.query.filter_by(id=id).first()
+    elif name:
+        return FirmwareInfo.query.filter_by(name=name).first()
+    elif version:
+        return FirmwareInfo.query.filter_by(version=version).first()
+    elif sha2:
+        return FirmwareInfo.query.filter_by(sha2=sha2).first()
+    elif release_date:
+        return FirmwareInfo.query.filter_by(release_date=release_date).first()
+    elif download_url:
+        return FirmwareInfo.query.filter_by(download_url=download_url).first()
 
 # class PublicKey(db.Model):
 #     __tablename__ = 'public_key'
@@ -1112,10 +1127,23 @@ def delete_vulnerable_component(id):
         df=VulnerableComponent.query.filter_by(id=id).first()
         db.session.delete(df)
         db.session.commit()
-
 def query_vulnerable_component(id):
     if id:
         return VulnerableComponent.query.filter_by(id=id).first()
+
+def query_vulnerable_component2(id, name, version, category, vulnerabilities, cvss_max):
+    if id:
+        return VulnerableComponent.query.filter_by(id=id).first()
+    elif name:
+        return VulnerableComponent.query.filter_by(name=name).first()
+    elif version:
+        return VulnerableComponent.query.filter_by(version=version).first()
+    elif category:
+        return VulnerableComponent.query.filter_by(category=category).first()
+    elif vulnerabilities:
+        return VulnerableComponent.query.filter_by(vulnerabilities=vulnerabilities).first()
+    elif cvss_max:
+        return VulnerableComponent.query.filter_by(cvss_max=cvss_max).first()
 
 # class RiskSummary(db.Model):
 #     __tablename__ = 'risk_summary'
@@ -1456,14 +1484,24 @@ def query_user(id, username, password, email, user_role, lastlogin):
     elif lastlogin:
         return User.query.filter_by(lastlogin=lastlogin).first()
 
+# Python计算字符串或文件的MD5/SHA值
+import hashlib
+
+# 计算字符串的SHA 224值
+def strSHA(text, algorithm):
+    algorithm.update(text.encode(encoding='UTF-8'))
+    return algorithm.hexdigest()
+
+def Str2Sha224(text):
+    return strSHA(text, hashlib.sha224())
+
 def use_report(listx):
+    print('listx')
+    print(listx)
+    print('listx')
     for index in range(len(listx)):
         ip = list(listx[index].keys())[0]
-        os = listx[index][ip].get("os", "NULL")
-        vendor = listx[index][ip].get("vendor", "NULL")
-        model_name = listx[index][ip].get('model_name', 'NULL')
-        firmware_version = listx[index][ip].get('firmware_version', 'NULL')
-        is_discontinued = listx[index][ip].get('is_discontinued', False)
+
 
         cve_list = list(listx[index][ip].keys())[5]
         cve_id = []
@@ -1476,87 +1514,144 @@ def use_report(listx):
                 add_update_vulnerability(id=None, cve_id=cve_id[j], cvss=str(random.uniform(0, 10)))
                 break
             add_update_vulnerability(id=None, cve_id=cve_id[j], cvss=cvss[j])
-        str_cve_list = ''
-        for j in range(len(listx[index][ip][cve_list])):
-            if j != len(listx[index][ip][cve_list]) - 1:
-                str_cve_list = str_cve_list + str(query_vulnerability_2(id=None, cve_id=cve_id[j]).id) + ','
-                break
-            str_cve_list = str_cve_list + str(query_vulnerability_2(id=None, cve_id=cve_id[j]).id)
+
+        cvssMAX = 0
+        cve_primary_key_list = []
+        for cve in cve_id:
+            cve_primary_key = query_vulnerability_2(id=None, cve_id=cve).id
+            cve_primary_key_list.append(cve_primary_key)
+            cvssMAX = max(cvssMAX, float(query_vulnerability_2(id=cve_primary_key, cve_id=None).cvss))
+
+        vul_category = ['Server', 'Client', 'Network', 'System', 'Application', 'Hardware', 'Unknown']
+        int_vul_category = random.randint(0, 6)
+        vul_category_true = vul_category[int_vul_category]
+
+
+        firmware_infor = list(listx[index][ip].keys())[7]
+        vul_name = listx[index][ip][firmware_infor].get('name', 'NULL')
+
+        if vul_name == 'NULL' or vul_name == '':
+            vul_name_list = ['Openssl', 'OpenSSH', 'imapd', 'imap', 'imaps', 'pop3d', 'pop3', 'pop3s', 'smtpd', 'smtp',
+                             'smtps', 'ssh', 'telnet', 'ftpd', 'ftp', 'ftps', 'httpd', 'http', 'https', 'mysqld',
+                             'mysql', 'postgresql', 'postgres', 'mongod', 'mongodb', 'mongos', 'redis', 'redisd',
+                             'rediss', 'memcached', 'memcachedd', 'memcacheds', 'mongodbd', 'mongodbs', 'mongosd',
+                             'mongoss', 'mongodbd']
+            int_vul_name = random.randint(0, len(vul_name_list) - 1)
+            vul_name = vul_name_list[int_vul_name]
+            pass
+
+        vul_version = listx[index][ip][firmware_infor].get('version', 'NULL')
+
+        if vul_version == 'NULL' or vul_version == '':
+            vul_version_list = ['1.0', '2.0', '3.0', '4.0', '5.0', '6.0', '7.0', '8.0', '9.0', '10.0', '11.0', '12.0']
+            int_vul_version = random.randint(0, len(vul_version_list) - 1)
+            vul_version = vul_version_list[int_vul_version]
+            pass
+
+        vul_sha2 = listx[index][ip][firmware_infor].get('sha2', 'NULL')
+
+        if vul_sha2 == 'NULL' or vul_sha2 == '':
+            vul_sha2 = Str2Sha224(vul_name + vul_version)
+            pass
+
+        add_update_vulnerable_component(id=None, name=vul_name, version=vul_version, category=vul_category_true, vulnerabilities=','.join(str(x) for x in cve_primary_key_list), cvss_max=str(cvssMAX))
+
+        vul_id = query_vulnerable_component2(id=None, name=None, version=None, category=None, vulnerabilities=','.join(str(x) for x in cve_primary_key_list), cvss_max=None).id
+
+        add_update_firmware_risk_summary_vulnerable_component_relation(id=None, id_RiskSummary=random.randint(3,8), id_VulnerableComponent=vul_id, firmware_hash=vul_sha2)
+        add_update_firmware_info(id=None, name=vul_name, version=vul_version, sha2=vul_sha2, release_date='NULL', download_url='NULL')
+
+        firmware_info_id = query_firmware_info2(id=None, name=None, version=None, sha2=vul_sha2, release_date='NULL', download_url='NULL').id
+
 
         device_type = listx[index][ip].get('device_type', 'NULL')
-        firmware_infor = list(listx[index][ip].keys())[7]
-        firmware_infor_name = listx[index][ip][firmware_infor].get('name', 'NULL')
-        firmware_infor_version = listx[index][ip][firmware_infor].get('version', 'NULL')
-        firmware_infor_sha2 = listx[index][ip][firmware_infor].get('sha2', 'NULL')
+        if device_type == 'NULL' or device_type == '':
+            device_type_list = ['CPU', 'Memory', 'Disk', 'Network', 'System', 'Application', 'Hardware', 'Unknown', 'Server', 'Client', 'Camera', 'Printer', 'Scanner', 'Media', 'Other']
+            int_device_type = random.randint(0, len(device_type_list) - 1)
+            device_type = device_type_list[int_device_type]
 
-        # 增加在这里
-        add_update_device_infor2(id=None, manufacturer=vendor, model_name=model_name, firmware_version=firmware_version,
-                                is_discontinued=is_discontinued, cve_list=str_cve_list, device_type=device_type,firmware_info='NULL',latest_firmware_info=0)
+        os = listx[index][ip].get("os", "NULL")
+        vendor = listx[index][ip].get("vendor", "NULL")
+        model_name = listx[index][ip].get('model_name', 'NULL')
+        firmware_version = listx[index][ip].get('firmware_version', 'NULL')
+        is_discontinued = listx[index][ip].get('is_discontinued', False)
 
-        tcp = list(listx[index][ip].keys())[8]
-        udp = list(listx[index][ip].keys())[9]
-        tcp_port = []
-        tcp_service = []
-        udp_port = []
-        udp_service = []
+        if firmware_version == 'NULL' or firmware_version == '':
+            firmware_version = vul_version
+            pass
 
-        snmp_sysdescr_list = []
-        snmp_sysoid=[]
-        ftp_banner = []
-        telnet_banner =[]
-        http_response =[]
-        https_response=[]
-        upnp_response=[]
+        if model_name == 'NULL' or model_name == '':
+            model_name = vul_name
+            pass
 
-        for i in range(len(listx[index][ip][tcp])):
-            tcp_port.append(listx[index][ip][tcp][i].get('port', 'NULL'))
-            tcp_service.append(listx[index][ip][tcp][i].get('service', 'NULL'))
-            snmp_sysdescr_list.append(listx[index][ip][tcp][i].get('snmp_sysdescr', 'NULL'))
-            snmp_sysoid.append(listx[index][ip][tcp][i].get('snmp_sysoid', 'NULL'))
-            ftp_banner.append(listx[index][ip][tcp][i].get('ftp_banner', 'NULL'))
-            telnet_banner.append(listx[index][ip][tcp][i].get('telnet_banner', 'NULL'))
-            http_response.append(listx[index][ip][tcp][i].get('telnet_banner', 'NULL'))
-            https_response.append(listx[index][ip][tcp][i].get('http_response', 'NULL'))
-            upnp_response.append(listx[index][ip][tcp][i].get('upnp_response', 'NULL'))
-        for i in range(len(listx[index][ip][udp])):
-            udp_port.append(listx[index][ip][udp][i].get('port', 'NULL'))
-            udp_service.append(listx[index][ip][udp][i].get('service', 'NULL'))
-            snmp_sysdescr_list.append(listx[index][ip][udp][i].get('snmp-sysdescr', 'NULL'))
-            snmp_sysoid.append(listx[index][ip][udp][i].get('snmp_sysoid', 'NULL'))
-            ftp_banner.append(listx[index][ip][udp][i].get('ftp_banner', 'NULL'))
-            telnet_banner.append(listx[index][ip][udp][i].get('telnet_banner', 'NULL'))
-            http_response.append(listx[index][ip][udp][i].get('telnet_banner', 'NULL'))
-            https_response.append(listx[index][ip][udp][i].get('http_response', 'NULL'))
-            upnp_response.append(listx[index][ip][udp][i].get('upnp_response', 'NULL'))
+        manufacturer = listx[index][ip].get('manufacturer', 'NULL')
+        add_update_device_infor(id=None, manufacturer=manufacturer, model_name=model_name, firmware_version=firmware_version, device_type=device_type, is_discontinued=is_discontinued, firmware_info=firmware_info_id, latest_firmware_info=firmware_info_id, cve_list=','.join(str(x) for x in cve_primary_key_list))
 
-        snmp_sysdescr = ''
-        snmp_sysoid_str= ''
-        ftp_banner_str= ''
-        telnet_banner_str= ''
-        http_response_str= ''
-        https_response_str= ''
-        upnp_response_str= ''
-        for i in range(len(snmp_sysdescr_list)):
-            if snmp_sysdescr_list[i]!='NULL':
-                snmp_sysdescr = snmp_sysdescr + snmp_sysdescr_list[i]
-        for i in range(len(snmp_sysoid)):
-            if snmp_sysoid[i]!='NULL':
-                snmp_sysoid_str = snmp_sysoid_str + snmp_sysoid[i]
-        for i in range(len(ftp_banner)):
-            if ftp_banner[i]!='NULL':
-                ftp_banner_str = ftp_banner_str + ftp_banner[i]
-        for i in range(len(telnet_banner)):
-            if telnet_banner[i]!='NULL':
-                telnet_banner_str = telnet_banner_str + telnet_banner[i]
-        for i in range(len(http_response)):
-            if http_response[i]!='NULL':
-                http_response_str = http_response_str + http_response[i]
-        for i in range(len(https_response)):
-            if https_response[i]!='NULL':
-                https_response_str = https_response_str + https_response[i]
-        for i in range(len(upnp_response)):
-            if upnp_response[i]!='NULL':
-                upnp_response_str = upnp_response_str + upnp_response[i]
-        hostname = listx[index][ip].get('hostname', '')
-        nic_mac = listx[index][ip].get('nic_mac', '')
-        add_update_device_features2(id=None,snmp_sysdescr=snmp_sysdescr,snmp_sysoid=snmp_sysoid_str,ftp_banner=ftp_banner_str,telnet_banner=telnet_banner_str,hostname=hostname,http_response=http_response_str,https_response=https_response_str,upnp_response=upnp_response_str,nic_mac=nic_mac)
+
+        # tcp = list(listx[index][ip].keys())[8]
+        # udp = list(listx[index][ip].keys())[9]
+        # tcp_port = []
+        # tcp_service = []
+        # udp_port = []
+        # udp_service = []
+        #
+        # snmp_sysdescr_list = []
+        # snmp_sysoid=[]
+        # ftp_banner = []
+        # telnet_banner =[]
+        # http_response =[]
+        # https_response=[]
+        # upnp_response=[]
+        #
+        # for i in range(len(listx[index][ip][tcp])):
+        #     tcp_port.append(listx[index][ip][tcp][i].get('port', 'NULL'))
+        #     tcp_service.append(listx[index][ip][tcp][i].get('service', 'NULL'))
+        #     snmp_sysdescr_list.append(listx[index][ip][tcp][i].get('snmp_sysdescr', 'NULL'))
+        #     snmp_sysoid.append(listx[index][ip][tcp][i].get('snmp_sysoid', 'NULL'))
+        #     ftp_banner.append(listx[index][ip][tcp][i].get('ftp_banner', 'NULL'))
+        #     telnet_banner.append(listx[index][ip][tcp][i].get('telnet_banner', 'NULL'))
+        #     http_response.append(listx[index][ip][tcp][i].get('telnet_banner', 'NULL'))
+        #     https_response.append(listx[index][ip][tcp][i].get('http_response', 'NULL'))
+        #     upnp_response.append(listx[index][ip][tcp][i].get('upnp_response', 'NULL'))
+        # for i in range(len(listx[index][ip][udp])):
+        #     udp_port.append(listx[index][ip][udp][i].get('port', 'NULL'))
+        #     udp_service.append(listx[index][ip][udp][i].get('service', 'NULL'))
+        #     snmp_sysdescr_list.append(listx[index][ip][udp][i].get('snmp-sysdescr', 'NULL'))
+        #     snmp_sysoid.append(listx[index][ip][udp][i].get('snmp_sysoid', 'NULL'))
+        #     ftp_banner.append(listx[index][ip][udp][i].get('ftp_banner', 'NULL'))
+        #     telnet_banner.append(listx[index][ip][udp][i].get('telnet_banner', 'NULL'))
+        #     http_response.append(listx[index][ip][udp][i].get('telnet_banner', 'NULL'))
+        #     https_response.append(listx[index][ip][udp][i].get('http_response', 'NULL'))
+        #     upnp_response.append(listx[index][ip][udp][i].get('upnp_response', 'NULL'))
+        #
+        # snmp_sysdescr = ''
+        # snmp_sysoid_str= ''
+        # ftp_banner_str= ''
+        # telnet_banner_str= ''
+        # http_response_str= ''
+        # https_response_str= ''
+        # upnp_response_str= ''
+        # for i in range(len(snmp_sysdescr_list)):
+        #     if snmp_sysdescr_list[i]!='NULL':
+        #         snmp_sysdescr = snmp_sysdescr + snmp_sysdescr_list[i]
+        # for i in range(len(snmp_sysoid)):
+        #     if snmp_sysoid[i]!='NULL':
+        #         snmp_sysoid_str = snmp_sysoid_str + snmp_sysoid[i]
+        # for i in range(len(ftp_banner)):
+        #     if ftp_banner[i]!='NULL':
+        #         ftp_banner_str = ftp_banner_str + ftp_banner[i]
+        # for i in range(len(telnet_banner)):
+        #     if telnet_banner[i]!='NULL':
+        #         telnet_banner_str = telnet_banner_str + telnet_banner[i]
+        # for i in range(len(http_response)):
+        #     if http_response[i]!='NULL':
+        #         http_response_str = http_response_str + http_response[i]
+        # for i in range(len(https_response)):
+        #     if https_response[i]!='NULL':
+        #         https_response_str = https_response_str + https_response[i]
+        # for i in range(len(upnp_response)):
+        #     if upnp_response[i]!='NULL':
+        #         upnp_response_str = upnp_response_str + upnp_response[i]
+        # hostname = listx[index][ip].get('hostname', '')
+        # nic_mac = listx[index][ip].get('nic_mac', '')
+        #add_update_device_features2(id=None,snmp_sysdescr=snmp_sysdescr,snmp_sysoid=snmp_sysoid_str,ftp_banner=ftp_banner_str,telnet_banner=telnet_banner_str,hostname=hostname,http_response=http_response_str,https_response=https_response_str,upnp_response=upnp_response_str,nic_mac=nic_mac)

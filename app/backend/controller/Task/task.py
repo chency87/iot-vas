@@ -232,7 +232,7 @@ def exe_task(params, id):
     print(create_time)
     task = Task(info=params)
     scan_report = task.create_task()
-    # use_report(scan_report) # 这个地方要改
+    use_report(scan_report) # 这个地方要改
     end_time = datetime.datetime.now()
     print(end_time)
 

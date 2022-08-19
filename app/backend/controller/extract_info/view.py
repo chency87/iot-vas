@@ -54,11 +54,11 @@ def extract_info_get():
         dao.add_update_device_infor(None, manufacturer='Axis Communications AB', model_name='P3346',
                                     firmware_version='5.20', is_discontinued=True, cve_list='23,342,45,56,67,87,43,12,54,563,212',
                                     device_type='IP Camera', firmware_info='1', latest_firmware_info='1')
-        dao.add_update_device_infor(None, manufacturer='ics', model_name='Endress+Hauser Fieldgate',
+        dao.add_update_device_infor(None, manufacturer='Omron', model_name='ics Endress+Hauser Fieldgate',
                                     firmware_version='FXA520',
                                     is_discontinued=True, cve_list='232,234,32,455,23,12,324,34,34,23,54,65,76,43,23,45,323,345,23,54,2343,45', device_type='gateway', firmware_info='2',
                                     latest_firmware_info='2')
-        dao.add_update_device_infor(None, manufacturer='PLC', model_name='CJ2M', firmware_version='02.01',
+        dao.add_update_device_infor(None, manufacturer='Omron', model_name='CJ2M PLC', firmware_version='02.01',
                                     is_discontinued=True, cve_list='2343,322,3434,323,1222,2332,43,2323,2343,2332,1234,4564,2333,2345,3423,345,6545', device_type='CPU',
                                     firmware_info='3', latest_firmware_info='3')
         dao.add_update_device_infor(None, manufacturer='Omron', model_name='CJ2M', firmware_version='1.11',
@@ -68,10 +68,10 @@ def extract_info_get():
                                     firmware_version='3.4 Build 11080114', is_discontinued=False,
                                     cve_list='435,124,657,223,123,32,87', device_type='serial-to-IP converter',
                                     firmware_info='5', latest_firmware_info='5')
-        dao.add_update_device_infor(None, manufacturer='PLC', model_name='Mitsubishi', firmware_version='Q-series',
+        dao.add_update_device_infor(None, manufacturer='Omron', model_name='ics Mitsubishi', firmware_version='Q-series',
                                     is_discontinued=False, cve_list='234,435,654,345,234,456,245,78,213', device_type='CPU',
                                     firmware_info='6', latest_firmware_info='6')
-        dao.add_update_device_infor(None, manufacturer='Bellwin', model_name='power-misc', firmware_version='Null',
+        dao.add_update_device_infor(None, manufacturer='Bellwin', model_name=' ', firmware_version='Null',
                                     is_discontinued=False, cve_list='332,123,435,657,345,44,32,43,76,34,65,76',
                                     device_type='Server', firmware_info='7', latest_firmware_info='7')
         dao.add_update_device_infor(None, manufacturer='POPFile', model_name='pop3d', firmware_version='4vO',
@@ -153,7 +153,7 @@ set("ctMAC","B2B-4687-3CD19179");
                                        'PLC CJ2M',
                                        None, None, None, None, None, None)
         dao.add_update_device_features(None, None, None,
-                                       'Omron CJ2M',
+                                       'PLC CJ2M',
                                        None, None, None, None, None, None)
         dao.add_update_device_features(None, None, None,
                                        'Moxa NPort 5150',
